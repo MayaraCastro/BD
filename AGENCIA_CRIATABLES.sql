@@ -43,10 +43,11 @@ salario decimal(10,2),
 ramal int,
 cpf char(9) not null,
 cod int not null, #da hierarquia
-
-primary key(cpf),
+tipo int not null, #tipo do funcionario
+primary key(cpf, cod),
 foreign key (cod) references pessoa(cod)
 );
+
 
 create table trabalha_para(
 cpf char(9) not null,
@@ -61,6 +62,19 @@ create table cliente(
 cod int not null, #da hierarquia
 agencia char (18),
 
+primary key(cod),
+foreign key (agencia) references agencia(CNPJ),
+foreign key (cod) references pessoa(cod)
+
+);
+
+create table cliente_juridico( 
+cod int not null, #da hierarquia
+agencia char (18),
+CNPJ char (18), 
+nome_fantasia varchar(50),
+
+primary key(cod),
 foreign key (agencia) references agencia(CNPJ),
 foreign key (cod) references pessoa(cod)
 
@@ -76,11 +90,29 @@ foreign key(codcliente) references cliente(cod),
 foreign key(codmala) references malaDireta(codigo)
 );
 create table passaporte(
+numero varchar(10) not null unique, 
+pais_emissao varchar(50),
+validade date,
+dt_emissao date, 
+codcliente int not null,
 
+primary key(numero, codcliente),
+foreign key(codcliente) references cliente(cod)
 );
 
 create table visto(
+controlnumber varchar(10) not null unique,
+numeroPass varchar(10) not null unique,
+tipo int, 
+pais varchar(50),
+dt_inicio date, 
+dt_fim date, 
+codcliente int not null, 
 
+
+primary key(controlnumber, numeroPass, codcliente),
+foreign key(codcliente) references cliente(cod),
+foreign key(numeroPass) references passaporte(numero)
 );
 
 create table malaDireta(
