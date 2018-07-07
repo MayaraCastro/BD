@@ -89,6 +89,7 @@ primary key(codcliente, codmala),
 foreign key(codcliente) references cliente(cod),
 foreign key(codmala) references malaDireta(codigo)
 );
+
 create table passaporte(
 numero varchar(10) not null unique, 
 pais_emissao varchar(50),
@@ -134,30 +135,111 @@ foreign key(codmala) references malaDireta(codigo)
 
 create table pacote(
 
+codigo int not null unique,
+total_a_pagar decimal(10,2),
+vl_total decimal(10,2), 
+vl_desconto decimal(10,2), 
+datafim date,
+datainicio date,
+indicadorReserva int,
+tipo int not null,
+n_criancas int,
+n_adultos int,
+
+primary key(codigo) 
 );
 
 create table item_pacote(
+codservico int not null, 
+codpacote int not null, 
+id_sk int not null unique auto_increment,
+dt date,
+vl_unitario decimal(10,2),
+qtd int, 
+seq int,
+vl_com_desconto decimal(10,2),
 
+primary key(id_sk, codpacote, codservico),
+foreign key(codpacote) references pacote(codigo),
+foreign key (codservico) references servico_ref(codigo)
+);
+
+create table itens_fatura(
+id int not null,
+codservico int not null, 
+codpacote int not null,
+id_sk int not null,
+
+primary key(id, id_sk, codpacote, codservico),
+foreign key(id) references fatura(id),
+foreign key(id_sk)references item_pacote(id_sk),
+foreign key(codservico)references item_pacote(codservico),
+foreign key(codpacote) references item_pacote(codpacote)
 );
 
 create table fatura(
+id int not null unique auto_increment,
+codpacote int ,
+
+primary key(id),
+foreign key(codpacote) references pacote(codigo)
 
 );
 
 create table pagamento(
+codigo int not null unique auto_increment,
+vl_pago decimal(10,2),
+juros decimal(10,2),
+dt_vence date,
+dt_pag date,
+codFatura int,
+tipo int not null, #da hierarquia
+cod_seg int,
+numero_cartao varchar(20),
+dt_validade date, 
+tipoCartao int, 
+nome_titular varchar(100),
 
-);
+primary key(codigo),
+foreign key(codFatura) references fatura(id)
+); 
 
 create table servico_ref(
+codigo int not null unique auto_increment, 
+valor decimal(10,2),
+local_destino varchar(50),
+nivel int,
 
+primary key(codigo),
+foreign key(nivel) references nivel_servico(codigo)
+);
+
+create table mapa_arquivo(
+codServico int not null, 
+mapa varbinary(8000) not null,
+
+primary key(mapa, codServico),
+foreign key(codServico) references servico_ref(codigo)
 );
 
 create table promocao(
+id int not null unique,
+dt_fim date,
+porcentagem_desconto double,
+tipo int, 
+dt_inicio date,
+codservico int,
 
+primary key(id),
+foreign key(codservico)  references servico_ref(codigo)
 );
 
 create table nivel_servico(
+codigo int not null unique,
+nivel int, 
+descr varchar(100),
 
+primary key(codigo)
 );
 
 create table intercambio(
@@ -186,6 +268,13 @@ create table servico_parceiro(
 
 create table parceiro(
 
+CNPJ varchar(18) not null unique,
+nome_fantasia varchar(50),
+status int, 
+tipo int, 
+ramo varchar(10),
+
+primary key(CNPJ)
 );
 
 
