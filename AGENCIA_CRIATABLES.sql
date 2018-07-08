@@ -48,11 +48,45 @@ primary key(cpf, cod),
 foreign key (cod) references pessoa(cod)
 );
 
+CREATE TABLE agente(
+cpf char(9) not null,
+cod int not null,
+PRIMARY KEY(cpf,cod),
+FOREIGN KEY(cpf,cod) REFERENCES funcionario(cpf,cod)
+);
+
+CREATE TABLE motorista(
+cpf char(9) not null,
+cod int not null,
+PRIMARY KEY(cpf,cod),
+FOREIGN KEY(cpf,cod) REFERENCES funcionario(cpf,cod)
+);
+
+CREATE TABLE guia(
+cpf char(9) not null,
+cod int not null,
+PRIMARY KEY(cpf,cod),
+FOREIGN KEY(cpf,cod) REFERENCES funcionario(cpf,cod)
+);
+
+CREATE TABLE compra(
+status int,
+dt_compra date not null, 
+cod_pacote int not null unique, 
+cpf_agente char(9) not null,
+cod_agente int not null,  
+cod_cliente int not null, 
+
+PRIMARY KEY(cpf_agente,cod_agente, cod_cliente,cod_pacote, dt_compra),
+FOREIGN KEY(cod_cliente) REFERENCES cliente(cod), 
+FOREIGN KEY(cpf_agente,cod_agente) REFERENCES agente(cpf,cod),
+FOREIGN KEY(cod_pacote) REFERENCES pacote(codigo)
+);
 
 create table trabalha_para(
 cpf char(9) not null,
 CNPJ char (18) not null,
-
+agencia char (18) not null, --faltou
 primary key (cpf, CNPJ),
 foreign key (agencia) references agencia(CNPJ),
 foreign key (cpf) references funcionario(cpf)
@@ -125,9 +159,9 @@ dt_envio date,
 primary key (codigo)
 );
 
-create table arquivo_pdf(
+create table arquivo_pdf( --error
 codmala int not null,
-arquivo varbinary(80000),
+arquivo varbinary(80000), --tamanho maximo 65535
 
 primary key (codmala, arquivo),
 foreign key(codmala) references malaDireta(codigo)
@@ -204,6 +238,35 @@ primary key(codigo),
 foreign key(codFatura) references fatura(id)
 ); 
 
+CREATE TABLE boleto(
+codigo int not null unique auto_increment,
+
+primary key(codigo),
+foreign key(codigo) references pagamento(codigo)
+
+);
+
+CREATE TABLE cheque(
+codigo int not null unique auto_increment,
+
+primary key(codigo),
+foreign key(codigo) references pagamento(codigo)
+
+);
+
+CREATE TABLE cartao(
+codigo int not null unique auto_increment,
+cod_seg int not null unique,
+numero_cart int not null unique,
+dat_validade date not null,
+tipo int not null,
+nume_titu VARCHAR(100) not null,
+
+
+primary key(codigo),
+foreign key(codigo) references pagamento(codigo)
+);
+
 create table servico_ref(
 codigo int not null unique auto_increment, 
 valor decimal(10,2),
@@ -214,7 +277,7 @@ primary key(codigo),
 foreign key(nivel) references nivel_servico(codigo)
 );
 
-create table mapa_arquivo(
+create table mapa_arquivo( --tamebm possui errro
 codServico int not null, 
 mapa varbinary(8000) not null,
 
@@ -243,27 +306,114 @@ primary key(codigo)
 );
 
 create table intercambio(
+codigo int not null unique auto_increment, 
+detalhe varchar(100),
+obs varchar(100),
 
+
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo)
 );
 
-create table acomodacao(
+create table trabalho(
+codigo int not null unique auto_increment, 
+dt_inicio date,
+cargo varchar(100),
+dt_fim date,
 
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo)
+);
+
+create table estudo(
+codigo int not null unique auto_increment, 
+carga_horaria int,
+lingua varchar(100),
+nome_curso varchar(100),
+
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo)
+);
+
+--ta pintado?
+create table acomodacao(
+codigo int not null unique auto_increment, 
+descricao varchar(100),
+data_entrada date,
+dt_saida date,
+capacidade_pessoas int,
+fumante int,
+no_estrelas int,
+tipo varchar(100), 
+
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo)
 );
 
 create table evento(
+codigo int not null unique auto_increment, 
+status varchar(100),
+data_entrada date,
+dt_fim date,
+nome varchar(100),
+detalhe varchar(100),
+tipo int,
+vl_desc varchar(100),
+obs varchar(100), 
+cpf char(9) not null,
+cod int not null,
 
+
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo),
+FOREIGN KEY(cpf,cod) REFERENCES guia(cpf,cod)
 );
 
 create table transporte(
+codigo int not null unique auto_increment, 
+local_de_origem varchar(100),
+data_ida date,
+dt_volta date,
+modalidade varchar(100),
+marca varchar(100),
+tipo int,
+num_identificacao int,
+capacidade_n_pessoas int,
+cpf char(9) not null,
+cod int not null,
 
+primary key(codigo),
+foreign key(codigo)  references servico_ref(codigo),
+FOREIGN KEY(cpf,cod) REFERENCES motorista(cpf,cod)
 );
 
 create table servico_proprio(
+codigo int not null unique auto_increment, 
+
+primary key(codigo),
+foreign key(codigo) references servico_ref(codigo)
 
 );
 
 create table servico_parceiro(
+codigo int not null unique auto_increment, 
 
+primary key(codigo),
+foreign key(codigo) references servico_ref(codigo)
+
+);
+
+create table oferece(
+codigo_servico int not null unique auto_increment, 
+parceiro varchar(18) not null unique,
+dt_inicio date,
+dt_fim date,
+percentual float,
+no_contrato int,  -- derivado. nao sei oq fazer
+
+primary key(codigo_servico, parceiro),
+foreign key(codigo_servico) references servico_parceiro(codigo),
+foreign key(parceiro) references parceiro(CNPJ)
 );
 
 create table parceiro(
@@ -276,5 +426,3 @@ ramo varchar(10),
 
 primary key(CNPJ)
 );
-
-
