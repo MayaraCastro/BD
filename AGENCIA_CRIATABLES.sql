@@ -29,9 +29,9 @@ CREATE TABLE pessoa (
 );
 
 create table agente(
-salario decimal(10,2), 
+salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null,
+cpf char(9) not null unique,
 cod int not null, #da hierarquia
 
 primary key(cpf, cod),
@@ -39,9 +39,9 @@ foreign key (cod) references pessoa(cod)
 );
 
 create table guia(
-salario decimal(10,2), 
+salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null,
+cpf char(9) not null unique,
 cod int not null, #da hierarquia
 
 primary key(cpf, cod),
@@ -49,9 +49,9 @@ foreign key (cod) references pessoa(cod)
 );
 
 create table motorista(
-salario decimal(10,2), 
+salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null,
+cpf char(9) not null unique,
 cod int not null, #da hierarquia
 
 primary key(cpf, cod),
@@ -59,9 +59,9 @@ foreign key (cod) references pessoa(cod)
 );
 
 create table gerente(
-salario decimal(10,2), 
+salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null,
+cpf char(9) not null unique,
 cod int not null, #da hierarquia
 
 primary key(cpf, cod),
@@ -70,7 +70,7 @@ foreign key (cod) references pessoa(cod)
 
 create table agencia(
 
-CNPJ char (18) not null,
+CNPJ char (18) not null unique,
 nome_fantasia varchar(50),
 cep varchar(10) null, #da relacao
 num int, #da relacao
@@ -167,7 +167,7 @@ create table cliente_fisico(
 cod int not null, #da hierarquia
 agencia char (18),
 cpf char (9), 
-tipo int not null, 
+tipo int not null check(3>=tipo>0), 
 
 primary key(cod),
 foreign key (agencia) references agencia(CNPJ),
@@ -375,7 +375,7 @@ descricao varchar(100),
 data_entrada date,
 dt_saida date,
 capacidade_pessoas int,
-fumante int,
+fumante int check (1 >= fumante >=0),
 no_estrelas int,
 tipo varchar(100), 
 
