@@ -34,13 +34,13 @@ CNPJ char (18) not null unique,
 nome_fantasia varchar(50),
 cep varchar(10) null, #da relacao
 num int, #da relacao
-gerentecod int not null unique,  
+codgerente int not null unique,  
 datainicio date,
 num_cliente int,
 
 primary key (CNPJ),
-foreign key (cep) references endereco(cep),
-foreign key (gerentecod) references gerente(cod)
+foreign key (cep) references endereco(cep)
+#foreign key (codgerente) references gerente(cod)
 
 );
 
@@ -95,6 +95,7 @@ foreign key (cod_agencia) references agencia(CNPJ)
 
 );
 
+ALTER TABLE agencia ADD FOREIGN KEY ( codgerente ) REFERENCES gerente (cod); # pois estava dando erro antes
 
 
 create table malaDireta(
@@ -204,7 +205,7 @@ codagente int not null,
 codpacote int not null, 
 codcliente int not null,
 
-primary key (cod, codpacote,codcliente, dt_compra),
+primary key (codagente, codpacote,codcliente, dt_compra),
 foreign key (codagente) references agente(cod),
 foreign key(codpacote) references pacote(codigo),
 foreign key(codcliente) references cliente_fisico(cod)
@@ -218,7 +219,7 @@ codagente int not null,
 codpacote int not null, 
 codcliente int not null,
 
-primary key (cod, codpacote,codcliente, dt_compra),
+primary key (codagente, codpacote,codcliente, dt_compra),
 foreign key (codagente) references agente(cod),
 foreign key(codpacote) references pacote(codigo),
 foreign key(codcliente) references cliente_juridico(cod)
@@ -245,7 +246,7 @@ foreign key(nivel) references nivel_servico(codigo)
 );
 
 create table item_pacote(
-id_sk int identity(1, 1) primary key,
+id_sk int unique auto_increment ,
 codservico int not null, 
 codpacote int not null, 
 dt date,
@@ -255,7 +256,6 @@ seq int,
 vl_com_desconto decimal(10,2),
 
 primary key(id_sk),
-primary key (codpacote, codservico),
 foreign key(codpacote) references pacote(codigo),
 foreign key (codservico) references servico_ref(codigo)
 );
