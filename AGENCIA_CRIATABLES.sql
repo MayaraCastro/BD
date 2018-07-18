@@ -22,7 +22,7 @@ CREATE TABLE pessoa (
 	sexo enum ('M', 'F'),
 	fone   varchar(15),
     foto blob,
-    cep varchar(10) , #da relacao
+    cep varchar(10) unique, #da relacao
     num int, #da relacao
 	primary key (cod),
     foreign key (cep) references endereco(cep)
@@ -33,9 +33,11 @@ salario decimal(10,2) check(salario>0),
 ramal int,
 cpf char(9) not null unique,
 cod int not null, #da hierarquia
+cod_agencia char (18) not null,
 
-primary key(cpf, cod),
-foreign key (cod) references pessoa(cod)
+primary key(cod),
+foreign key (cod) references pessoa(cod),
+foreign key (cod_agencia) references agencia(CNPJ)
 );
 
 create table guia(
@@ -43,9 +45,12 @@ salario decimal(10,2) check(salario>0),
 ramal int,
 cpf char(9) not null unique,
 cod int not null, #da hierarquia
+cod_agencia char (18) not null,
 
-primary key(cpf, cod),
-foreign key (cod) references pessoa(cod)
+primary key(cod),
+foreign key (cod) references pessoa(cod),
+foreign key (cod_agencia) references agencia(CNPJ)
+
 );
 
 create table motorista(
@@ -53,9 +58,12 @@ salario decimal(10,2) check(salario>0),
 ramal int,
 cpf char(9) not null unique,
 cod int not null, #da hierarquia
+cod_agencia char (18) not null,
 
-primary key(cpf, cod),
-foreign key (cod) references pessoa(cod)
+primary key(cod),
+foreign key (cod) references pessoa(cod),
+foreign key (cod_agencia) references agencia(CNPJ)
+
 );
 
 create table gerente(
@@ -63,9 +71,12 @@ salario decimal(10,2) check(salario>0),
 ramal int,
 cpf char(9) not null unique,
 cod int not null, #da hierarquia
+cod_agencia char (18) not null,
 
 primary key(cpf, cod),
-foreign key (cod) references pessoa(cod)
+foreign key (cod) references pessoa(cod),
+foreign key (cod_agencia) references agencia(CNPJ)
+
 );
 
 create table agencia(
@@ -74,54 +85,14 @@ CNPJ char (18) not null unique,
 nome_fantasia varchar(50),
 cep varchar(10) null, #da relacao
 num int, #da relacao
-gerentecpf char(9) not null,
-gerentecod int not null,  
+gerentecod int not null unique,  
 datainicio date,
+num_cliente int,
 
 primary key (CNPJ),
 foreign key (cep) references endereco(cep),
-foreign key (gerentecpf,gerentecod) references gerente(cpf,cod)
+foreign key (gerentecod) references gerente(cod)
 
-);
-
-create table guia_trabalha_para(
-cpf char(9) not null,
-cod int not null,
-agencia char (18) not null,
-
-primary key (cpf, agencia,cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cpf, cod) references guia(cpf, cod)
-);
-
-create table motorista_trabalha_para(
-cpf char(9) not null,
-cod int not null,
-agencia char (18) not null,
-
-primary key (cpf, agencia,cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cpf,cod) references motorista(cpf,cod)
-);
-
-create table gerente_trabalha_para(
-cpf char(9) not null,
-cod int not null,
-agencia char (18) not null,
-
-primary key (cpf, agencia,cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cpf,cod) references gerente(cpf,cod)
-);
-
-create table agente_trabalha_para(
-cpf char(9) not null,
-cod int not null,
-agencia char (18) not null,
-
-primary key (cpf, agencia,cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cpf,cod) references agente(cpf,cod)
 );
 
 create table malaDireta(
@@ -184,6 +155,7 @@ primary key(codcliente, codmala),
 foreign key(codcliente) references cliente_fisico(cod),
 foreign key(codmala) references malaDireta(codigo)
 );
+
 create table passaporte(
 numero varchar(10) not null unique, 
 pais_emissao varchar(50),
@@ -191,22 +163,19 @@ validade date,
 dt_emissao date, 
 codcliente int not null,
 
-primary key(numero, codcliente),
+primary key(numero),
 foreign key(codcliente) references cliente_fisico(cod)
 );
 
 create table visto(
 controlnumber varchar(10) not null unique,
-numeroPass varchar(10) not null unique,
+numeroPass varchar(10) not null,
 tipo int, 
 pais varchar(50),
 dt_inicio date, 
 dt_fim date, 
-codcliente int not null, 
 
-
-primary key(controlnumber, numeroPass, codcliente),
-foreign key(codcliente) references cliente_fisico(cod),
+primary key(controlnumber),
 foreign key(numeroPass) references passaporte(numero)
 );
 
@@ -229,13 +198,12 @@ primary key(codigo)
 create table clienteFisico_compra(
 dt_compra date not null,
 stats int,
-cpf char(9) not null,
-cod int not null,
+codagente int not null,
 codpacote int not null, 
 codcliente int not null,
 
-primary key (cpf, cod, codpacote,codcliente, dt_compra),
-foreign key (cpf,cod) references agente(cpf,cod),
+primary key (cod, codpacote,codcliente, dt_compra),
+foreign key (codagente) references agente(cod),
 foreign key(codpacote) references pacote(codigo),
 foreign key(codcliente) references cliente_fisico(cod)
 
@@ -244,13 +212,12 @@ foreign key(codcliente) references cliente_fisico(cod)
 create table clienteJuridico_compra(
 dt_compra date not null,
 stats int,
-cpf char(9) not null,
-cod int not null,
+codagente int not null,
 codpacote int not null, 
 codcliente int not null,
 
-primary key (cpf, cod, codpacote,codcliente, dt_compra),
-foreign key (cpf,cod) references agente(cpf,cod),
+primary key (cod, codpacote,codcliente, dt_compra),
+foreign key (codagente) references agente(cod),
 foreign key(codpacote) references pacote(codigo),
 foreign key(codcliente) references cliente_juridico(cod)
 
@@ -268,8 +235,7 @@ create table servico_ref(
 codigo int not null unique auto_increment, 
 valor decimal(10,2),
 local_destino varchar(50),
-nivel int,
-modalidadeServico int not null, #intercambio, acomodação, evento, transporte
+nivel int ,
 tipoServico int not null, #serviço parceiro, serviço proprio
 
 primary key(codigo),
@@ -277,16 +243,17 @@ foreign key(nivel) references nivel_servico(codigo)
 );
 
 create table item_pacote(
+id_sk int identity(1, 1) primary key,
 codservico int not null, 
 codpacote int not null, 
-id_sk int not null unique auto_increment,
 dt date,
 vl_unitario decimal(10,2),
 qtd int, 
 seq int,
 vl_com_desconto decimal(10,2),
 
-primary key(id_sk, codpacote, codservico),
+primary key(id_sk),
+primary key (codpacote, codservico),
 foreign key(codpacote) references pacote(codigo),
 foreign key (codservico) references servico_ref(codigo)
 );
@@ -294,6 +261,8 @@ foreign key (codservico) references servico_ref(codigo)
 create table fatura(
 id int not null unique auto_increment,
 codpacote int ,
+dt_fatura date, 
+stats int, 
 
 primary key(id),
 foreign key(codpacote) references pacote(codigo)
@@ -302,13 +271,11 @@ foreign key(codpacote) references pacote(codigo)
 
 create table itens_fatura(
 id int not null,
-codservico int not null, 
-codpacote int not null,
-id_sk int not null,
+sk_itemPacote int not null,
 
-primary key(id, id_sk, codpacote, codservico),
+primary key(id, sk_itemPacote),
 foreign key(id) references fatura(id),
-foreign key(id_sk, codpacote, codservico)references item_pacote(id_sk, codpacote, codservico)
+foreign key(sk_itemPacote)references item_pacote(id_sk)
 );
 
 
@@ -355,7 +322,7 @@ create table intercambio(
 codigo int not null,
 obs varchar(200),
 detalhe varchar(200),
-tipo int not null, #hierarquia
+tipo_intercambio int not null, #hierarquia
 
 cargo varchar(20),#trabalho
 dt_inicio date,
@@ -393,12 +360,11 @@ detalhe varchar(100),
 tipo int,
 vl_desc varchar(100),
 obs varchar(100), 
-guiacpf char(9) not null,
 guiacod int not null,
 
 primary key(codigo),
 foreign key(codigo) references servico_ref(codigo),
-FOREIGN KEY(guiacpf,guiacod) REFERENCES guia(cpf,cod)
+FOREIGN KEY(guiacod) REFERENCES guia(cod)
 
 );
 
@@ -412,12 +378,11 @@ marca varchar(100),
 tipo int,
 num_identificacao int,
 capacidade_n_pessoas int,
-motoristacpf char(9) not null,
 motoristacod int not null,
 
 primary key(codigo),
 foreign key(codigo) references servico_ref(codigo),
-FOREIGN KEY(motoristacpf,motoristacod) REFERENCES motorista(cpf,cod)
+FOREIGN KEY(motoristacod) REFERENCES motorista(cod)
 
 );
 
