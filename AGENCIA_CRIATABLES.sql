@@ -28,6 +28,22 @@ CREATE TABLE pessoa (
     foreign key (cep) references endereco(cep)
 );
 
+create table agencia(
+
+CNPJ char (18) not null unique,
+nome_fantasia varchar(50),
+cep varchar(10) null, #da relacao
+num int, #da relacao
+gerentecod int not null unique,  
+datainicio date,
+num_cliente int,
+
+primary key (CNPJ),
+foreign key (cep) references endereco(cep),
+foreign key (gerentecod) references gerente(cod)
+
+);
+
 create table agente(
 salario decimal(10,2) check(salario>0), 
 ramal int,
@@ -73,27 +89,13 @@ cpf char(9) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
-primary key(cpf, cod),
+primary key(cod),
 foreign key (cod) references pessoa(cod),
 foreign key (cod_agencia) references agencia(CNPJ)
 
 );
 
-create table agencia(
 
-CNPJ char (18) not null unique,
-nome_fantasia varchar(50),
-cep varchar(10) null, #da relacao
-num int, #da relacao
-gerentecod int not null unique,  
-datainicio date,
-num_cliente int,
-
-primary key (CNPJ),
-foreign key (cep) references endereco(cep),
-foreign key (gerentecod) references gerente(cod)
-
-);
 
 create table malaDireta(
 codigo int not null auto_increment,
