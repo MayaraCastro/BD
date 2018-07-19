@@ -32,14 +32,14 @@ create table agencia(
 
 CNPJ char (18) not null unique,
 nome_fantasia varchar(50),
-cep varchar(10) null, #da relacao
+cep varchar(10) unique, #da relacao
 num int, #da relacao
 codgerente int not null unique,  
 datainicio date,
 num_cliente int,
 
 primary key (CNPJ),
-foreign key (cep) references endereco(cep)
+foreign key (cep) references endereco(cep) 
 #foreign key (codgerente) references gerente(cod)
 
 );
@@ -52,8 +52,8 @@ cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
 primary key(cod),
-foreign key (cod) references pessoa(cod),
-foreign key (cod_agencia) references agencia(CNPJ)
+constraint fk_agente_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade,
+constraint fk_agente_agencia foreign key (cod_agencia) references agencia(CNPJ) on delete cascade on update cascade
 );
 
 create table guia(
@@ -64,8 +64,8 @@ cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
 primary key(cod),
-foreign key (cod) references pessoa(cod),
-foreign key (cod_agencia) references agencia(CNPJ)
+constraint fk_guia_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade,
+constraint fk_guia_agencia foreign key (cod_agencia) references agencia(CNPJ)on delete cascade on update cascade
 
 );
 
@@ -77,8 +77,8 @@ cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
 primary key(cod),
-foreign key (cod) references pessoa(cod),
-foreign key (cod_agencia) references agencia(CNPJ)
+constraint fk_motorista_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade,
+constraint fk_motorista_agencia foreign key (cod_agencia) references agencia(CNPJ) on delete cascade on update cascade
 
 );
 
@@ -90,12 +90,12 @@ cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
 primary key(cod),
-foreign key (cod) references pessoa(cod),
-foreign key (cod_agencia) references agencia(CNPJ)
+constraint fk_gerente_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade,
+constraint fk_gerente_agencia foreign key (cod_agencia) references agencia(CNPJ)on delete cascade on update cascade
 
 );
 
-ALTER TABLE agencia ADD FOREIGN KEY ( codgerente ) REFERENCES gerente (cod); # pois estava dando erro antes
+ALTER TABLE agencia ADD constraint fk_agencia_gerente FOREIGN KEY ( codgerente ) REFERENCES gerente (cod) on update cascade; # pois estava dando erro antes
 
 
 create table malaDireta(
@@ -112,7 +112,7 @@ codmala int not null,
 arquivo varbinary(500),
 
 primary key (codmala, arquivo),
-foreign key(codmala) references malaDireta(codigo)
+constraint fk_arquivo_mala foreign key(codmala) references malaDireta(codigo) on delete cascade on update cascade
 );
 
 create table cliente_juridico( 
@@ -122,8 +122,8 @@ CNPJ char (18),
 nome_fantasia varchar(50),
 
 primary key(cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cod) references pessoa(cod)
+constraint fk_juridico_agencia foreign key (agencia) references agencia(CNPJ) on update cascade,
+constraint fk_juridico_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade
 
 );
 
@@ -133,8 +133,8 @@ codcliente int not null,
 codmala int not null, 
 
 primary key(codcliente, codmala),
-foreign key(codcliente) references cliente_juridico(cod),
-foreign key(codmala) references malaDireta(codigo)
+constraint fk_juridicoMala_juridico foreign key(codcliente) references cliente_juridico(cod) on delete cascade on update cascade,
+constraint fk_juridicoMala_mala foreign key(codmala) references malaDireta(codigo) on delete cascade on update cascade
 );
 
 create table cliente_fisico( 
@@ -144,8 +144,8 @@ cpf char (9),
 tipo int not null check(3>=tipo>0), 
 
 primary key(cod),
-foreign key (agencia) references agencia(CNPJ),
-foreign key (cod) references pessoa(cod)
+constraint fk_fisico_agencia foreign key (agencia) references agencia(CNPJ) on update cascade,
+constraint fk_fisico_pessoa foreign key (cod) references pessoa(cod) on delete cascade on update cascade
 
 );
 
@@ -155,8 +155,8 @@ codcliente int not null,
 codmala int not null, 
 
 primary key(codcliente, codmala),
-foreign key(codcliente) references cliente_fisico(cod),
-foreign key(codmala) references malaDireta(codigo)
+constraint fk_fisicoMala_fisico foreign key(codcliente) references cliente_fisico(cod) on delete cascade on update cascade,
+constraint fk_fisicoMala_mala foreign key(codmala) references malaDireta(codigo) on delete cascade on update cascade
 );
 
 create table passaporte(
@@ -167,7 +167,7 @@ dt_emissao date,
 codcliente int not null,
 
 primary key(numero),
-foreign key(codcliente) references cliente_fisico(cod)
+constraint fk_passaporte_fisico foreign key(codcliente) references cliente_fisico(cod) on delete cascade on update cascade
 );
 
 create table visto(
@@ -179,7 +179,7 @@ dt_inicio date,
 dt_fim date, 
 
 primary key(controlnumber),
-foreign key(numeroPass) references passaporte(numero)
+constraint fk_visto_passaporte foreign key(numeroPass) references passaporte(numero) on delete cascade on update cascade
 );
 
 create table pacote(
@@ -206,9 +206,9 @@ codpacote int not null,
 codcliente int not null,
 
 primary key (codagente, codpacote,codcliente, dt_compra),
-foreign key (codagente) references agente(cod),
-foreign key(codpacote) references pacote(codigo),
-foreign key(codcliente) references cliente_fisico(cod)
+constraint fk_fisicoCompra_agente foreign key (codagente) references agente(cod) on delete cascade on update cascade,
+constraint fk_fisicoCompra_pacote foreign key(codpacote) references pacote(codigo) on delete cascade on update cascade,
+constraint fk_fisicoCompra_fisico foreign key(codcliente) references cliente_fisico(cod) on delete cascade on update cascade
 
 );
 
@@ -220,9 +220,9 @@ codpacote int not null,
 codcliente int not null,
 
 primary key (codagente, codpacote,codcliente, dt_compra),
-foreign key (codagente) references agente(cod),
-foreign key(codpacote) references pacote(codigo),
-foreign key(codcliente) references cliente_juridico(cod)
+constraint fk_juridicoCompra_agente foreign key (codagente) references agente(cod) on delete cascade on update cascade,
+constraint fk_juridicoCompra_pacote foreign key(codpacote) references pacote(codigo) on delete cascade on update cascade,
+constraint fk_juridicoCompra_juridico foreign key(codcliente) references cliente_juridico(cod) on delete cascade on update cascade
 
 );
 
@@ -242,7 +242,7 @@ nivel int ,
 tipoServico int not null, #serviço parceiro, serviço proprio
 
 primary key(codigo),
-foreign key(nivel) references nivel_servico(codigo)
+foreign key(nivel) references nivel_servico(codigo) 
 );
 
 create table item_pacote(
@@ -256,8 +256,9 @@ seq int,
 vl_com_desconto decimal(10,2),
 
 primary key(id_sk),
-foreign key(codpacote) references pacote(codigo),
-foreign key (codservico) references servico_ref(codigo)
+constraint fk_itemPacote_pacote foreign key(codpacote) references pacote(codigo) on delete cascade on update cascade,
+constraint fk_itemPacote_servico foreign key (codservico) references servico_ref(codigo) on delete cascade on update cascade,
+unique index sk (codpacote, codservico)
 );
 
 create table fatura(
@@ -276,8 +277,8 @@ id int not null,
 sk_itemPacote int not null,
 
 primary key(id, sk_itemPacote),
-foreign key(id) references fatura(id),
-foreign key(sk_itemPacote)references item_pacote(id_sk)
+constraint fk_itemFatura_fatura foreign key(id) references fatura(id) on delete cascade on update cascade,
+constraint fk_itemFatura_pacote foreign key(sk_itemPacote)references item_pacote(id_sk) on delete cascade on update cascade
 );
 
 
@@ -305,7 +306,7 @@ codServico int not null,
 mapa varbinary(500) not null,
 
 primary key(mapa, codServico),
-foreign key(codServico) references servico_ref(codigo)
+constraint fk_mapa_servico foreign key(codServico) references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table promocao(
@@ -317,7 +318,7 @@ dt_inicio date,
 codservico int,
 
 primary key(id),
-foreign key(codservico)  references servico_ref(codigo)
+constraint fk_promocao_servico foreign key(codservico)  references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table intercambio(
@@ -335,7 +336,7 @@ nome_curso varchar(50),
 lingua varchar(20),
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo)
+constraint fk_intercambio_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table acomodacao(
@@ -349,7 +350,7 @@ no_estrelas int,
 tipo varchar(100), 
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo)
+constraint fk_acomodacao_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table evento(
@@ -365,8 +366,8 @@ obs varchar(100),
 guiacod int not null,
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo),
-FOREIGN KEY(guiacod) REFERENCES guia(cod)
+constraint fk_evento_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade,
+FOREIGN KEY(guiacod) REFERENCES guia(cod) 
 
 );
 
@@ -383,7 +384,7 @@ capacidade_n_pessoas int,
 motoristacod int not null,
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo),
+constraint fk_transporte_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade,
 FOREIGN KEY(motoristacod) REFERENCES motorista(cod)
 
 );
@@ -392,14 +393,14 @@ create table servico_proprio(
 codigo int not null,
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo)
+constraint fk_servicoProprio_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table servico_parceiro(
 codigo int not null,
 
 primary key(codigo),
-foreign key(codigo) references servico_ref(codigo)
+constraint fk_servicoParceiro_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
 );
 
 create table parceiro(
@@ -422,8 +423,8 @@ percentual float,
 no_contrato int not null,
 
 primary key(codigo, CNPJ, no_contrato),
-foreign key(codigo) references servico_parceiro(codigo),
-foreign key(CNPJ) references parceiro(CNPJ)
+constraint fk_oferece_servicoParceiro foreign key(codigo) references servico_parceiro(codigo) on delete cascade on update cascade,
+constraint fk_oferece_parceiro foreign key(CNPJ) references parceiro(CNPJ) on delete cascade on update cascade
 
 );
 
