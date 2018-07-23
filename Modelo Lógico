@@ -1,0 +1,302 @@
+UFRPE 
+
+ALUNOS: Giuseppe Fiorentino, Mayara Castro  
+
+Modelo Lógico [LIBÉLULA] 
+
+ 
+
+ENDERECO( cep, estado, logradouro, predio, complemento, cidade) 
+
+primary key (cep) 
+
+ 
+
+PESSOA ( cod, nome, dt_nasc date, sexo, fone, foto, cep, num) 
+
+primary key (cod) 
+
+foreign key (cep) references ENDERECO(cep) UNIQUE 
+
+ 
+
+AGENTE(salario, ramal, cpf, cod,  cod_agencia) 
+
+primary key( cod) 
+
+foreign key (cod) references PESSOA(cod) - not null 
+
+foreign key (cod_agencia) references AGENCIA(CNPJ) - not null 
+
+ 
+
+GUIA( salario, ramal, cpf, cod,  cod_agencia) 
+
+primary key( cod) 
+
+foreign key (cod) references PESSOA(cod)- not null 
+
+foreign key (cod_agencia) references AGENCIA(CNPJ) - not null 
+
+ 
+
+MOTORISTA( salario, ramal, cpf, cod,  cod_agencia) 
+
+primary key( cod), 
+
+foreign key (cod) references PESSOA(cod) - not null 
+
+foreign key (cod_agencia) references AGENCIA(CNPJ) - not null 
+
+ 
+
+GERENTE(salario, ramal, cpf, cod,  cod_agencia) 
+
+primary key( cod), 
+
+foreign key (cod) references PESSOA(cod) - not null 
+
+foreign key (cod_agencia) references AGENCIA(CNPJ) - not null 
+
+
+AGENCIA( CNPJ, Nome_fantasia, Cep, Num, Gerentecpf, Gerentecod, datainicio, num_clientes) 
+
+primary key (CNPJ), 
+
+foreign key (cep) references ENDERECO(cep), 
+
+foreign key (gerentecod) references GERENTE(cod) - not null  UNIQUE 
+
+ 
+
+MALADIRETA( codigo, texto, dt_criacao, dt_envio) 
+
+primary key (codigo) 
+
+ 
+
+ARQUIVO_PDF( codmala, arquivo) 
+
+primary key (codmala, arquivo), 
+
+foreign key(codmala) references MALADIRETA(codigo) - not null 
+
+ 
+
+CLIENTE_JURIDICO( cod, agencia , CNPJ, nome_fantasia ) 
+
+primary key(cod), 
+
+foreign key (agencia) references AGENCIA(CNPJ), 
+
+foreign key (cod) references PESSOA(cod) 
+
+ 
+
+CLIENTE_FISICO( cod, agencia, cpf, tipo) 
+
+primary key(cod), 
+
+foreign key (agencia) references AGENCIA(CNPJ) - not null 
+
+foreign key (cod) references PESSOA(cod) - not null 
+
+ 
+
+CLIENTEJURIDICO_RECEBE_MALADIRETA( codcliente, codmala) 
+
+primary key(codcliente, codmala), 
+
+foreign key(codcliente) references CLIENTE_JURIDICO(cod) - not null 
+
+foreign key(codmala) references MALADIRETA(codigo) - not null 
+
+
+CLIENTEFISICO_RECEBE_MALADIRETA( codcliente, codmala) 
+
+primary key(codcliente, codmala), 
+
+foreign key(codcliente) references CLIENTE_FISICO(cod) - not null 
+
+foreign key(codmala) references MALADIRETA(codigo) - not null 
+
+ 
+
+PASSAPORTE( numero,  pais_emissao, validade, dt_emissao, codcliente) 
+
+primary key(numero), 
+
+foreign key(codcliente) references CLIENTE_FISICO(cod) - not null 
+
+ 
+
+VISTO( controlnumber, numeroPass, tipo, pais, dt_inicio, dt_fim) 
+
+primary key(controlnumber), 
+
+foreign key(numeroPass) references PASSAPORTE(numero) - not null 
+
+ 
+
+PACOTE( codigo, total_a_pagar, vl_total, vl_desconto, datafim, datainicio, indicadorReserva, tipo, n_criancas, n_adultos) 
+
+primary key(codigo)  
+
+ 
+
+CLIENTEFISICO_COMPRA(dt_compra, codcliente, codpacote, codagente, status) 
+
+primary key ( dt_compra,  codcliente, codpacote, codagente), 
+
+foreign key (codagente) references AGENTE(cod) - not null 
+
+foreign key(codpacote) references PACOTE(codigo) - not null 
+
+foreign key(codcliente) references CLIENTE_FISICO(cod) - not null 
+
+ 
+
+CLIENTEJURIDICO_COMPRA (dt_compra, codcliente, codpacote, codagente, status) 
+
+primary key ( dt_compra,  codcliente, codpacote, codagente), 
+
+foreign key (codagente) references AGENTE(cod) - not null 
+
+foreign key(codpacote) references PACOTE(codigo) - not null 
+
+foreign key(codcliente) references CLIENTE_JURIDICO(cod) - not null 
+
+
+NIVEL_SERVICO(codigo,nivel, descr) 
+
+primary key(codigo) 
+
+
+SERVICO_REF(codigo,valor,local_destino, nivel, tipoServico) 
+
+primary key(codigo), 
+
+foreign key(nivel) references NIVEL_SERVICO(codigo)  
+
+ 
+
+ 
+
+ITEM_PACOTE(codservico, codpacote,  id_sk, dt,vl_unitario,qtd,seq,vl_com_desconto) 
+
+primary key (id_sk), 
+
+(codpacote, codservico ) UNIQUE 
+
+foreign key(codpacote) references PACOTE(codigo) - not null 
+
+foreign key (codservico) references SERVICO_REF(codigo) - not null 
+
+ 
+
+FATURA(Id, dt_fatura,  status, codpacote) 
+
+primary key(id), 
+
+foreign key(codpacote) references PACOTE(codigo) 
+
+ 
+
+ITENS_FATURA( id_fatura,  sk_itempacote) 
+
+primary key (id_fatura, sk_itempacote ), 
+
+foreign key(id_fatura) references FATURA(id) - not null 
+
+foreign key(sk_itempacote ) references ITEM_PACOTE (sk_itempacote) - not null 
+
+ 
+
+PAGAMENTO(codigo,vl_pago,juros,dt_vence,dt_pag,codFatura,tipo,cod_seg,numero_cartao,dt_validade,tipoCartao,nome_titular) 
+
+primary key(codigo), 
+
+foreign key(codFatura) references FATURA(id) 
+
+ 
+
+MAPA_ARQUIVO(codServico,mapa) 
+
+primary key(mapa, codServico), 
+
+foreign key(codServico) references SERVICO_REF(codigo) - not null 
+
+ 
+
+PROMOCAO(id,dt_fim,porcentagem_desconto,tipo,dt_inicio,codservico) 
+
+primary key(id), 
+
+foreign key(codservico)  references SERVICO_REF(codigo) 
+
+ 
+
+INTERCAMBIO(codigo,obs,detalhe,tipo_intercambio,dt_inicio,dt_fim,cargaHoraria,nome_curso,,lingua) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) - not null 
+
+ 
+
+ACOMODACAO(codigo,descricao,data_entrada,dt_saida,capacidade_pessoas,fumante,no_estrelas,tipo) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) - not null 
+
+ 
+
+EVENTO(codigo,stats,data_entrada,dt_fim,nome,detalhe,tipo,vl_desc,obs, guiacod) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) - not null 
+
+FOREIGN KEY(guiacod) REFERENCES GUIA( cod) - not null 
+
+
+TRANSPORTE( codigo,local_de_origem,data_ida,dt_volta,modalidade,marca,tipo, num_identificacao,capacidade_n_pessoas ,motoristacod ) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) not null 
+
+FOREIGN KEY(motoristacod) REFERENCES MOTORISTA(cod) - not null 
+
+ 
+
+SERVICO_PROPRIO( codigo) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) - not null 
+
+ 
+
+SERVICO_PARCEIRO( codigo) 
+
+primary key(codigo), 
+
+foreign key(codigo) references SERVICO_REF(codigo) - not null 
+
+ 
+
+PARCEIRO( CNPJ, nome_fantasia, status,  tipo, ramo) 
+
+primary key(CNPJ) 
+
+ 
+
+OFERECE(codigo, CNPJl, dt_inicio, dt_fim, percentual, no_contrato) 
+
+primary key(codigo, CNPJ, no_contrato), 
+
+foreign key(codigo) references SERVICO_PARCEIRO(codigo) - not null 
+
+foreign key(CNPJ) references PARCEIRO(CNPJ) - not null 
