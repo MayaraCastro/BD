@@ -1,4 +1,5 @@
- USE AGENCIA;
+
+USE AGENCIA;
 
 INSERT INTO `endereco` (`cep`,`estado`,`logradouro`,`predio`,`complemento`,`cidade`) VALUES ("14846-260","SP","P.O. Box 903, 8152 Porta St.","3A4","5135 Vitae Ave","Diadema"),
 ("51470-231","PE","P.O. Box 752, 4420 Proin Road","5","250-2724 Aliquet Ave","Camaragibe"),
@@ -229,43 +230,50 @@ INSERT INTO `fatura` (`id`,`codpacote`,`dt_fatura`,`status`) VALUES
 ("942280 4188","9334043164","2018-07-06 01:11:42",1),
 ("977133 5123","9827063273","2018-02-12 00:47:44",0);
 
+INSERT INTO `itens_fatura` (`id`,`sk_itemPacote`) VALUES 
+("283410 1426",6),
+("715900 3404",10),
+("724391 0929",7),
+("418572 3212",2),
+("429970 3449",5),
+("285986 1128",8),
+("388739 5444",4),
+("616873 2862",8),
+("942280 4188",1),
+("977133 5123",9);
 
-create table itens_fatura(
-id int not null,
-sk_itemPacote int not null,
+INSERT INTO `pagamento` (`codigo`,`vl_pago`,`juros`,`dt_vence`,`dt_pag`,`codFatura`,`tipo`,`cod_seg`,`numero_cartao`,`dt_validade`,`tipoCartao`,`nome_titular`) VALUES
+ ("16790110 4906",2078,17,"2019-07-01 06:09:23","2019-04-29 06:55:49","283410 1426",4,170,"639504 7282","2018-02-08 21:12:01","Felis Donec Tempor LLP","Haviva"),
+("16630418 9365",5778,1,"2018-06-24 04:58:50","2019-05-07 20:59:11","715900 3404",1,889,"594198 7017","2018-02-02 04:42:16","Aliquam Nisl Incorporated","Darrel or Malik"),
+("16230710 8544",3771,9,"2017-10-22 09:38:40","2018-08-04 12:10:32","724391 0929",3,990,"506000 7662","2017-10-20 00:39:33","Cum Sociis PC","Dara"),
+("16820725 9113",4526,8,"2018-08-19 17:36:31","2017-10-11 17:22:54","418572 3212",2,721,"742963 4384","2019-05-10 03:08:57","Mauris Blandit Corp.","Tamekah"),
+("16180316 4035",4463,2,"2017-12-19 07:04:41","2017-10-22 19:56:25","429970 3449",3,453,"158516 8279","2019-07-24 07:29:43","Convallis Ltd","Jaden "),
+("16270904 4594",3331,22,"2018-02-13 03:40:26","2018-01-16 10:17:19","285986 1128",0,782,"409547 6554","2018-08-23 12:41:43","Ut Tincidunt Limited","Anika"),
+("16520424 4148",4647,12,"2019-05-17 00:48:39","2019-06-12 05:41:27","388739 5444",2,299,"857569 5872","2019-04-05 21:41:37","Sed Molestie Associates","Hayley"),
+("16921030 4458",3224,5,"2019-05-03 04:36:28","2019-07-11 01:06:08","388739 5444",4,713,"452863 2021","2017-09-22 12:38:05","Urna Nunc Quis Foundation","Linda"),
+("16070605 3816",9565,18,"2018-01-24 01:03:09","2018-07-04 21:19:38","16520422-7531",2,670,"649771 6040","2018-07-05 15:10:22","Mauris Suspendisse Aliquet Limited","Libby"),
+("16350617 7553",9269,20,"2017-10-27 11:17:28","2019-04-28 20:16:44","16880904-7841",2,115,"538594 2098","2018-12-01 13:57:19","Vulputate Corp.","Pascal");
 
-primary key(id, sk_itemPacote),
-constraint fk_itemFatura_fatura foreign key(id) references fatura(id) on delete cascade on update cascade,
-constraint fk_itemFatura_pacote foreign key(sk_itemPacote)references item_pacote(id_sk) on delete cascade on update cascade
-);
+INSERT INTO `mapa_arquivo` (`codServico`,`mapa`) VALUES
 
-
-
-create table pagamento(
-codigo int not null unique auto_increment,
-vl_pago decimal(10,2),
-juros decimal(10,2),
-dt_vence date,
-dt_pag date,
-codFatura int,
-tipo int not null, #da hierarquia
-cod_seg int,
-numero_cartao varchar(20),
-dt_validade date, 
-tipoCartao int, 
-nome_titular varchar(100),
-
-primary key(codigo),
-foreign key(codFatura) references fatura(id)
-); 
-
-create table mapa_arquivo(
-codServico int not null, 
-mapa varbinary(500) not null,
-
-primary key(mapa, codServico),
-constraint fk_mapa_servico foreign key(codServico) references servico_ref(codigo) on delete cascade on update cascade
-);
+("4080424163",7356.00,"8726 Mi St.","9490916773",1),
+("2368720021",5150.00,"P.O. Box 710, 941 Ipsum. Road","7973796217",1),
+("7058791737",5362.00,"Ap #317-2640 In St.","3984218655",1),
+("6650208611",6698.00,"P.O. Box 822, 3077 Proin Av.","6387013821",0),
+("5436953557",4797.00,"P.O. Box 786, 9270 Neque Avenue","8548448284",1),
+("0983921644",4244.00,"Ap #832-2454 Enim Ave","9562930587",0),
+("2070763632",8914.00,"Ap #272-1139 Enim Avenue","0476285143",0);
+ 
+("4332059742","mapa0"),
+("1135480695","mapa1"),
+("6547059722","mapa2"),
+("2368720021","mapa3"),
+("7058791737","mapa4"),
+("6650208611","mapa5"),
+("5436953557","mapa6"),
+("0983921644","mapa7"),
+("2070763632","mapa8"),
+("2070763621","mapa9");
 
 create table promocao(
 id int not null unique,
@@ -347,41 +355,40 @@ FOREIGN KEY(motoristacod) REFERENCES motorista(cod)
 
 );
 
-create table servico_proprio(
-codigo int not null,
+INSERT INTO `servico_proprio` (`codigo`) VALUES 
+("4332059742"),
+("1135480695"),
+("6547059722"),
+("4080424163"),
+("2368720021");
 
-primary key(codigo),
-constraint fk_servicoProprio_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
-);
+INSERT INTO `servico_parceiro` (`codigo`) VALUES 
+("7058791737")
+("6650208611"),
+("5436953557"),
+("0983921644"),
+("2070763632");
 
-create table servico_parceiro(
-codigo int not null,
+INSERT INTO `parceiro` (`CNPJ`,`nome_fantasia`,`status`,`tipo`,`ramo`) VALUES 
+("4064-001","Felis Consulting",0,3,"magna"),
+("4540-051","Integer Corporation",1,10,"sagittis"),
+("6267-000","Metus Aenean Sed Institute",1,3,"tempor"),
+("8561-321","Phasellus Inc.",1,8,"faucibus"),
+("2093-001","Lacus Vestibulum Incorporated",0,3,"massa"),
+("9133-123","Vitae Limited",0,8,"ligula"),
+("8105-441","Id Ante Nunc Institute",0,4,"vulputate"),
+("2357-341","Quis Accumsan Convallis Consulting",1,10,"laoreet ipsum"),
+("1299-832","Scelerisque Industries",1,2,"Curabitur sed tortor. "),
+("9246-211","In Faucibus Limited",1,4,"Donec nibh");
 
-primary key(codigo),
-constraint fk_servicoParceiro_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
-);
-
-create table parceiro(
-
-CNPJ varchar(18) not null unique,
-nome_fantasia varchar(50),
-status int, 
-tipo int, 
-ramo varchar(10),
-
-primary key(CNPJ)
-);
-
-create table oferece(
-codigo int not null,
-CNPJ varchar(18) not null,
-dt_inicio date, 
-dt_fim date, 
-percentual float, 
-no_contrato int not null,
-
-primary key(codigo, CNPJ, no_contrato),
-constraint fk_oferece_servicoParceiro foreign key(codigo) references servico_parceiro(codigo) on delete cascade on update cascade,
-constraint fk_oferece_parceiro foreign key(CNPJ) references parceiro(CNPJ) on delete cascade on update cascade
-
-);  
+INSERT INTO `oferece` (`codigo`,`CNPJ`,`dt_inicio`,`dt_fim`,`perccentual`,`no_contrato`) VALUES 
+("7058791737","4064-001","2018-07-26 20:44:02","2018-07-24 21:11:04",79,"335710 2528"),
+("7058791737","4540-051","2017-11-10 10:29:15","2019-03-08 11:26:02",5,"826817 0175"),
+("6650208611","6267-000","2018-08-01 06:08:41","2018-10-13 18:58:24",58,"784995 0378"),
+("6650208611","8561-321","2018-02-10 07:21:17","2018-03-22 22:57:12",84,"377024 7850"),
+("5436953557","2093-001","2018-06-15 23:11:26","2018-10-02 14:15:38",77,"992320 9275"),
+("5436953557","9133-123","2018-09-20 19:03:31","2018-10-03 19:29:51",26,"735847 6989"),
+("0983921644","8105-441","2017-04-30 16:58:01","2018-10-07 20:09:35",83,"843950 9459"),
+("0983921644","2357-341","2018-01-24 15:17:44","2018-10-11 02:21:29",47,"603755 0214"),
+("0983921644","1299-832","2018-03-07 07:27:13","2019-08-31 15:00:38",63,"973206 2428"),
+("2070763632","9246-211","2017-10-17 08:27:47","2018-11-19 03:07:24",16,"829221 7471");
