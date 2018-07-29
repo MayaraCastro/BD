@@ -275,85 +275,60 @@ INSERT INTO `mapa_arquivo` (`codServico`,`mapa`) VALUES
 ("2070763632","mapa8"),
 ("2070763621","mapa9");
 
-create table promocao(
-id int not null unique,
-dt_fim date,
-porcentagem_desconto double,
-tipo int, 
-dt_inicio date,
-codservico int,
+INSERT INTO `promocao` (`id`,`dt_fim`,`porcentagem_desconto`,`tipo`,`dt_inicio`,`codservico`) VALUES 
+("025085 7893","2019-02-27 15:01:15",78,1,"2019-01-06 16:14:52","4332059742"),
+("643244 9756","2019-04-09 14:55:12",1,3,"2018-11-04 13:15:26","1135480695"),
+("415718 9038","2018-07-26 08:14:46",35,0,"2018-05-02 17:03:12","6547059722"),
+("929346 0300","2019-04-19 14:43:44",8,4,"2018-05-24 07:22:50","4080424163"),
+("845301 3230","2019-12-24 07:54:59",79,4,"2018-05-13 00:33:16","2368720021"),
+("397559 1755","2019-07-05 23:31:37",89,4,"2018-08-21 21:10:50","7058791737"),
+("758061 3524","2019-05-24 18:00:22",47,4,"2018-12-27 18:52:33","6650208611"),
+("385276 9425","2019-01-12 00:22:30",48,4,"2018-04-12 07:32:46","5436953557"),
+("894149 2996","2018-12-15 01:26:17",88,1,"2018-10-18 21:39:34","0983921644"),
+("417358 0111","2019-04-22 04:39:38",2,0,"2017-10-13 20:51:28","2070763632");
 
-primary key(id),
-constraint fk_promocao_servico foreign key(codservico)  references servico_ref(codigo) on delete cascade on update cascade
-);
+INSERT INTO `intercambio` (`codigo`,`obs`,`detalhe`,`tipo_intercambio`,`cargo`,`dt_inicio`,`dt_fim`,`cargaHoraria`,`nome_curso`,`lingua`) VALUES 
+("16980110 1487",null,null,4,"trabalho","2018-06-05 01:48:07","2019-06-11 12:12:28",8,"Ed. Fisica","Ingles"),
+("16360115 1958","Estagio remunerado","trabalho estagiario",4,"estagio","2017-12-14 01:36:37","2017-10-01 16:25:05",6,"Oceanografia","Ukraine"),
+("16830216 1453",null,null,3,"trabalho","2019-06-30 10:44:31","2018-08-10 01:59:10",12,"Medicina","Åland Islands"),
+("16380408 0418","Trabalho",null,3,"trabalho","2018-06-08 00:12:49","2018-08-26 17:32:19",10,"Matematica","Armenia"),
+("16220106 2565",null,"",3,"trabalho","2018-05-24 13:00:21","2018-03-21 14:45:20",9,"Sociologia","Mozambique"),
+("16590913 4198","Universitario","estudo com tudo pago",0,"estudo","2018-04-09 14:32:45","2018-04-22 02:41:42",8,"Geografia","Denmark"),
+("16330824 2373",null,null,4,"trabalho","2018-05-22 17:37:40","2018-11-16 10:03:25",11,"Enfermagem","Turco"),
+("16170626 7224",null,"tudo pago",4,"estudante","2019-04-12 17:10:46","2018-05-14 00:45:02",12,"BCC","Japones"),
+("16100304 3419",null,"trabalho estagiario",3,"estagio","2019-03-11 21:00:26","2019-06-15 06:14:01",8,"Engenharia Eletrica","Sweden"),
+("16630717 4604",null,"trabalho estagiario",4,"estagio","2018-10-27 05:43:29","2017-10-01 19:03:40",11,"Historia","Iran");
 
-create table intercambio(
-codigo int not null,
-obs varchar(200),
-detalhe varchar(200),
-tipo_intercambio int not null, #hierarquia
+INSERT INTO `acomodacao` (`codigo`,`descricao`,`data_entrada`,`dt_saida`,`capacidade_pessoas`,`fumante`,`no_estrelas`,`tipo`) VALUES
+("16680721 9503","suite","2018-03-26 06:29:54","2019-01-05 10:37:22",7,1,4,"enim. Mauris quis turpis vitae purus gravida sagittis. Duis gravida.")
+,("16520806 2785","com local para fumante","2018-06-24 14:14:34","2019-11-22 23:18:22",3,1,5,"aliquam, enim nec tempus scelerisque, lorem ipsum sodales purus, in"),
+("16710622 4913","permitido fumantes","2017-06-03 21:05:15","2018-09-12 16:52:59",9,1,3,"Fusce aliquet magna a neque. Nullam ut nisi a odio"),
+("16080720 7030","pode fumantes","2018-11-14 23:31:16","2017-08-31 03:36:11",3,1,1,""),
+("16301018 4368","area de fumantes","2017-09-30 15:55:11","2017-12-15 04:52:10",1,1,2,"motel"),
+("16990306 7370","proibido fumantes","2019-02-11 03:22:21","2019-04-28 06:07:18",7,0,3,"hotel"),
+("16380522 2514","sem fumantes","2018-07-08 04:07:38","2018-10-06 02:12:47",9,0,5,"hostel"),
+("16320716 9412","No fumantes","2018-04-03 14:09:57","2018-12-24 11:35:42",6,0,5,"hostel"),
+("16310907 1468","Ambiente Familiar","2018-02-13 17:43:17","2018-12-01 21:12:18",7,1,1,"hotel"),
+("16890501 6195","casa de massagem","2018-03-30 16:17:30","2018-08-25 02:46:20",3,1,0,"hotel");
 
-cargo varchar(20),#trabalho
-dt_inicio date,
-dt_fim date,
+INSERT INTO `evento` (`codigo`,`status`,`data_entrada`,`dt_fim`,`nome`,`detalhe`,`tipo`,`vl_desc`,`obs`,`guiacod`) VALUES 
+("16130919 5483","ativo","2017-05-01 12:02:01","2019-12-30 11:29:09","Show Reginaldo Rossi Cover","Muita emoção","Show",80,"+18","45726444299"),
 
-cargaHoraria int, #estudo
-nome_curso varchar(50),
-lingua varchar(20),
+("16450820 7117","desativo","2018-06-29 21:35:53","2019-07-12 22:14:12","Final NFL",null,"Esporte",50,"Livre","45726444299"),
 
-primary key(codigo),
-constraint fk_intercambio_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
-);
+("16451205 2764","ativo","2017-09-22 14:06:49","2018-12-14 12:43:57","Show do Didi",null,"Show",0,null,"45726444299");
 
-create table acomodacao(
-codigo int not null,
-descricao varchar(100),
-data_entrada date,
-dt_saida date,
-capacidade_pessoas int,
-fumante int check (1 >= fumante >=0),
-no_estrelas int,
-tipo varchar(100), 
-
-primary key(codigo),
-constraint fk_acomodacao_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade
-);
-
-create table evento(
-codigo int not null,
-stats varchar(100),
-data_entrada date,
-dt_fim date,
-nome varchar(100),
-detalhe varchar(100),
-tipo int,
-vl_desc varchar(100),
-obs varchar(100), 
-guiacod int not null,
-
-primary key(codigo),
-constraint fk_evento_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade,
-FOREIGN KEY(guiacod) REFERENCES guia(cod) 
-
-);
-
-create table transporte(
-codigo int not null,
-local_de_origem varchar(100),
-data_ida date,
-dt_volta date,
-modalidade varchar(100),
-marca varchar(100),
-tipo int,
-num_identificacao int,
-capacidade_n_pessoas int,
-motoristacod int not null,
-
-primary key(codigo),
-constraint fk_transporte_servico foreign key(codigo) references servico_ref(codigo) on delete cascade on update cascade,
-FOREIGN KEY(motoristacod) REFERENCES motorista(cod)
-
-);
+INSERT INTO `transporte` (`codigo`,`lical_de_origem`,`data_ida`,`dt_volta`,`modalidade`,`marca`,`tipo`,`num_identificacao`,`capacidade_n_pessoas`,`motoristacod`) VALUES 
+("325018 9978","San Marino","2018-11-07 23:48:30","2018-10-17 11:58:18","luctus, ipsum","Blandit Mattis Cras Associates",2,"975604 7859",8,"003068 5838"),
+("467379 6217","Hong Kong","2018-10-11 02:56:25","2019-08-12 02:50:20","justo nec ante. Maecenas mi felis,","Enim LLP",2,"016474 2355",9,"226437 3289"),
+("607206 4766","Andorra","2018-07-04 12:18:35","2019-11-26 04:58:56","gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum","Nulla Associates",3,"314584 6386",18,"518253 6010"),
+("899876 8686","Azerbaijan","2018-11-10 23:49:43","2018-12-28 04:35:13","rutrum. Fusce dolor quam,","Sollicitudin Commodo Ipsum Industries",4,"597103 8939",22,"812226 2432"),
+("959942 1287","Slovenia","2019-01-20 04:39:35","2019-07-31 16:56:35","nibh dolor, nonummy ac,","Mauris Associates",3,"834464 6669",1,"783492 4875"),
+("339950 4327","Andorra","2018-09-01 19:58:32","2018-29-04 05:01:23","dui. Suspendisse ac metus vitae velit egestas","Ridiculus Incorporated",0,"364198 0200",23,"756610 9778"),
+("364621 7343","Samoa","2017-07-16 19:51:52","2019-09-26 05:06:56","orci. Donec","Accumsan Interdum Libero Inc.",4,"867707 4463",10,"089739 0241"),
+("596274 8868","Hong Kong","2018-05-04 05:33:55","2019-08-09 02:25:55","lacinia at, iaculis quis, pede. Praesent eu dui. Cum","Adipiscing Fringilla Porttitor Consulting",2,"539745 4116",16,"285420 0462"),
+("274010 4886","Dominican Republic","2017-05-08 18:52:26","2018-10-09 15:10:28","mattis. Cras eget nisi dictum augue malesuada malesuada. Integer","Ac Fermentum LLC",3,"284501 1358",15,"168967 3067"),
+("799657 9137","Dominican Republic","2019-08-09 16:22:09","2019-09-10 11:21:52","ornare, libero at auctor ullamcorper, nisl arcu","Non Cursus Inc.",2,"744248 8925",7,"626039 4827");
 
 INSERT INTO `servico_proprio` (`codigo`) VALUES 
 ("4332059742"),
@@ -392,3 +367,5 @@ INSERT INTO `oferece` (`codigo`,`CNPJ`,`dt_inicio`,`dt_fim`,`perccentual`,`no_co
 ("0983921644","2357-341","2018-01-24 15:17:44","2018-10-11 02:21:29",47,"603755 0214"),
 ("0983921644","1299-832","2018-03-07 07:27:13","2019-08-31 15:00:38",63,"973206 2428"),
 ("2070763632","9246-211","2017-10-17 08:27:47","2018-11-19 03:07:24",16,"829221 7471");
+
+
