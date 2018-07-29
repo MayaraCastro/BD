@@ -59,7 +59,7 @@ foreign key (cod) references PESSOA(cod) - not null
 foreign key (cod_agencia) references AGENCIA(CNPJ) - not null 
 
 
-AGENCIA( CNPJ, Nome_fantasia, Cep, Num, Gerentecpf, Gerentecod, datainicio, num_clientes) 
+AGENCIA( CNPJ, Nome_fantasia, Cep, Num, Gerentecpf, Gerentecod, datainicio, num_clientes, num_funcionarios) 
 
 primary key (CNPJ), 
 

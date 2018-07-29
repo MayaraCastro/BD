@@ -24,6 +24,7 @@ CREATE TABLE pessoa (
     foto blob,
     cep varchar(10) unique, #da relacao
     num int, #da relacao
+    
 	primary key (cod),
     foreign key (cep) references endereco(cep)
 );
@@ -37,6 +38,7 @@ num int, #da relacao
 codgerente int not null unique,  
 datainicio date,
 num_cliente int,
+num_funcionarios int,
 
 primary key (CNPJ),
 foreign key (cep) references endereco(cep) 
