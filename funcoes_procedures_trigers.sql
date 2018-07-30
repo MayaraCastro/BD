@@ -24,7 +24,7 @@ create function cliente_apto (cod int, pais varchar(50), dt_inicio date, dt_fim 
 $$
 #2.   para retornar se o CLIENTE esta em dias com seus pagamentos de FATURAS
 
-create function cliente_apto (cod int) returns boll
+create function cliente_em_dias (cod int) returns boll
 	begin
 		--0 pago
 		--!=0 nao pago
