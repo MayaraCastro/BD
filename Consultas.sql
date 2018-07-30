@@ -19,6 +19,9 @@ where
 C.tipo = 2 #estudo
 ;
 
--- 
-
-
+-- Seleciona intercambios da lingua inglesa e  mostra a descricao
+SELECT I.detalhe
+FROM  
+	intercambio I
+where
+	I.lingua= 'Inglês';
