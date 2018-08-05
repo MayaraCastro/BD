@@ -26,7 +26,7 @@ public class GerenciamentoPacote {
 	
 	public void RemoverPacote(Pacote a) {
 		try {
-			pacote.apagar(a);
+			pacote.remover(a);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,12 +34,12 @@ public class GerenciamentoPacote {
 	}
 	
 	public Pacote BuscarPacote(String cod) {
-		return pacote.busca(cod);
+		return pacote.buscar(cod);
 	}
 	
 	public void AtualizarPacote(Pacote a) {
 		try {
-			pacote.update(a);
+			pacote.atualizar(a);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

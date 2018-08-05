@@ -24,7 +24,7 @@ public class GerenciamentoFuncionario {
 	
 	public void RemoverFuncionario(Funcionario a, int tipo) {
 		try {
-			funcionario.apagar(a, tipo);
+			funcionario.remover(a, tipo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,12 +32,12 @@ public class GerenciamentoFuncionario {
 	}
 	
 	public Funcionario BuscarFuncionario(String cpf) {
-		return funcionario.busca(cpf);
+		return funcionario.buscar(cpf);
 	}
 	
 	public void AtualizarFuncionario(Funcionario a, int tipo) {
 		try {
-			funcionario.update(a, tipo);
+			funcionario.atualizar(a, tipo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

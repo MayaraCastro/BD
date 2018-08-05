@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
@@ -37,7 +38,7 @@
             </DropShadow>
          </effect>
       </Pane>
-      <Pane layoutX="186.0" layoutY="47.0" prefHeight="323.0" prefWidth="404.0" style="-fx-background-color: ffffff;">
+      <Pane layoutX="189.0" layoutY="47.0" prefHeight="323.0" prefWidth="404.0" style="-fx-background-color: ffffff;">
          <children>
             <ImageView fitHeight="111.0" fitWidth="112.0" layoutX="21.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -50,15 +51,36 @@
             <JFXComboBox layoutX="21.0" layoutY="149.0" prefHeight="25.0" prefWidth="150.0" promptText="Cargo" />
             <JFXComboBox layoutX="214.0" layoutY="104.0" prefHeight="25.0" prefWidth="150.0" promptText="Sexo" />
             <JFXTextField layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" text="Salário" />
-            <JFXTextField layoutX="20.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Cod Pessoa" />
+            <JFXTextField layoutX="20.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Código" />
             <JFXTextField layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="149.0" text="Nome Completo" />
             <JFXTextField layoutX="215.0" layoutY="29.0" prefHeight="25.0" prefWidth="149.0" text="CPF" />
             <JFXTextField layoutX="215.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Ramal" />
             <JFXTextField layoutX="214.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" text="Tefefone" />
             <Button layoutX="339.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ffd034;" text="Salvar" textFill="WHITE" />
             <Button layoutX="269.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ff0138;" text="Cancelar" textFill="WHITE" />
+            <Pane layoutX="-2.0" prefHeight="28.0" prefWidth="411.0" style="-fx-background-color: ffd034;">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </Pane>
+            <Text layoutX="180.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Novo">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </Pane>
-      <JFXTreeTableView layoutX="7.0" layoutY="106.0" prefHeight="260.0" prefWidth="171.0" />
+      <JFXTreeTableView layoutX="7.0" layoutY="90.0" prefHeight="280.0" prefWidth="171.0">
+         <effect>
+            <DropShadow />
+         </effect></JFXTreeTableView>
+      <TextField layoutX="7.0" layoutY="56.0" prefHeight="25.0" prefWidth="171.0" promptText="Buscar">
+         <effect>
+            <DropShadow />
+         </effect>
+      </TextField>
    </children>
 </Pane>
