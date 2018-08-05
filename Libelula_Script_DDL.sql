@@ -22,7 +22,7 @@ CREATE TABLE pessoa (
 	sexo enum ('M', 'F'),
 	fone   varchar(15),
     foto blob,
-    cep varchar(10) unique, #da relacao
+    cep varchar(10) not null, #da relacao
     num int, #da relacao
     
 	primary key (cod),
@@ -49,7 +49,7 @@ foreign key (cep) references endereco(cep)
 create table agente(
 salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null unique,
+cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
@@ -61,7 +61,7 @@ constraint fk_agente_agencia foreign key (cod_agencia) references agencia(CNPJ) 
 create table guia(
 salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null unique,
+cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
@@ -74,7 +74,7 @@ constraint fk_guia_agencia foreign key (cod_agencia) references agencia(CNPJ)on 
 create table motorista(
 salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null unique,
+cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
@@ -87,7 +87,7 @@ constraint fk_motorista_agencia foreign key (cod_agencia) references agencia(CNP
 create table gerente(
 salario decimal(10,2) check(salario>0), 
 ramal int,
-cpf char(9) not null unique,
+cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
 
@@ -142,7 +142,7 @@ constraint fk_juridicoMala_mala foreign key(codmala) references malaDireta(codig
 create table cliente_fisico( 
 cod int not null, #da hierarquia
 agencia char (18),
-cpf char (9), 
+cpf char (14), 
 tipo int not null check(3>=tipo>0), 
 
 primary key(cod),
