@@ -2,9 +2,7 @@ package br.ufrpe.libelula.negocio.gerenciamento;
 
 import java.util.ArrayList;
 
-import br.ufrpe.libelula.DAO.FuncionarioDAO;
 import br.ufrpe.libelula.DAO.ItemPacoteDAO;
-import br.ufrpe.libelula.negocio.beans.Funcionario;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
 
 public class GerenciamentoItemPacote {
@@ -33,13 +31,19 @@ public class GerenciamentoItemPacote {
 		}
 	}
 	
-	public ItemPacote BuscarItemPacote(String cod) {
-		return item.buscar(cod);
+	public ItemPacote BuscarItemPacote(int  cod) {
+		try {
+			return item.buscar(cod);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void AtualizarItemPacote(ItemPacote a) {
 		try {
-			item.atualizar(a);
+			item.alterar(a);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +51,12 @@ public class GerenciamentoItemPacote {
 	}
 	
 	public ArrayList<ItemPacote> ListarItemPacote(){
-		return item.listar();
+		try {
+			return item.listarTodos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

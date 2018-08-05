@@ -101,7 +101,7 @@ public class Fachada {
 		this.gip.RemoverItemPacote(a);
 	}
 	
-	public ItemPacote BuscarItemPacote(String cod) {
+	public ItemPacote BuscarItemPacote(int cod) {
 		return this.gip.BuscarItemPacote(cod);
 	}
 	

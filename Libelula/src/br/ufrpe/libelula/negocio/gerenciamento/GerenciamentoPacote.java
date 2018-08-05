@@ -2,9 +2,7 @@ package br.ufrpe.libelula.negocio.gerenciamento;
 
 import java.util.ArrayList;
 
-import br.ufrpe.libelula.DAO.ItemPacoteDAO;
 import br.ufrpe.libelula.DAO.PacoteDAO;
-import br.ufrpe.libelula.negocio.beans.ItemPacote;
 import br.ufrpe.libelula.negocio.beans.Pacote;
 
 public class GerenciamentoPacote {
