@@ -173,7 +173,7 @@ constraint fk_passaporte_fisico foreign key(codcliente) references cliente_fisic
 );
 
 create table visto(
-controlnumber varchar(10) not null unique,
+controlnumber varchar(14) not null unique,
 numeroPass varchar(10) not null,
 tipo int, 
 pais varchar(50),
@@ -409,7 +409,7 @@ create table parceiro(
 
 CNPJ varchar(18) not null unique,
 nome_fantasia varchar(50),
-status int, 
+stats int, 
 tipo int, 
 ramo varchar(10),
 
