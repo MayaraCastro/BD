@@ -33,13 +33,19 @@ public class GerenciamentoPacote {
 		}
 	}
 	
-	public Pacote BuscarPacote(String cod) {
-		return pacote.buscar(cod);
+	public Pacote BuscarPacote(int cod) {
+		try {
+			return pacote.buscar(cod);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void AtualizarPacote(Pacote a) {
 		try {
-			pacote.atualizar(a);
+			pacote.alterar(a);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,6 +53,12 @@ public class GerenciamentoPacote {
 	}
 	
 	public ArrayList<Pacote> ListarPacote(){
-		return pacote.listar();
+		try {
+			return pacote.listarTodos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

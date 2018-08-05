@@ -1,11 +1,12 @@
 package br.ufrpe.libelula.DAO;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.ufrpe.libelula.gui.ScreenManager;
-import br.ufrpe.libelula.negocio.beans.ItemPacote;
+import javax.swing.JOptionPane;
+
 import br.ufrpe.libelula.negocio.beans.Pacote;
 
 public class PacoteDAO extends DAO<Pacote> {
@@ -14,23 +15,32 @@ public class PacoteDAO extends DAO<Pacote> {
 		String sql = "INSERT INTO `pacote` (`codigo`,`total_a_pagar`,`vl_total`,`vl_desconto`,`datafim`,`datainicio`,`indicadorReserva`,`tipo`,`n_criancas`,`n_adultos`)"
 				+ " VALUES " + "(?,?,?,?,?,?,?,?,?,?)";
 		preparar(sql);
-		getStatement().setString(1, o.getCpf());
-		getStatement().setString(2, o.getNome());
-		getStatement().setString(3, o.getEspecializacao());
-		getStatement().setString(4, o.getFone_1());
-		getStatement().setString(5, o.getFone_2());
-		getStatement().setDate(6, Date.valueOf(o.getData_de_contratacao()));
-		getStatement().setDouble(7, o.getSalario());
-		getStatement().setString(8, o.getEndereco());
-		getStatement().setInt(9, o.getJornada_trabalho());
-		getStatement().setInt(10, o.getId_zoo());
+		getStatement().setInt(1, o.getCodigo());
+		getStatement().setFloat(2, o.getTotal_a_pagar());
+		getStatement().setFloat(3, o.getVl_total());
+		getStatement().setFloat(4, o.getVl_desconto());
+		getStatement().setDate(5, Date.valueOf(o.getDatafim()));
+		getStatement().setDate(6, Date.valueOf(o.getDatainicio()));
+		getStatement().setInt(7, o.getIndicadorReserva());
+		getStatement().setInt(8, o.getTipo());
+		
+		if (o.getN_criancas() != null)
+			getStatement().setInt(9, o.getN_criancas());	
+		else
+			getStatement().setDate(9, null);
+		
+		if (o.getN_adultos() != null)
+			getStatement().setInt(10, o.getN_adultos());
+		else
+			getStatement().setDate(10, null);
+		
 		try {
 			getStatement().execute();
 			getConnection().commit();
-			ScreenManager.alertaInformativo("Inserção realizada com sucesso!");
+			JOptionPane.showMessageDialog(null, "Inserção realizada com sucesso!");
 		} catch (SQLException e) {
-			getCon().rollback();
-			ScreenManager.alertaErro("Não foi possível inserir!");
+			getConnection().rollback(); //caso aja erro na transação faz um rollback
+			JOptionPane.showMessageDialog(null, "Erro na Inserção!");
 		} finally {
 			fecharStatetment();
 		}
@@ -38,93 +48,102 @@ public class PacoteDAO extends DAO<Pacote> {
 
 	@Override
 	public void remover(Pacote o) throws Exception {
-		String sql = "DELETE FROM funcionario WHERE `CPF` = ?";
+		String sql = "DELETE FROM pacote WHERE `codigo` = ?";
 		preparar(sql);
-		getStmt().setString(1, o.getCpf());
+		getStatement().setInt(1, o.getCodigo());
 		try {
-			getStmt().execute();
-			getCon().commit();
-			ScreenManager.alertaInformativo("Remoção realizada com sucesso!");
+			getStatement().execute();
+			getConnection().commit();
+			JOptionPane.showMessageDialog(null, "Remoção realizada com sucesso!");
 		} catch (SQLException e) {
-			getCon().rollback();
-			ScreenManager.alertaErro("Não foi possível remover!");
+			getConnection().rollback();
+			JOptionPane.showMessageDialog(null, "Erro na Remoção!");
 		} finally {
-			fecharStmt();
+			fecharStatetment();
 		}
 	}
 
 	@Override
 	public void alterar(Pacote o) throws Exception {
-		String sql = "UPDATE `funcionario` SET `Nome` = ?,`especializacao` = ?,`fone_1` = ?,"
-				+ "`fone_2` = ?,`data_de_contratacao` = ?,"
-				+ "`salario` = ?,`ender` = ?,`jornada_trabalho` = ?,`idZoo` = ? " + "WHERE `CPF` = ?";
+		String sql = "UPDATE `pacote` SET `total_a_pagar` = ?,`vl_total` = ?,`vl_desconto` = ?,"
+				+ "`datafim` = ?,`datainicio` = ?,"
+				+ "`indicadorReserva` = ?,`tipo` = ?,`n_criancas` = ?,`n_adultos` = ? " + "WHERE `codigo` = ?";
 		preparar(sql);
-		getStmt().setString(1, o.getNome());
-		getStmt().setString(2, o.getEspecializacao());
-		getStmt().setString(3, o.getFone_1());
-		getStmt().setString(4, o.getFone_2());
-		getStmt().setDate(5, Date.valueOf(o.getData_de_contratacao()));
-		getStmt().setDouble(6, o.getSalario());
-		getStmt().setString(7, o.getEndereco());
-		getStmt().setInt(8, o.getJornada_trabalho());
-		getStmt().setInt(9, o.getId_zoo());
-		getStmt().setString(10, o.getCpf());
+		getStatement().setFloat(1, o.getTotal_a_pagar());
+		getStatement().setFloat(2, o.getVl_total());
+		getStatement().setFloat(3, o.getVl_desconto());
+		getStatement().setDate(4, Date.valueOf(o.getDatafim()));
+		getStatement().setDate(5, Date.valueOf(o.getDatainicio()));
+		getStatement().setInt(6, o.getIndicadorReserva());
+		getStatement().setInt(7, o.getTipo());
+		
+		if (o.getN_criancas() != null)
+			getStatement().setInt(8, o.getN_criancas());	
+		else
+			getStatement().setDate(8, null);
+		
+		if (o.getN_adultos() != null)
+			getStatement().setInt(9, o.getN_adultos());
+		else
+			getStatement().setDate(9, null);
+		getStatement().setInt(10, o.getCodigo());
+
 		try {
-			getStmt().execute();
-			getCon().commit();
-			ScreenManager.alertaInformativo("Alteração realizada com sucesso!");
+			getStatement().execute();
+			getConnection().commit();
+			JOptionPane.showMessageDialog(null, "Alteração realizada com sucesso!");
 		} catch (SQLException e) {
-			getCon().rollback();
-			ScreenManager.alertaErro("Não foi possível alterar!");
+			getConnection().rollback();
+			JOptionPane.showMessageDialog(null, "Erro na Alteração!");
 		} finally {
-			fecharStmt();
+			fecharStatetment();
 		}
 	}
 
-	public Funcionario buscar(String codigo) throws Exception {
-		String sql = "SELECT * FROM `funcionario` WHERE `CPF` = ?";
+	public Pacote buscar(int codigo) throws Exception {
+		String sql = "SELECT * FROM `pacote` WHERE `codigo` = ?";
 		preparar(sql);
-		getStmt().setString(1, cpf);
+		getStatement().setInt(1, codigo);
 		ResultSet rs = null;
 		try {
-			rs = getStmt().executeQuery();
-			getCon().commit();
+			rs = getStatement().executeQuery();
+			getConnection().commit();
 		} catch (SQLException e) {
-			getCon().rollback();
-			fecharStmt();
-			ScreenManager.alertaErro("Funcionário não encontrado!");
+			getConnection().rollback();
+			fecharStatetment();
+			JOptionPane.showMessageDialog(null, "Pacote não encontrado!");
 		}
 		rs.next();
-		Funcionario o = new Funcionario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-				rs.getString(5), rs.getDate(6).toLocalDate(), rs.getDouble(7), rs.getString(8), rs.getInt(9),
+		Pacote o = new Pacote(rs.getInt(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4),
+				rs.getDate(5).toLocalDate(), rs.getDate(6).toLocalDate(), rs.getInt(7), rs.getInt(8), rs.getInt(9),
 				rs.getInt(10));
 		rs.close();
-		fecharStmt();
+		fecharStatetment();
 		return o;
 	}
 
 	@Override
-	public ArrayList<Funcionario> listarTodos() throws Exception {
-		ArrayList<Funcionario> r = new ArrayList<Funcionario>();
-		String sql = "SELECT * FROM `funcionario`";
+	public ArrayList<Pacote> listarTodos() throws Exception {
+		ArrayList<Pacote> r = new ArrayList<Pacote>();
+		String sql = "SELECT * FROM `pacote`";
 		preparar(sql);
 		ResultSet rs = null;
 		try {
-			rs = getStmt().executeQuery();
-			getCon().commit();
+			rs = getStatement().executeQuery();
+			getConnection().commit();
 		} catch (SQLException e) {
-			getCon().rollback();
-			fecharStmt();
+			getConnection().rollback();
+			fecharStatetment();
 			e.printStackTrace();
 		}
 		while (rs.next()) {
-			Funcionario o = new Funcionario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-					rs.getString(5), rs.getDate(6).toLocalDate(), rs.getDouble(7), rs.getString(8), rs.getInt(9),
+			Pacote o = new Pacote(rs.getInt(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4),
+					rs.getDate(5).toLocalDate(), rs.getDate(6).toLocalDate(), rs.getInt(7), rs.getInt(8), rs.getInt(9),
 					rs.getInt(10));
 			r.add(o);
 		}
 		rs.close();
-		fecharStmt();
+		fecharStatetment();
 		return r;
 
 	}

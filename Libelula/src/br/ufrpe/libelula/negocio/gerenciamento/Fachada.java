@@ -80,7 +80,7 @@ public class Fachada {
 		this.gp.RemoverPacote(a);
 	}
 	
-	public Pacote BuscarPacote(String cod) {
+	public Pacote BuscarPacote(int cod) {
 		return this.gp.BuscarPacote(cod);
 	}
 	
