@@ -2,7 +2,12 @@ package br.ufrpe.libelula.negocio.gerenciamento;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import br.ufrpe.libelula.negocio.beans.Funcionario;
+import br.ufrpe.libelula.negocio.beans.ItemPacote;
+import br.ufrpe.libelula.negocio.beans.Pacote;
 
 public class Fachada {
 
@@ -46,15 +51,73 @@ public class Fachada {
 	}
 	
 	/** FUNCIONARIO */
+	public void CadastrarFuncionario(Funcionario a, int tipo) {
+		this.gfu.CadastrarFuncionario(a, tipo);
+	}
+	
+	public void RemoverFuncionario(Funcionario a, int tipo) {
+		this.gfu.RemoverFuncionario(a, tipo);
+	}
+	
+	public Funcionario BuscarFuncionario(String cpf) {
+		return this.gfu.BuscarFuncionario(cpf);
+	}
+	
+	public ArrayList<Funcionario> ListarFuncionario(){
+		return this.gfu.ListarFuncionario();
+	}
+	
+	public void AtualizarFuncionario(Funcionario a, int tipo) {
+		this.gfu.AtualizarFuncionario(a, tipo);
+	}
+	
+	/** PACOTE */
+	public void CadastrarPacote(Pacote a) {
+		this.gp.CadastrarPacote(a);
+	}
+	
+	public void RemoverPacote(Pacote a) {
+		this.gp.RemoverPacote(a);
+	}
+	
+	public Pacote BuscarPacote(String cod) {
+		return this.gp.BuscarPacote(cod);
+	}
+	
+	public ArrayList<Pacote> ListarPacote(){
+		return this.gp.ListarPacote();
+	}
+	
+	public void AtualizarPacote(Pacote a) {
+		this.gp.AtualizarPacote(a);
+	}
+	
+	/** ITEM PACOTE */
+	public void CadastrarItemPacote(ItemPacote a) {
+		this.gip.CadastrarItemPacote(a);
+	}
+	
+	public void RemoverItemPacote(ItemPacote a) {
+		this.gip.RemoverItemPacote(a);
+	}
+	
+	public ItemPacote BuscarItemPacote(String cod) {
+		return this.gip.BuscarItemPacote(cod);
+	}
+	
+	public ArrayList<ItemPacote> ListarItemPacote(){
+		return this.gip.ListarItemPacote();
+	}
+	
+	public void AtualizarItemPacote(ItemPacote a) {
+		this.gip.AtualizarItemPacote(a);
+	}
+	
+	/** SERVICO */
 	
 	/** FATURA */
 	
 	/** CLIENTE */
 	
-	/** PACOTE */
-	
-	/** ITEM PACOTE */
-	
-	/** SERVICO */
 
 }
