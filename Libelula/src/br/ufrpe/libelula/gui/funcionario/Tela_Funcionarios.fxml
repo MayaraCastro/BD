@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="600.0" style="-fx-background-color: aaaaaa;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.funcionario.TelaFuncionarioController">
+   <children>
+      <Pane layoutX="-3.0" layoutY="-4.0" prefHeight="44.0" prefWidth="607.0" style="-fx-background-color: #2c90d7;">
+         <children>
+            <Text fill="#2c686c" layoutX="242.0" layoutY="35.0" opacity="0.99" strokeType="OUTSIDE" strokeWidth="0.0" text="Libélula" wrappingWidth="123.0000029602088">
+               <font>
+                  <Font name="Leelawadee UI" size="33.0" />
+               </font>
+               <effect>
+                  <InnerShadow height="1.32" radius="0.0" width="0.0" />
+               </effect>
+            </Text>
+            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Tela_Principal" style="-fx-background-color: ffffff;" text="Home" />
+         </children>
+         <effect>
+            <DropShadow>
+               <input>
+                  <Glow level="0.14" />
+               </input>
+            </DropShadow>
+         </effect>
+      </Pane>
+      <Pane layoutX="189.0" layoutY="47.0" prefHeight="323.0" prefWidth="404.0" style="-fx-background-color: ffffff;">
+         <children>
+            <ImageView fitHeight="111.0" fitWidth="112.0" layoutX="21.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@package.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="140.0" layoutY="229.0" mnemonicParsing="false" style="-fx-background-color: ffd084;" text="Adicionar Foto" textFill="WHITE" />
+            <Button layoutX="146.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ffd034;" text="Deletar Foto" textFill="WHITE" />
+            <JFXDatePicker layoutX="214.0" layoutY="184.0" promptText="Data de Nascimento" />
+            <JFXComboBox layoutX="21.0" layoutY="149.0" prefHeight="25.0" prefWidth="150.0" promptText="Cargo" />
+            <JFXComboBox layoutX="214.0" layoutY="104.0" prefHeight="25.0" prefWidth="150.0" promptText="Sexo" />
+            <JFXTextField layoutX="20.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" text="Salário" />
+            <JFXTextField layoutX="20.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Código" />
+            <JFXTextField layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="149.0" text="Nome Completo" />
+            <JFXTextField layoutX="215.0" layoutY="29.0" prefHeight="25.0" prefWidth="149.0" text="CPF" />
+            <JFXTextField layoutX="215.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Ramal" />
+            <JFXTextField layoutX="214.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" text="Tefefone" />
+            <Button layoutX="339.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ffd034;" text="Salvar" textFill="WHITE" />
+            <Button layoutX="269.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ff0138;" text="Cancelar" textFill="WHITE" />
+            <Pane layoutX="-2.0" prefHeight="28.0" prefWidth="411.0" style="-fx-background-color: ffd034;">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </Pane>
+            <Text layoutX="180.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Novo">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
+      <JFXTreeTableView layoutX="7.0" layoutY="90.0" prefHeight="280.0" prefWidth="171.0">
+         <effect>
+            <DropShadow />
+         </effect></JFXTreeTableView>
+      <TextField layoutX="7.0" layoutY="56.0" prefHeight="25.0" prefWidth="171.0" promptText="Buscar">
+         <effect>
+            <DropShadow />
+         </effect>
+      </TextField>
+   </children>
+</Pane>
