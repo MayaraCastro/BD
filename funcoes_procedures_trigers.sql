@@ -22,25 +22,26 @@ create function cliente_apto (cod int, pais varchar(50), dt_inicio date, dt_fim 
 	end if;
  end;
 $$
-#2.   para retornar se o CLIENTE esta em dias com seus pagamentos de FATURAS
 
-create function cliente_em_dias (cod int) returns boll
+
+#2.   para retornar se o CLIENTE esta em dias com seus pagamentos de FATURAS
+delimiter $$
+create function cliente_em_dias (cod int) returns bool
 	begin
-		--0 pago
-		--!=0 nao pago
+		-- 0 pago
+		-- !=0 nao pago
 		
 		select f.status
 		from fatura f join pacote p join  clienteJuridico_compra cj join clienteFisico_compra cf
-		on cj.codcliente==cod or cf.codcliente==cod
+		on cj.codcliente=cod or cf.codcliente = cod
 		where
-			f.codpacote = p.codigo
+			f.codpacote = p.codigo;
 		
-		if f.status==0 then
+		if f.stats = 0 then
 			return true;
 		else
 			return false;
 		end if;		
-
 	end;
 $$
 
@@ -71,7 +72,7 @@ create procedure verificarStatus(in status int)
 		if( status = 0 ) then
 			INSERT INTO fatura (status) VALUES (0);
         
-	        else  then
+	        else 
 			INSERT INTO fatura (status) VALUES (1);
 	        end if;
     end;

@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
 			this.chamarTelaPrincipal();
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro no Login");
+			JOptionPane.showMessageDialog(null, "Erro no Login" + e.getMessage());
 		}
 	}
 

@@ -87,7 +87,7 @@ public class ScreenManager {
 	public void showMenuPrincipal() {
 		this.loadMenuPrincipal();
 		this.mainStage.setScene(mainMenuPrincipal);
-		this.mainStage.show();
+		//this.mainStage.show();
 
 	}
 
