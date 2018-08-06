@@ -3,22 +3,46 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.item.ItemController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.item.ItemController">
    <children>
-      <TextField fx:id="cod_serv" layoutX="13.0" layoutY="58.0" />
-      <TextField fx:id="valor_unitario" layoutX="12.0" layoutY="109.0" />
-      <Label layoutX="14.0" layoutY="40.0" text="Código do serviço" />
-      <Label layoutX="13.0" layoutY="91.0" text="Valor Unitário" />
-      <TextField fx:id="qtd" layoutX="13.0" layoutY="164.0" />
-      <Label layoutX="18.0" layoutY="143.0" text="Quantidade" />
-      <DatePicker fx:id="data" layoutX="177.0" layoutY="109.0" prefHeight="25.0" prefWidth="149.0" />
-      <Button layoutX="269.0" layoutY="177.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
-      <Button layoutX="177.0" layoutY="148.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-      <Label layoutX="165.0" layoutY="6.0" text="Item" />
-      <Button layoutX="177.0" layoutY="58.0" mnemonicParsing="false" onAction="#buscar_servico" prefHeight="25.0" prefWidth="149.0" text="Buscar Servico" />
-      <Button fx:id="remover_button" disable="true" layoutX="176.0" layoutY="177.0" mnemonicParsing="false" onAction="#remover" text="Remover" />
+      <TabPane layoutX="-1.0" layoutY="-3.0" prefHeight="403.0" prefWidth="569.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Item">
+               <content>
+                  <Pane prefHeight="170.0" prefWidth="218.0" style="-fx-background-color: ffffff;">
+                     <children>
+                        <TextField fx:id="cod_serv" layoutX="7.0" layoutY="36.0" />
+                        <Label layoutX="7.0" layoutY="14.0" text="Código do serviço" />
+                        <Button layoutX="175.0" layoutY="34.0" mnemonicParsing="false" onAction="#buscar_servico" prefHeight="25.0" prefWidth="149.0" text="Buscar Servico" />
+                        <TextField fx:id="valor_unitario" layoutX="7.0" layoutY="91.0" />
+                        <Label layoutX="7.0" layoutY="74.0" text="Valor Unitário" />
+                        <TextField fx:id="qtd" layoutX="6.0" layoutY="156.0" />
+                        <Label layoutX="12.0" layoutY="130.0" text="Quantidade" />
+                        <DatePicker fx:id="data" layoutX="175.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0" />
+                        <Button layoutX="175.0" layoutY="126.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                        <Button fx:id="remover_button" disable="true" layoutX="174.0" layoutY="168.0" mnemonicParsing="false" onAction="#remover" text="Remover" />
+                        <Button layoutX="275.0" layoutY="168.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+                     </children>
+                  </Pane>
+               </content>
+          </Tab>
+          <Tab text="Pacote">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Serviço">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </Pane>

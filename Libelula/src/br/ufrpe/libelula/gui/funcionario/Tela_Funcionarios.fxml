@@ -28,6 +28,7 @@
                </effect>
             </Text>
             <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Tela_Principal" style="-fx-background-color: ffffff;" text="Home" />
+            <Button layoutX="385.0" layoutY="10.0" mnemonicParsing="false" onAction="#Tela_Principal" style="-fx-background-color: ffffff;" text="Novo Funcionário" />
          </children>
          <effect>
             <DropShadow>
@@ -44,8 +45,7 @@
                   <Image url="@package.png" />
                </image>
             </ImageView>
-            <Button layoutX="140.0" layoutY="229.0" mnemonicParsing="false" style="-fx-background-color: ffd084;" text="Adicionar Foto" textFill="WHITE" />
-            <Button layoutX="146.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ffd034;" text="Deletar Foto" textFill="WHITE" />
+            <Button layoutX="132.0" layoutY="229.0" mnemonicParsing="false" style="-fx-background-color: ffd084;" text="Adicionar Foto" textFill="WHITE" />
             <JFXDatePicker layoutX="214.0" layoutY="184.0" promptText="Data de Nascimento" />
             <JFXComboBox layoutX="21.0" layoutY="149.0" prefHeight="25.0" prefWidth="150.0" promptText="Cargo" />
             <JFXComboBox layoutX="214.0" layoutY="104.0" prefHeight="25.0" prefWidth="150.0" promptText="Sexo" />
@@ -56,17 +56,20 @@
             <JFXTextField layoutX="215.0" layoutY="67.0" prefHeight="25.0" prefWidth="149.0" text="Ramal" />
             <JFXTextField layoutX="214.0" layoutY="149.0" prefHeight="25.0" prefWidth="149.0" text="Tefefone" />
             <Button layoutX="339.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ffd034;" text="Salvar" textFill="WHITE" />
-            <Button layoutX="269.0" layoutY="273.0" mnemonicParsing="false" style="-fx-background-color: ff0138;" text="Cancelar" textFill="WHITE" />
+            <Button layoutX="258.0" layoutY="229.0" mnemonicParsing="false" style="-fx-background-color: ff0138;" text="Cancelar" textFill="WHITE" />
             <Pane layoutX="-2.0" prefHeight="28.0" prefWidth="411.0" style="-fx-background-color: ffd034;">
                <effect>
                   <DropShadow blurType="ONE_PASS_BOX" />
                </effect>
+               <children>
+                  <Text layoutX="169.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Funcionário">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
             </Pane>
-            <Text layoutX="180.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Novo">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
+            <Button layoutX="257.0" layoutY="273.0" mnemonicParsing="false" text="Remover" />
          </children>
          <effect>
             <DropShadow />

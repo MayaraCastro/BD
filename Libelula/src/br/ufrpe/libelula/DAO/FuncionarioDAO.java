@@ -10,7 +10,7 @@ import br.ufrpe.libelula.negocio.beans.Funcionario;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
 
 
-public class FuncionarioDAO extends Pessoa{
+public class FuncionarioDAO extends DAO<Funcionario>{
 	public List<Funcionario> busca(Funcionario f, int tipo) throws Exception{
 		/* DIfine a SQL*/
 		StringBuilder sql = new StringBuilder();

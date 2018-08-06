@@ -1,17 +1,31 @@
 package br.ufrpe.libelula.negocio.beans;
 
-public class Gerente extends Pessoa{
-	private String CPF;
+public class Gerente {
+	private Float salario;
 	private Integer ramal;
-	private double salario;
+	private String CPF;
+	private Integer codigoPessoa;
 	private String cod_Agencia;
 	
-	public Gerente(String cPF, Integer ramal, double salario, String cod_Agencia) {
+
+	
+	
+
+	public Gerente(Float salario, Integer ramal, String cPF, Integer codigoPessoa, String cod_Agencia) {
 		super();
-		CPF = cPF;
-		this.ramal = ramal;
 		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.codigoPessoa = codigoPessoa;
 		this.cod_Agencia = cod_Agencia;
+	}
+
+	public Integer getCodigoPessoa() {
+		return codigoPessoa;
+	}
+
+	public void setCodigoPessoa(Integer codigoPessoa) {
+		this.codigoPessoa = codigoPessoa;
 	}
 
 	public String getCPF() {
@@ -30,11 +44,11 @@ public class Gerente extends Pessoa{
 		this.ramal = ramal;
 	}
 
-	public double getSalario() {
+	public float getSalario() {
 		return salario;
 	}
 
-	public void setSalario(double salario) {
+	public void setSalario(Float salario) {
 		this.salario = salario;
 	}
 

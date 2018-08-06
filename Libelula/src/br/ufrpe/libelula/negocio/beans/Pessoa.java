@@ -1,126 +1,93 @@
 package br.ufrpe.libelula.negocio.beans;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDate;
 
-import br.ufrpe.libelula.exceptions.InformacaoEmBrancoException;
 
 public class Pessoa {
-	private int cod;
+	private Integer cod;
 	private String nome;
-	private Date dt_nasc;
-	private ArrayList<String> sexo;
+	private LocalDate dt_nasc;
+	private String sexo;
 	private String fone;
-	private byte[] logo;
+	private byte[] foto;
 	private String cep;
-	private int num ;
+	private Integer num ;	
 	
-	public Pessoa() {
-		this.cod  = -1;
-		this.nome = null;
-		this.dt_nasc = null;
-		this.sexo = new ArrayList<>(Arrays.asList("M","F"));
-		this.fone = null;
-		this.logo = null;
-		this.cep = null;
-		this.num = -1;
-		
+	
+	public Pessoa(Integer cod) {
+		super();
+		this.cod = cod;
 	}
-	
-	
-
-	public Pessoa(int cod, String nome, Date dt_nasc, ArrayList<String> sexo, String fone, byte[] logo, String cep,
-			int num) {
+	public Pessoa(String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep, Integer num) {
+		super();
+		this.nome = nome;
+		this.dt_nasc = dt_nasc;
+		this.sexo = sexo;
+		this.fone = fone;
+		this.foto = foto;
+		this.cep = cep;
+		this.num = num;
+	}
+	public Pessoa(Integer cod, String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep,
+			Integer num) {
 		super();
 		this.cod = cod;
 		this.nome = nome;
 		this.dt_nasc = dt_nasc;
 		this.sexo = sexo;
 		this.fone = fone;
-		this.logo = logo;
+		this.foto = foto;
 		this.cep = cep;
 		this.num = num;
 	}
-
-
-
-	public int getCod() {
+	public Integer getCod() {
 		return cod;
 	}
-
-	public void setCod(int cod) {
+	public void setCod(Integer cod) {
 		this.cod = cod;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
-	public void setNome(String nome) throws InformacaoEmBrancoException{
-		if(nome != null) this.nome = nome;
-		else throw new InformacaoEmBrancoException();
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-
-	public Date getDt_nasc() {
+	public LocalDate getDt_nasc() {
 		return dt_nasc;
 	}
-
-	public void setDt_nasc(Date dt_nasc) {
+	public void setDt_nasc(LocalDate dt_nasc) {
 		this.dt_nasc = dt_nasc;
 	}
-
-	public ArrayList<String> getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
-
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 	public String getFone() {
 		return fone;
 	}
-
-	public void setFone(String fone) throws InformacaoEmBrancoException{
-		if(fone!=null)
-			this.fone = fone;
-		else {
-			throw new InformacaoEmBrancoException();
-		}
-		
+	public void setFone(String fone) {
+		this.fone = fone;
 	}
-
-	public byte[] getLogo() {
-		return logo;
+	public byte[] getFoto() {
+		return foto;
 	}
-
-	public void setLogo(byte[] logo) throws InformacaoEmBrancoException{
-		if(logo!=null)
-			this.logo = logo;
-		else {
-			throw new InformacaoEmBrancoException();
-		}
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
-
 	public String getCep() {
 		return cep;
 	}
-
-	public void setCep(String cep) throws InformacaoEmBrancoException{
-		if(cep!= null)
-			this.cep = cep;
-		else 
-			throw new InformacaoEmBrancoException();
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
-
-	public int getNum() {
+	public Integer getNum() {
 		return num;
 	}
-
-	public void setNum(int num) throws InformacaoEmBrancoException{
-		if(num!=0)
-			this.num = num;
-		else
-			throw new InformacaoEmBrancoException();
+	public void setNum(Integer num) {
+		this.num = num;
 	}
-
 	
 	
 	

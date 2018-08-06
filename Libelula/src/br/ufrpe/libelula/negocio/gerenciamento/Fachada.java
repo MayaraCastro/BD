@@ -8,6 +8,7 @@ import java.util.Calendar;
 import br.ufrpe.libelula.negocio.beans.Funcionario;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
 import br.ufrpe.libelula.negocio.beans.Pacote;
+import br.ufrpe.libelula.negocio.beans.Pessoa;
 import br.ufrpe.libelula.negocio.beans.Servico_Ref;
 
 public class Fachada {
@@ -19,6 +20,8 @@ public class Fachada {
 	private GerenciamentoItemPacote gip;
 	private GerenciamentoServico gs;
 	private GerenciamentoLogin login;
+	
+	private GerenciamentoPessoa gpessoa;
 	
 	private static Fachada instance;
 
@@ -116,6 +119,31 @@ public class Fachada {
 	
 	public ArrayList<ItemPacote> ListarItemdoPacote(int cod) {
 		return this.gip.ListarItemdoPacote(cod);
+	}
+	
+	/** PESSOA */
+	public void CadastrarPessoa(Pessoa a) {
+		this.gpessoa.CadastrarPessoa(a);
+	}
+	
+	public void RemoverPessoa(Pessoa a) {
+		this.gpessoa.RemoverPessoa(a);
+	}
+	
+	public Pessoa BuscarPessoa(int cod) {
+		return this.gpessoa.BuscarPessoa(cod);
+	}
+	
+	public ArrayList<Pessoa> ListarPessoa(){
+		return this.gpessoa.ListarPessoa();
+	}
+	
+	public void AtualizarPessoa(Pessoa a) {
+		this.gpessoa.AtualizarPessoa(a);
+	}
+	
+	public int pegarcoddoultimo() {
+		return this.gpessoa.pegarCoddoUltimoInserido();
 	}
 	
 	/** SERVICO */

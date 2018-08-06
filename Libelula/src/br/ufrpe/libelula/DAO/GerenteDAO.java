@@ -1,6 +1,5 @@
 package br.ufrpe.libelula.DAO;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,27 +12,15 @@ import br.ufrpe.libelula.negocio.beans.Gerente;
 public class GerenteDAO extends DAO<Gerente> {
 	@Override
 	public void inserir(Gerente o) throws Exception {
-		String sql = "INSERT INTO `pacote` (`codigo`,`total_a_pagar`,`vl_total`,`vl_desconto`,`datafim`,`datainicio`,`indicadorReserva`,`tipo`,`n_criancas`,`n_adultos`)"
-				+ " VALUES " + "(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO `gerente` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
+				+ " VALUES " + "(?,?,?,?,?)";
 		preparar(sql);
-		getStatement().setInt(1, o.getCodigo());
-		getStatement().setFloat(2, o.getTotal_a_pagar());
-		getStatement().setFloat(3, o.getVl_total());
-		getStatement().setFloat(4, o.getVl_desconto());
-		getStatement().setDate(5, Date.valueOf(o.getDatafim()));
-		getStatement().setDate(6, Date.valueOf(o.getDatainicio()));
-		getStatement().setInt(7, o.getIndicadorReserva());
-		getStatement().setInt(8, o.getTipo());
+		getStatement().setFloat(1, o.getSalario() );
+		getStatement().setInt(2, o.getRamal());
+		getStatement().setString(3, o.getCPF());
+		getStatement().setInt(4, o.getCodigoPessoa());
+		getStatement().setString(5, o.getCod_Agencia());
 		
-		if (o.getN_criancas() != null)
-			getStatement().setInt(9, o.getN_criancas());	
-		else
-			getStatement().setDate(9, null);
-		
-		if (o.getN_adultos() != null)
-			getStatement().setInt(10, o.getN_adultos());
-		else
-			getStatement().setDate(10, null);
 		
 		try {
 			getStatement().execute();
@@ -48,10 +35,10 @@ public class GerenteDAO extends DAO<Gerente> {
 	}
 
 	@Override
-	public void remover(Pacote o) throws Exception {
-		String sql = "DELETE FROM pacote WHERE `codigo` = ?";
+	public void remover(Gerente o) throws Exception {
+		String sql = "DELETE FROM gerente WHERE `cod` = ?";
 		preparar(sql);
-		getStatement().setInt(1, o.getCodigo());
+		getStatement().setInt(1, o.getCodigoPessoa());
 		try {
 			getStatement().execute();
 			getConnection().commit();
@@ -65,29 +52,17 @@ public class GerenteDAO extends DAO<Gerente> {
 	}
 
 	@Override
-	public void alterar(Pacote o) throws Exception {
-		String sql = "UPDATE `pacote` SET `total_a_pagar` = ?,`vl_total` = ?,`vl_desconto` = ?,"
-				+ "`datafim` = ?,`datainicio` = ?,"
-				+ "`indicadorReserva` = ?,`tipo` = ?,`n_criancas` = ?,`n_adultos` = ? " + "WHERE `codigo` = ?";
+	public void alterar(Gerente o) throws Exception {
+		String sql = "UPDATE `gerente` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
+				+ "`cod_agencia` = ?"
+				+  "WHERE `cod` = ?";
 		preparar(sql);
-		getStatement().setFloat(1, o.getTotal_a_pagar());
-		getStatement().setFloat(2, o.getVl_total());
-		getStatement().setFloat(3, o.getVl_desconto());
-		getStatement().setDate(4, Date.valueOf(o.getDatafim()));
-		getStatement().setDate(5, Date.valueOf(o.getDatainicio()));
-		getStatement().setInt(6, o.getIndicadorReserva());
-		getStatement().setInt(7, o.getTipo());
+		getStatement().setFloat(1, o.getSalario() );
+		getStatement().setInt(2, o.getRamal());
+		getStatement().setString(3, o.getCPF());
+		getStatement().setString(4, o.getCod_Agencia());
+		getStatement().setInt(5, o.getCodigoPessoa());
 		
-		if (o.getN_criancas() != null)
-			getStatement().setInt(8, o.getN_criancas());	
-		else
-			getStatement().setDate(8, null);
-		
-		if (o.getN_adultos() != null)
-			getStatement().setInt(9, o.getN_adultos());
-		else
-			getStatement().setDate(9, null);
-		getStatement().setInt(10, o.getCodigo());
 
 		try {
 			getStatement().execute();
@@ -101,8 +76,8 @@ public class GerenteDAO extends DAO<Gerente> {
 		}
 	}
 
-	public Pacote buscar(int codigo) throws Exception {
-		String sql = "SELECT * FROM `pacote` WHERE `codigo` = ?";
+	public Gerente buscar(int codigo) throws Exception {
+		String sql = "SELECT * FROM `gerente` WHERE `cod` = ?";
 		preparar(sql);
 		getStatement().setInt(1, codigo);
 		ResultSet rs = null;
@@ -115,18 +90,17 @@ public class GerenteDAO extends DAO<Gerente> {
 			JOptionPane.showMessageDialog(null, "Pacote não encontrado!");
 		}
 		rs.next();
-		Pacote o = new Pacote(rs.getInt(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4),
-				rs.getDate(5).toLocalDate(), rs.getDate(6).toLocalDate(), rs.getInt(7), rs.getInt(8), rs.getInt(9),
-				rs.getInt(10));
+		Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+				rs.getString(5));
 		rs.close();
 		fecharStatetment();
 		return o;
 	}
 
 	@Override
-	public ArrayList<Pacote> listarTodos() throws Exception {
-		ArrayList<Pacote> r = new ArrayList<Pacote>();
-		String sql = "SELECT * FROM `pacote`";
+	public ArrayList<Gerente> listarTodos() throws Exception {
+		ArrayList<Gerente> r = new ArrayList<Gerente>();
+		String sql = "SELECT * FROM `gerente`";
 		preparar(sql);
 		ResultSet rs = null;
 		try {
@@ -138,9 +112,8 @@ public class GerenteDAO extends DAO<Gerente> {
 			e.printStackTrace();
 		}
 		while (rs.next()) {
-			Pacote o = new Pacote(rs.getInt(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4),
-					rs.getDate(5).toLocalDate(), rs.getDate(6).toLocalDate(), rs.getInt(7), rs.getInt(8), rs.getInt(9),
-					rs.getInt(10));
+			Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+					rs.getString(5));
 			r.add(o);
 		}
 		rs.close();
