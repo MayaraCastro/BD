@@ -7,31 +7,33 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import br.ufrpe.libelula.negocio.beans.Pacote;
+import br.ufrpe.libelula.negocio.beans.Gerente;
 
-public class PacoteDAO extends DAO<Pacote> {
+
+public class GerenteDAO extends DAO<Gerente> {
 	@Override
-	public void inserir(Pacote o) throws Exception {
-		String sql = "INSERT INTO `pacote` (`total_a_pagar`,`vl_total`,`vl_desconto`,`datafim`,`datainicio`,`indicadorReserva`,`tipo`,`n_criancas`,`n_adultos`)"
-				+ " VALUES " + "(?,?,?,?,?,?,?,?,?)";
+	public void inserir(Gerente o) throws Exception {
+		String sql = "INSERT INTO `pacote` (`codigo`,`total_a_pagar`,`vl_total`,`vl_desconto`,`datafim`,`datainicio`,`indicadorReserva`,`tipo`,`n_criancas`,`n_adultos`)"
+				+ " VALUES " + "(?,?,?,?,?,?,?,?,?,?)";
 		preparar(sql);
-		getStatement().setFloat(1, o.getTotal_a_pagar());
-		getStatement().setFloat(2, o.getVl_total());
-		getStatement().setFloat(3, o.getVl_desconto());
-		getStatement().setDate(4, Date.valueOf(o.getDatafim()));
-		getStatement().setDate(5, Date.valueOf(o.getDatainicio()));
-		getStatement().setInt(6, o.getIndicadorReserva());
-		getStatement().setInt(7, o.getTipo());
+		getStatement().setInt(1, o.getCodigo());
+		getStatement().setFloat(2, o.getTotal_a_pagar());
+		getStatement().setFloat(3, o.getVl_total());
+		getStatement().setFloat(4, o.getVl_desconto());
+		getStatement().setDate(5, Date.valueOf(o.getDatafim()));
+		getStatement().setDate(6, Date.valueOf(o.getDatainicio()));
+		getStatement().setInt(7, o.getIndicadorReserva());
+		getStatement().setInt(8, o.getTipo());
 		
 		if (o.getN_criancas() != null)
-			getStatement().setInt(8, o.getN_criancas());	
-		else
-			getStatement().setDate(8, null);
-		
-		if (o.getN_adultos() != null)
-			getStatement().setInt(9, o.getN_adultos());
+			getStatement().setInt(9, o.getN_criancas());	
 		else
 			getStatement().setDate(9, null);
+		
+		if (o.getN_adultos() != null)
+			getStatement().setInt(10, o.getN_adultos());
+		else
+			getStatement().setDate(10, null);
 		
 		try {
 			getStatement().execute();
@@ -147,3 +149,4 @@ public class PacoteDAO extends DAO<Pacote> {
 
 	}
 }
+

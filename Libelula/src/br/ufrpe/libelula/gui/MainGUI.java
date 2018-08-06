@@ -18,7 +18,7 @@ public class MainGUI extends Application {
 		}
 		ScreenManager.getInstance().setMainStage(primaryStage);
 		ScreenManager.getInstance().showLogin();
-		// ScreenManager.getInstance().showMenuPrincipal();
+		//ScreenManager.getInstance().showPacote();
 
 
 	}

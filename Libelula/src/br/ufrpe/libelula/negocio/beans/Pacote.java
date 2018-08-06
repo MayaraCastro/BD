@@ -3,7 +3,7 @@ package br.ufrpe.libelula.negocio.beans;
 import java.time.LocalDate;
 
 public class Pacote {
-	private int codigo;
+	private Integer codigo;
 	private float total_a_pagar;
 	private float vl_total; 
 	private float vl_desconto; 
@@ -43,8 +43,40 @@ public class Pacote {
 		this.n_criancas = n_criancas;
 		this.n_adultos = n_adultos;
 	}
+	
+	
 
-	public int getCodigo() {
+	public Pacote(float total_a_pagar, float vl_total, float vl_desconto, LocalDate datafim, LocalDate datainicio,
+			int indicadorReserva, int tipo) {
+		super();
+		this.total_a_pagar = total_a_pagar;
+		this.vl_total = vl_total;
+		this.vl_desconto = vl_desconto;
+		this.datafim = datafim;
+		this.datainicio = datainicio;
+		this.indicadorReserva = indicadorReserva;
+		this.tipo = tipo;
+	}
+
+	public Pacote(float total_a_pagar, float vl_total, float vl_desconto, LocalDate datafim, LocalDate datainicio,
+			int indicadorReserva, int tipo, Integer n_criancas, Integer n_adultos) {
+		super();
+		this.total_a_pagar = total_a_pagar;
+		this.vl_total = vl_total;
+		this.vl_desconto = vl_desconto;
+		this.datafim = datafim;
+		this.datainicio = datainicio;
+		this.indicadorReserva = indicadorReserva;
+		this.tipo = tipo;
+		this.n_criancas = n_criancas;
+		this.n_adultos = n_adultos;
+	}
+
+	public Pacote() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getCodigo() {
 		return codigo;
 	}
 	public void setCodigo(int codigo) {

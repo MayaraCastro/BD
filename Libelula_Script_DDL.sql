@@ -186,16 +186,16 @@ constraint fk_visto_passaporte foreign key(numeroPass) references passaporte(num
 
 create table pacote(
 
-codigo int not null unique,
+codigo int not null unique auto_increment,
 total_a_pagar decimal(10,2),
 vl_total decimal(10,2), 
 vl_desconto decimal(10,2), 
-datafim date,
-datainicio date,
-indicadorReserva int,
-tipo int not null,
-n_criancas int,
-n_adultos int,
+datafim date check(datafim >= datainicio),
+datainicio date check(datafim >= datainicio),
+indicadorReserva int check(1>=indicadorReserva>=0),
+tipo int not null check( 1<= tipo <=3),
+n_criancas int check(n_criancas >= 0),
+n_adultos int check(n_adultos >= 0),
 
 primary key(codigo) 
 );
@@ -254,7 +254,7 @@ codpacote int not null,
 dt date,
 vl_unitario decimal(10,2),
 qtd int, 
-seq int,
+seq int auto_increment,
 vl_com_desconto decimal(10,2),
 
 primary key(id_sk),

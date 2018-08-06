@@ -37,7 +37,7 @@ public class TelaMenuPrincipalController {
 
     @FXML
     void tela_pacotes(MouseEvent event) {
-
+    	ScreenManager.getInstance().showPacote();
     }
 
     @FXML

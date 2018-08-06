@@ -8,6 +8,7 @@ import java.util.Calendar;
 import br.ufrpe.libelula.negocio.beans.Funcionario;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
 import br.ufrpe.libelula.negocio.beans.Pacote;
+import br.ufrpe.libelula.negocio.beans.Servico_Ref;
 
 public class Fachada {
 
@@ -113,7 +114,14 @@ public class Fachada {
 		this.gip.AtualizarItemPacote(a);
 	}
 	
+	public ArrayList<ItemPacote> ListarItemdoPacote(int cod) {
+		return this.gip.ListarItemdoPacote(cod);
+	}
+	
 	/** SERVICO */
+	public Servico_Ref BuscarServico(int cod) {
+		return gs.BuscarServico(cod);
+	}
 	
 	/** FATURA */
 	

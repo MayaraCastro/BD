@@ -12,16 +12,15 @@ import br.ufrpe.libelula.negocio.beans.ItemPacote;
 public class ItemPacoteDAO extends DAO<ItemPacote> {
 	@Override
 	public void inserir(ItemPacote o) throws Exception {
-		String sql = "INSERT INTO `item_pacote` (`codservico`,`codpacote`,`dt`,`vl_unitario`,`qtd`,`seq`,`vl_com_desconto`)"
-				+ " VALUES " + "(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO `item_pacote` (`codservico`,`codpacote`,`dt`,`vl_unitario`,`qtd`,`vl_com_desconto`)"
+				+ " VALUES " + "(?,?,?,?,?,?)";
 		preparar(sql);
 		getStatement().setInt(1, o.getCodservico());
 		getStatement().setFloat(2, o.getCodpacote());
 		getStatement().setDate(3, Date.valueOf(o.getDt()));
 		getStatement().setFloat(4, o.getVl_unitario());
 		getStatement().setInt(5, o.getQtd());
-		getStatement().setInt(6, o.getSeq());
-		getStatement().setFloat(7, o.getVl_com_desconto());
+		getStatement().setFloat(6, o.getVl_com_desconto());
 		
 		try {
 			getStatement().execute();
@@ -55,15 +54,14 @@ public class ItemPacoteDAO extends DAO<ItemPacote> {
 	@Override
 	public void alterar(ItemPacote o) throws Exception {
 		String sql = "UPDATE `item_pacote` SET `dt` = ?,`vl_unitario` = ?,`qtd` = ?,"
-				+ "`seq` = ?,`vl_com_desconto` = ?,"
+				+ "`vl_com_desconto` = ?,"
 				 + "WHERE `id_sk` = ?";
 		preparar(sql);
 		getStatement().setDate(1, Date.valueOf(o.getDt()));
 		getStatement().setFloat(2, o.getVl_unitario());
 		getStatement().setInt(3, o.getQtd());
-		getStatement().setInt(4, o.getSeq());
-		getStatement().setFloat(5, o.getVl_com_desconto());
-		getStatement().setInt(6, o.getId_sk());
+		getStatement().setFloat(4, o.getVl_com_desconto());
+		getStatement().setInt(5, o.getId_sk());
 
 		try {
 			getStatement().execute();
@@ -88,7 +86,7 @@ public class ItemPacoteDAO extends DAO<ItemPacote> {
 		} catch (SQLException e) {
 			getConnection().rollback();
 			fecharStatetment();
-			JOptionPane.showMessageDialog(null, "Pacote não encontrado!");
+			JOptionPane.showMessageDialog(null, "Item não encontrado!");
 		}
 		rs.next();
 		ItemPacote o = new ItemPacote(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4).toLocalDate(),
@@ -96,6 +94,30 @@ public class ItemPacoteDAO extends DAO<ItemPacote> {
 		rs.close();
 		fecharStatetment();
 		return o;
+	}
+	
+	public ArrayList<ItemPacote> listardoPacote(int codigo) throws Exception {
+		ArrayList<ItemPacote> r = new ArrayList<ItemPacote>();
+		String sql = "SELECT * FROM `item_pacote` WHERE `codpacote` = ?";
+		preparar(sql);
+		getStatement().setInt(1, codigo);
+		ResultSet rs = null;
+		try {
+			rs = getStatement().executeQuery();
+			getConnection().commit();
+		} catch (SQLException e) {
+			getConnection().rollback();
+			fecharStatetment();
+			e.printStackTrace();
+		}
+		while (rs.next()) {
+			ItemPacote o = new ItemPacote(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4).toLocalDate(),
+					rs.getFloat(5), rs.getInt(6), rs.getInt(7),rs.getFloat(8));
+			r.add(o);
+		}
+		rs.close();
+		fecharStatetment();
+		return r;
 	}
 
 	@Override

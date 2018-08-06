@@ -3,7 +3,7 @@ package br.ufrpe.libelula.negocio.beans;
 import java.time.LocalDate;
 
 public class ItemPacote {
-	private int id_sk;// auto increment
+	private Integer id_sk;// auto increment
 	private Integer codservico;
 	private Integer codpacote;
 	private LocalDate dt;
@@ -24,10 +24,54 @@ public class ItemPacote {
 		this.seq = seq;
 		this.vl_com_desconto = vl_com_desconto;
 	}
+	
+	
 
-	public int getId_sk() {
+	public ItemPacote(Integer codservico, Integer codpacote, LocalDate dt, float vl_unitario, Integer qtd,
+			float vl_com_desconto) {
+		super();
+		this.codservico = codservico;
+		this.codpacote = codpacote;
+		this.dt = dt;
+		this.vl_unitario = vl_unitario;
+		this.qtd = qtd;
+		this.vl_com_desconto = vl_com_desconto;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof ItemPacote))
+			return false;
+		ItemPacote other = (ItemPacote) obj;
+		if (codpacote == null) {
+			if (other.codpacote != null)
+				return false;
+		} else if (!codpacote.equals(other.codpacote))
+			return false;
+		if (codservico == null) {
+			if (other.codservico != null)
+				return false;
+		} else if (!codservico.equals(other.codservico))
+			return false;
+		return true;
+	}
+
+
+
+	public Integer getId_sk() {
 		return id_sk;
 	}
+
+	public ItemPacote() {
+		super();
+	}
+
+
 
 	public void setId_sk(int id_sk) {
 		this.id_sk = id_sk;

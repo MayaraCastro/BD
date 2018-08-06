@@ -1,29 +1,50 @@
 package br.ufrpe.libelula.negocio.beans;
-import java.sql.Date;
-import java.util.ArrayList;
 
-public class Gerente extends Funcionario{
-	private int tipo;
-
-	public Gerente() {
+public class Gerente extends Pessoa{
+	private String CPF;
+	private Integer ramal;
+	private double salario;
+	private String cod_Agencia;
+	
+	public Gerente(String cPF, Integer ramal, double salario, String cod_Agencia) {
 		super();
-		this.setTipo(0);
-	}
-	public Gerente(String cPF, String ramal, double salario, int cod, String nome, Date dt_nasc, ArrayList<String> sexo,
-			String fone, byte[] logo, String cep, int num, String cod_Agencia) {
-		super(cPF, ramal, salario, cod, nome, dt_nasc, sexo, fone, logo, cep, num, cod_Agencia);
-		// TODO Auto-generated constructor stub
+		CPF = cPF;
+		this.ramal = ramal;
+		this.salario = salario;
+		this.cod_Agencia = cod_Agencia;
 	}
 
-	public Gerente(String cPF, String ramal, double salario, String cod_Agencia) {
-		super(cPF, ramal, salario, cod_Agencia);
-		// TODO Auto-generated constructor stub
+	public String getCPF() {
+		return CPF;
 	}
-	public int getTipo() {
-		return tipo;
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
 	}
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+
+	public Integer getRamal() {
+		return ramal;
+	}
+
+	public void setRamal(Integer ramal) {
+		this.ramal = ramal;
+	}
+
+	public double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(double salario) {
+		this.salario = salario;
+	}
+
+	public String getCod_Agencia() {
+		return cod_Agencia;
+	}
+
+	public void setCod_Agencia(String cod_Agencia) {
+		this.cod_Agencia = cod_Agencia;
 	}
 	
+
 }

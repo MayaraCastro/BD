@@ -59,4 +59,13 @@ public class GerenciamentoItemPacote {
 		}
 		return null;
 	}
+	public ArrayList<ItemPacote> ListarItemdoPacote(int cod){
+		try {
+			return item.listardoPacote(cod);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
