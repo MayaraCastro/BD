@@ -1,31 +1,45 @@
 package br.ufrpe.libelula.negocio.beans;
 
-public class Gerente {
+import java.time.LocalDate;
+
+public class Gerente extends Pessoa{
 	private Float salario;
 	private Integer ramal;
 	private String CPF;
-	private Integer codigoPessoa;
 	private String cod_Agencia;
-	
 
 	
-	
-
-	public Gerente(Float salario, Integer ramal, String cPF, Integer codigoPessoa, String cod_Agencia) {
-		super();
+	public Gerente(String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep, Integer num,
+			Float salario, Integer ramal, String cPF, String cod_Agencia) {
+		super(nome, dt_nasc, sexo, fone, foto, cep, num);
 		this.salario = salario;
 		this.ramal = ramal;
 		CPF = cPF;
-		this.codigoPessoa = codigoPessoa;
 		this.cod_Agencia = cod_Agencia;
 	}
 
-	public Integer getCodigoPessoa() {
-		return codigoPessoa;
+
+	public Gerente(Integer cod, String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep,
+			Integer num, Float salario, Integer ramal, String cPF, String cod_Agencia) {
+		super(cod, nome, dt_nasc, sexo, fone, foto, cep, num);
+		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.cod_Agencia = cod_Agencia;
 	}
 
-	public void setCodigoPessoa(Integer codigoPessoa) {
-		this.codigoPessoa = codigoPessoa;
+
+	public Gerente(Float salario, Integer ramal, String cPF,Integer cod, String cod_Agencia) {
+		super(cod);
+		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.cod_Agencia = cod_Agencia;
+	}
+	
+
+	public Gerente() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getCPF() {

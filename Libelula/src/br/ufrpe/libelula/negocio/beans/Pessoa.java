@@ -40,6 +40,9 @@ public class Pessoa {
 		this.cep = cep;
 		this.num = num;
 	}
+	public Pessoa() {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getCod() {
 		return cod;
 	}

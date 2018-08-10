@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import br.ufrpe.libelula.negocio.beans.Gerente;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
 
 public class PessoaDAO extends DAO<Pessoa> {
@@ -143,8 +142,17 @@ public class PessoaDAO extends DAO<Pessoa> {
 			JOptionPane.showMessageDialog(null, "Pessoa não encontrado!");
 		}
 		rs.next();
-		Pessoa o = new Pessoa(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4),
-				rs.getString(5), rs.getBytes(6), rs.getString(7), rs.getInt(8));
+		
+		LocalDate dt_nasc = null;
+		byte[] foto = null;
+		if (rs.getDate(3) != null)
+			dt_nasc = rs.getDate(3).toLocalDate();
+		if(rs.getBytes(6) != null) {
+			foto = rs.getBytes(6);
+		}
+		
+		Pessoa o = new Pessoa(rs.getInt(1), rs.getString(2), dt_nasc, rs.getString(4),
+				rs.getString(5), foto, rs.getString(7), rs.getInt(8));
 		rs.close();
 		fecharStatetment();
 		return o;

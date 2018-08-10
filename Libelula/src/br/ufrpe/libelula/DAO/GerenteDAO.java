@@ -18,7 +18,7 @@ public class GerenteDAO extends DAO<Gerente> {
 		getStatement().setFloat(1, o.getSalario() );
 		getStatement().setInt(2, o.getRamal());
 		getStatement().setString(3, o.getCPF());
-		getStatement().setInt(4, o.getCodigoPessoa());
+		getStatement().setInt(4, o.getCod());
 		getStatement().setString(5, o.getCod_Agencia());
 		
 		
@@ -38,7 +38,7 @@ public class GerenteDAO extends DAO<Gerente> {
 	public void remover(Gerente o) throws Exception {
 		String sql = "DELETE FROM gerente WHERE `cod` = ?";
 		preparar(sql);
-		getStatement().setInt(1, o.getCodigoPessoa());
+		getStatement().setInt(1, o.getCod());
 		try {
 			getStatement().execute();
 			getConnection().commit();
@@ -61,7 +61,7 @@ public class GerenteDAO extends DAO<Gerente> {
 		getStatement().setInt(2, o.getRamal());
 		getStatement().setString(3, o.getCPF());
 		getStatement().setString(4, o.getCod_Agencia());
-		getStatement().setInt(5, o.getCodigoPessoa());
+		getStatement().setInt(5, o.getCod());
 		
 
 		try {

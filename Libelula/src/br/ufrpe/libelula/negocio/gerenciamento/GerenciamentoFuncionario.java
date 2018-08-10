@@ -2,19 +2,28 @@ package br.ufrpe.libelula.negocio.gerenciamento;
 
 import java.util.ArrayList;
 
-import br.ufrpe.libelula.DAO.FuncionarioDAO;
-import br.ufrpe.libelula.negocio.beans.Funcionario;
+import br.ufrpe.libelula.DAO.GerenteDAO;
+import br.ufrpe.libelula.DAO.PessoaDAO;
+import br.ufrpe.libelula.negocio.beans.Gerente;
+import br.ufrpe.libelula.negocio.beans.Pessoa;
 
 public class GerenciamentoFuncionario {
-	private FuncionarioDAO funcionario;
+	private GerenteDAO gerente;
+	private PessoaDAO pessoa;
 	
 	public GerenciamentoFuncionario() {
-		this.funcionario = new FuncionarioDAO();
+		this.gerente = new GerenteDAO();
+		this.pessoa = new PessoaDAO();
 	}
 	
-	public void CadastrarFuncionario(Funcionario a, int tipo) {
+	public void CadastrarFuncionario(Pessoa a) {
 			try {
-				funcionario.inserir(a, tipo); //tirar tipo
+				pessoa.inserir(a);
+				a.setCod(pessoa.pegarCodigodoUltimoAutoIncrmente());
+				if(a instanceof Gerente) {
+					gerente.inserir(((Gerente)a));
+				}
+				 
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -22,29 +31,55 @@ public class GerenciamentoFuncionario {
 			}
 	}
 	
-	public void RemoverFuncionario(Funcionario a, int tipo) {
+	public void RemoverFuncionario(Pessoa a) {
 		try {
-			funcionario.remover(a, tipo);
+			
+			if(a instanceof Gerente) {
+				gerente.remover(((Gerente)a));
+			}
+			pessoa.remover(a);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public Funcionario BuscarFuncionario(String cpf) {
-		return funcionario.buscar(cpf);
+	public Pessoa BuscarFuncionario(int cod) {
+		try {
+				Pessoa p = pessoa.buscar(cod);
+				Gerente g;
+				
+				if(p !=null) {
+					g = gerente.buscar(cod);
+						if(g != null) {
+							g = new Gerente(cod,p.getNome(),p.getDt_nasc(), p.getSexo(), p.getFone(), p.getFoto(), p.getCep(), p.getNum(), g.getSalario(), g.getRamal(), g.getCPF(), g.getCod_Agencia());
+									return g;
+						}
+				}
+				
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
-	public void AtualizarFuncionario(Funcionario a, int tipo) {
+	public void AtualizarFuncionario(Pessoa a) {
 		try {
-			funcionario.atualizar(a, tipo);
+			pessoa.alterar(a);
+			if(a instanceof Gerente) {
+				gerente.alterar(((Gerente)a));
+			}
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public ArrayList<Funcionario> ListarFuncionario(){
-		return funcionario.listar();
+	public ArrayList<Pessoa> ListarFuncionario(){
+		return null; //gerente.listarTodos();
 	}
 }

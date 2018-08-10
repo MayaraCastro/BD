@@ -55,24 +55,24 @@ public class Fachada {
 	}
 	
 	/** FUNCIONARIO */
-	public void CadastrarFuncionario(Funcionario a, int tipo) {
-		this.gfu.CadastrarFuncionario(a, tipo);
+	public void CadastrarFuncionario(Pessoa a) {
+		this.gfu.CadastrarFuncionario(a);
 	}
 	
-	public void RemoverFuncionario(Funcionario a, int tipo) {
-		this.gfu.RemoverFuncionario(a, tipo);
+	public void RemoverFuncionario(Pessoa a) {
+		this.gfu.RemoverFuncionario(a);
 	}
 	
-	public Funcionario BuscarFuncionario(String cpf) {
-		return this.gfu.BuscarFuncionario(cpf);
+	public Pessoa BuscarFuncionario(int cod) {
+		return this.gfu.BuscarFuncionario(cod);
 	}
 	
-	public ArrayList<Funcionario> ListarFuncionario(){
+	public ArrayList<Pessoa> ListarFuncionario(){
 		return this.gfu.ListarFuncionario();
 	}
 	
-	public void AtualizarFuncionario(Funcionario a, int tipo) {
-		this.gfu.AtualizarFuncionario(a, tipo);
+	public void AtualizarFuncionario(Pessoa a) {
+		this.gfu.AtualizarFuncionario(a);
 	}
 	
 	/** PACOTE */

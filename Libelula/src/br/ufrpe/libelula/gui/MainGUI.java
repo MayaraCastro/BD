@@ -11,7 +11,7 @@ public class MainGUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			//Fachada.getInstance().conexao("superuser", "12345");
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			throw new Exception(e);

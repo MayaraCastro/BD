@@ -3,119 +3,128 @@ package br.ufrpe.libelula.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import br.ufrpe.libelula.negocio.beans.Funcionario;
+import br.ufrpe.libelula.negocio.beans.Gerente;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
 
 
-public class FuncionarioDAO extends DAO<Funcionario>{
-	public List<Funcionario> busca(Funcionario f, int tipo) throws Exception{
-		/* DIfine a SQL*/
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT cod_Funcionario, nome_Funcionario");
-		sql.append("from TABELA_Funcionario");
-		sql.append("WHRE nome_Funcionario LIKE ?");
-		sql.append("ORDER BY nome_Funcionario");
+public class FuncionarioDAO extends DAO<Pessoa>{
+	@Override
+	public void inserir(Pessoa o) throws Exception {
 		
-		/*Abre a conexao que criamos o retorno Ã©  armazenado na variavel conn*/
-		Connection conn = new Conexao().getConnection(tipo);
+		String sql = "INSERT INTO `gerente` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
+				+ " VALUES " + "(?,?,?,?,?)";
+		preparar(sql);
+		getStatement().setFloat(1, o.getSalario() );
+		getStatement().setInt(2, o.getRamal());
+		getStatement().setString(3, o.getCPF());
+		getStatement().setInt(4, o.getCod());
+		getStatement().setString(5, o.getCod_Agencia());
 		
-		/*Mapeamento objeto relacional*/
-		PreparedStatement comando = conn.prepareStatement(sql.toString());
-		comando.setString(1, "%"+f.getSalario()+"%");
-		comando.setString(2, "%"+f.getRamal()+"%");
-		comando.setString(3, "%"+f.getCPF()+"%");
-		comando.setString(4, "%"+f.getCod()+"%");
-		comando.setString(5, "%"+f.getCod()+"%");
-		comando.setString(6, "%"+f.getCod_Agencia()+"%");
 		
-		/*Executa a SQL e captura o resultado da consulta*/
-		ResultSet resultado = comando.executeQuery();
-		
-		/*Cria uma lista para armazenar o resultado da consulta*/
-		List<Funcionario> lista = new ArrayList<Funcionario>();
-		
-		/*Percorre o resultado armazenando os valores em uma lista*/
-		while(resultado.next()) {
-			Funcionario linha = new Funcionario();
-			linha.setSalario(resultado.getDouble("salario"));
-			linha.setRamal(resultado.getString("ramal"));
-			linha.setCPF(resultado.getString("cpf"));
-			//TODO CONTINUAR
-			lista.add(linha);
+		try {
+			getStatement().execute();
+			getConnection().commit();
+			JOptionPane.showMessageDialog(null, "Inserção realizada com sucesso!");
+		} catch (SQLException e) {
+			getConnection().rollback(); //caso aja erro na transação faz um rollback
+			JOptionPane.showMessageDialog(null, "Erro na Inserção!");
+		} finally {
+			fecharStatetment();
 		}
-		
-		/*Fecha a conexao*/
-		resultado.close();
-		comando.close();conn.close();
-		return lista;
-		
 	}
-	public int apagar(Funcionario c, int tipo) throws Exception{
-		/* DIfine a SQL*/
-		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE");
-		sql.append("FROM pessoa");
-		sql.append("WHRE nome = '"+c+"'");
-		
-		/*Abre a conexao que criamos o retorno Ã©  armazenado na variavel conn*/
-		Connection conn = new Conexao().getConnection(tipo);
-		
-		/*Mapeamento objeto relacional*/
-		PreparedStatement comando = conn.prepareStatement(sql.toString());
-		comando.setString(1, "%"+c.getNomeFuncionario()+"%");
-		
-		/*Executa a SQL e captura o resultado da consulta*/
-		int resultado = comando.executeUpdate();
-		/*Fecha a conexao*/
-		comando.close();conn.close();
-		return resultado;
-		
+
+	@Override
+	public void remover(Pessoa o) throws Exception {
+		String sql = "DELETE FROM gerente WHERE `cod` = ?";
+		preparar(sql);
+		getStatement().setInt(1, o.getCodigoPessoa());
+		try {
+			getStatement().execute();
+			getConnection().commit();
+			JOptionPane.showMessageDialog(null, "Remoção realizada com sucesso!");
+		} catch (SQLException e) {
+			getConnection().rollback();
+			JOptionPane.showMessageDialog(null, "Erro na Remoção!");
+		} finally {
+			fecharStatetment();
+		}
 	}
-	public int inserir (Funcionario c, int tipo) throws Exception{
-		/* DIfine a SQL*/
-		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT");
-		sql.append("INTO pessoa(nome)");
-		sql.append("VALUES('"+c+"')");
+
+	@Override
+	public void alterar(Pessoa o) throws Exception {
+		String sql = "UPDATE `gerente` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
+				+ "`cod_agencia` = ?"
+				+  "WHERE `cod` = ?";
+		preparar(sql);
+		getStatement().setFloat(1, o.getSalario() );
+		getStatement().setInt(2, o.getRamal());
+		getStatement().setString(3, o.getCPF());
+		getStatement().setString(4, o.getCod_Agencia());
+		getStatement().setInt(5, o.getCod());
 		
-		/*Abre a conexao que criamos o retorno Ã©  armazenado na variavel conn*/
-		Connection conn = new Conexao().getConnection(tipo);
-		
-		/*Mapeamento objeto relacional*/
-		PreparedStatement comando = conn.prepareStatement(sql.toString());
-		comando.setString(1, "%"+c.getNomeFuncionario()+"%");     // preenche os valores
-		
-		/*Executa a SQL e captura o resultado da consulta*/
-		int resultado = comando.executeUpdate();
-		/*Fecha a conexao*/
-		comando.close();
-		conn.close();
-		return resultado;
-		
+
+		try {
+			getStatement().execute();
+			getConnection().commit();
+			JOptionPane.showMessageDialog(null, "Alteração realizada com sucesso!");
+		} catch (SQLException e) {
+			getConnection().rollback();
+			JOptionPane.showMessageDialog(null, "Erro na Alteração!");
+		} finally {
+			fecharStatetment();
+		}
 	}
-	
-	public int update (Funcionario c, int tipo) throws Exception{
-		/* DIfine a SQL*/
-		StringBuilder sql = new StringBuilder();
-		sql.append("");
-		sql.append("");
-		sql.append("");
-		
-		/*Abre a conexao que criamos o retorno Ã©  armazenado na variavel conn*/
-		Connection conn = new Conexao().getConnection(tipo);
-		
-		/*Mapeamento objeto relacional*/
-		PreparedStatement comando = conn.prepareStatement(sql.toString());
-		comando.setString(1, "%"+c.getNomeFuncionario()+"%");
-		
-		/*Executa a SQL e captura o resultado da consulta*/
-		int resultado = comando.executeUpdate();
-		/*Fecha a conexao*/
-		comando.close();conn.close();
-		return resultado;
-		
+
+	public Gerente buscar(int codigo) throws Exception {
+		String sql = "SELECT * FROM `gerente` WHERE `cod` = ?";
+		preparar(sql);
+		getStatement().setInt(1, codigo);
+		ResultSet rs = null;
+		try {
+			rs = getStatement().executeQuery();
+			getConnection().commit();
+		} catch (SQLException e) {
+			getConnection().rollback();
+			fecharStatetment();
+			JOptionPane.showMessageDialog(null, "Pacote não encontrado!");
+		}
+		rs.next();
+		Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+				rs.getString(5));
+		rs.close();
+		fecharStatetment();
+		return o;
+	}
+
+	@Override
+	public ArrayList<Pessoa> listarTodos() throws Exception {
+		ArrayList<Pessoa> r = new ArrayList<Pessoa>();
+		String sql = "SELECT * FROM `gerente`";
+		preparar(sql);
+		ResultSet rs = null;
+		try {
+			rs = getStatement().executeQuery();
+			getConnection().commit();
+		} catch (SQLException e) {
+			getConnection().rollback();
+			fecharStatetment();
+			e.printStackTrace();
+		}
+		while (rs.next()) {
+			Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+					rs.getString(5));
+			r.add(o);
+		}
+		rs.close();
+		fecharStatetment();
+		return r;
+
 	}
 }
