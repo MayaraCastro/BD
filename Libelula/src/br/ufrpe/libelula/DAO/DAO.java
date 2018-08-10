@@ -29,13 +29,9 @@ public abstract class DAO <T>{
 		this.statement = this.conexao.prepareStatement(sql);
 	}
 
-<<<<<<< HEAD
 	public abstract void inserir(T o) throws Exception; 
 	
-=======
-	public abstract void inserir(T o) throws Exception; //adicionei tipo pq ta dando erro no funcionario e servico
 
->>>>>>> master
 	public abstract void remover(T o) throws Exception;
 
 	public abstract void alterar(T o) throws Exception;
