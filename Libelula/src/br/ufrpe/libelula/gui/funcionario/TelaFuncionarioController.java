@@ -1,7 +1,10 @@
 package br.ufrpe.libelula.gui.funcionario;
 
 import br.ufrpe.libelula.gui.ScreenManager;
+import br.ufrpe.libelula.negocio.beans.Agente;
 import br.ufrpe.libelula.negocio.beans.Gerente;
+import br.ufrpe.libelula.negocio.beans.Guia;
+import br.ufrpe.libelula.negocio.beans.Motorista;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
 import br.ufrpe.libelula.negocio.gerenciamento.Fachada;
 
@@ -26,13 +29,7 @@ import javafx.scene.control.TextField;
 public class TelaFuncionarioController implements Initializable{
 	Fachada f;
     Pessoa	pessoa;
-    Gerente	gerente;
-    /*
-     * 
-     * Guia	guia;
-     * Motorista motorista;
-     * Agente agente;
-     */
+
     @FXML
     private JFXTextField agencia;
     
@@ -88,12 +85,7 @@ public class TelaFuncionarioController implements Initializable{
     @FXML
     void novo_funcionario(ActionEvent event) {   
     	pessoa = new Pessoa();
-    	gerente = new Gerente();
-    	/*
-    	 * guia = new Guia();
-    	 * motorista = new Motorista();
-    	 * agente = new Agente();
-    	 *     	 * */
+    	
     	salario.clear();
     	nome.clear();
     	cpf.clear();
@@ -118,6 +110,7 @@ public class TelaFuncionarioController implements Initializable{
     void remover(ActionEvent event) {
     	this.preenchercomosdados();
     	f.RemoverFuncionario(pessoa);
+    	ScreenManager.getInstance().showFuncionario();
     }
     
     @FXML
@@ -129,16 +122,16 @@ public class TelaFuncionarioController implements Initializable{
     	}
     	else{
     		f.CadastrarFuncionario(pessoa);
+    		codigo.setText(Integer.toString(f.pegarcoddoultimo()));
     	}
     }
     void preenchercomosdados() {
-    	if(cargo.getSelectionModel().equals("Gerente")) {
+    	if(cargo.getSelectionModel().getSelectedItem().equals("Gerente")) {
     		
 			String s;
-			if(sexo.getSelectionModel().equals("Masculino")) {
+			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
 				s = "M";
-			}else
-			{
+			}else{
 				s ="F";
 			}
 			
@@ -148,6 +141,63 @@ public class TelaFuncionarioController implements Initializable{
 			}
 			else {
 				pessoa = new Gerente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+    	
+			}
+    	}
+    	else if(cargo.getSelectionModel().getSelectedItem().equals("Agente")) {
+    		
+			String s;
+			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+				s = "M";
+			}else{
+				s ="F";
+			}
+			
+			if(pessoa.getCod() != null) {
+				pessoa = new Agente(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+			}
+			else {
+				pessoa = new Agente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+    	
+			}
+    	}
+    	else if(cargo.getSelectionModel().getSelectedItem().equals("Guia")) {
+    		
+			String s;
+			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+				s = "M";
+			}else{
+				s ="F";
+			}
+			
+			if(pessoa.getCod() != null) {
+				pessoa = new Guia(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+			}
+			else {
+				pessoa = new Guia(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+    	
+			}
+    	}
+    	else if(cargo.getSelectionModel().getSelectedItem().equals("Motorista")) {
+    		
+			String s;
+			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+				s = "M";
+			}else{
+				s ="F";
+			}
+			
+			if(pessoa.getCod() != null) {
+				pessoa = new Motorista(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+			}
+			else {
+				pessoa = new Motorista(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
     				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
     	
 			}
@@ -193,8 +243,55 @@ public class TelaFuncionarioController implements Initializable{
         		
         		codigo.setText(Integer.toString(((Gerente)pessoa).getCod()));
         		
-        	}//TODO por else if de guia, agente e motorista
-        	
+        	}
+        	else if(pessoa instanceof Agente) {
+        		SingleSelectionModel<String> a =cargo.getSelectionModel() ;
+        		a.select(0);
+        		cargo.setSelectionModel(a);
+        		
+        		salario.setText(Float.toString(((Agente)pessoa).getSalario()));
+
+        		ramal.setText(Integer.toString(((Agente)pessoa).getRamal()));
+        		
+        		cpf.setText(((Agente)pessoa).getCPF());
+        		
+        		agencia.setText(((Agente)pessoa).getCod_Agencia());
+        		
+        		codigo.setText(Integer.toString(((Agente)pessoa).getCod()));
+        		
+        	}
+        	else if(pessoa instanceof Guia) {
+        		SingleSelectionModel<String> a =cargo.getSelectionModel() ;
+        		a.select(1);
+        		cargo.setSelectionModel(a);
+        		
+        		salario.setText(Float.toString(((Guia)pessoa).getSalario()));
+
+        		ramal.setText(Integer.toString(((Guia)pessoa).getRamal()));
+        		
+        		cpf.setText(((Guia)pessoa).getCPF());
+        		
+        		agencia.setText(((Guia)pessoa).getCod_Agencia());
+        		
+        		codigo.setText(Integer.toString(((Guia)pessoa).getCod()));
+        		
+        	}
+        	else if(pessoa instanceof Motorista) {
+        		SingleSelectionModel<String> a =cargo.getSelectionModel() ;
+        		a.select(2);
+        		cargo.setSelectionModel(a);
+        		
+        		salario.setText(Float.toString(((Motorista)pessoa).getSalario()));
+
+        		ramal.setText(Integer.toString(((Motorista)pessoa).getRamal()));
+        		
+        		cpf.setText(((Motorista)pessoa).getCPF());
+        		
+        		agencia.setText(((Motorista)pessoa).getCod_Agencia());
+        		
+        		codigo.setText(Integer.toString(((Motorista)pessoa).getCod()));
+        		
+        	}
         	
         	remover_button.setDisable(false);
     	}
@@ -212,12 +309,7 @@ public class TelaFuncionarioController implements Initializable{
 		f = Fachada.getInstance();
 		
 		pessoa = new Pessoa();
-    	gerente = new Gerente();
-    	/*
-    	 * guia = new Guia();
-    	 * motorista = new Motorista();
-    	 * agente = new Agente();
-		*/
+    	
 		
 	}
 

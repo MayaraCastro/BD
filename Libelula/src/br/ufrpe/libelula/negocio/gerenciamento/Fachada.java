@@ -3,9 +3,7 @@ package br.ufrpe.libelula.negocio.gerenciamento;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import br.ufrpe.libelula.negocio.beans.Funcionario;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
 import br.ufrpe.libelula.negocio.beans.Pacote;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
@@ -28,7 +26,7 @@ public class Fachada {
 	private Fachada() {
 		this.gfu = new GerenciamentoFuncionario();
 		this.gfa = new GerenciamentoFatura();
-		this.gc = new GerenciamentoCliente();
+	//	this.gc = new GerenciamentoCliente();
 		this.gp = new GerenciamentoPacote();
 		this.gip = new GerenciamentoItemPacote();
 		this.gs = new GerenciamentoServico();

@@ -1,8 +1,6 @@
 package br.ufrpe.libelula.gui;
 
 import javax.swing.JOptionPane;
-
-import br.ufrpe.libelula.negocio.gerenciamento.Fachada;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,8 +16,6 @@ public class MainGUI extends Application {
 		}
 		ScreenManager.getInstance().setMainStage(primaryStage);
 		ScreenManager.getInstance().showLogin();
-		//ScreenManager.getInstance().showPacote();
-
 
 	}
 

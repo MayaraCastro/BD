@@ -6,13 +6,12 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import br.ufrpe.libelula.negocio.beans.Gerente;
+import br.ufrpe.libelula.negocio.beans.Motorista;
 
-
-public class GerenteDAO extends DAO<Gerente> {
+public class MotoristaDAO extends DAO<Motorista> {
 	@Override
-	public void inserir(Gerente o) throws Exception {
-		String sql = "INSERT INTO `gerente` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
+	public void inserir(Motorista o) throws Exception {
+		String sql = "INSERT INTO `motorista` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
 				+ " VALUES " + "(?,?,?,?,?)";
 		preparar(sql);
 		getStatement().setFloat(1, o.getSalario() );
@@ -35,8 +34,8 @@ public class GerenteDAO extends DAO<Gerente> {
 	}
 
 	@Override
-	public void remover(Gerente o) throws Exception {
-		String sql = "DELETE FROM gerente WHERE `cod` = ? ";
+	public void remover(Motorista o) throws Exception {
+		String sql = "DELETE FROM motorista WHERE `cod` = ? ";
 		preparar(sql);
 		getStatement().setInt(1, o.getCod());
 		try {
@@ -52,8 +51,8 @@ public class GerenteDAO extends DAO<Gerente> {
 	}
 
 	@Override
-	public void alterar(Gerente o) throws Exception {
-		String sql = "UPDATE `gerente` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
+	public void alterar(Motorista o) throws Exception {
+		String sql = "UPDATE `motorista` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
 				+ "`cod_agencia` = ?"
 				+  "WHERE `cod` = ?";
 		preparar(sql);
@@ -76,8 +75,8 @@ public class GerenteDAO extends DAO<Gerente> {
 		}
 	}
 
-	public Gerente buscar(int codigo) throws Exception  {
-		String sql = "SELECT * FROM `gerente` WHERE `cod` = ?";
+	public Motorista buscar(int codigo) throws Exception {
+		String sql = "SELECT * FROM `motorista` WHERE `cod` = ?";
 		preparar(sql);
 		getStatement().setInt(1, codigo);
 		ResultSet rs = null;
@@ -87,27 +86,28 @@ public class GerenteDAO extends DAO<Gerente> {
 		} catch (SQLException e) {
 			getConnection().rollback();
 			fecharStatetment();
-			JOptionPane.showMessageDialog(null, "Gerente não encontrado!");
+			JOptionPane.showMessageDialog(null, "Motorista não encontrado!");
 		}
 		try {
 			rs.next();
-			Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
-			rs.getString(5));
-			rs.close();
-			fecharStatetment();
-			return o;
+			Motorista o = new Motorista(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+				rs.getString(5));
+		rs.close();
+		fecharStatetment();
+		return o;
+		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 		
+		
 	}
 
 	@Override
-	public ArrayList<Gerente> listarTodos() throws Exception {
-		ArrayList<Gerente> r = new ArrayList<Gerente>();
-		String sql = "SELECT * FROM `gerente`";
+	public ArrayList<Motorista> listarTodos() throws Exception {
+		ArrayList<Motorista> r = new ArrayList<Motorista>();
+		String sql = "SELECT * FROM `motorista`";
 		preparar(sql);
 		ResultSet rs = null;
 		try {
@@ -119,7 +119,7 @@ public class GerenteDAO extends DAO<Gerente> {
 			e.printStackTrace();
 		}
 		while (rs.next()) {
-			Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+			Motorista o = new Motorista(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
 					rs.getString(5));
 			r.add(o);
 		}

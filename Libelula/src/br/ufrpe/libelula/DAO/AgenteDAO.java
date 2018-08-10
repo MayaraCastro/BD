@@ -1,24 +1,18 @@
 package br.ufrpe.libelula.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import br.ufrpe.libelula.negocio.beans.Funcionario;
-import br.ufrpe.libelula.negocio.beans.Gerente;
-import br.ufrpe.libelula.negocio.beans.Pessoa;
+import br.ufrpe.libelula.negocio.beans.Agente;
 
 
-public class FuncionarioDAO extends DAO<Pessoa>{
+public class AgenteDAO extends DAO<Agente> {
 	@Override
-	public void inserir(Pessoa o) throws Exception {
-		
-		String sql = "INSERT INTO `gerente` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
+	public void inserir(Agente o) throws Exception {
+		String sql = "INSERT INTO `agente` (`salario`,`ramal`,`cpf`,`cod`,`cod_agencia`)"
 				+ " VALUES " + "(?,?,?,?,?)";
 		preparar(sql);
 		getStatement().setFloat(1, o.getSalario() );
@@ -41,10 +35,10 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 	}
 
 	@Override
-	public void remover(Pessoa o) throws Exception {
-		String sql = "DELETE FROM gerente WHERE `cod` = ?";
+	public void remover(Agente o) throws Exception {
+		String sql = "DELETE FROM agente WHERE `cod` = ? ";
 		preparar(sql);
-		getStatement().setInt(1, o.getCodigoPessoa());
+		getStatement().setInt(1, o.getCod());
 		try {
 			getStatement().execute();
 			getConnection().commit();
@@ -58,8 +52,8 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 	}
 
 	@Override
-	public void alterar(Pessoa o) throws Exception {
-		String sql = "UPDATE `gerente` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
+	public void alterar(Agente o) throws Exception {
+		String sql = "UPDATE `agente` SET `salario` = ?,`ramal` = ?,`cpf` = ?,"
 				+ "`cod_agencia` = ?"
 				+  "WHERE `cod` = ?";
 		preparar(sql);
@@ -82,8 +76,8 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 		}
 	}
 
-	public Gerente buscar(int codigo) throws Exception {
-		String sql = "SELECT * FROM `gerente` WHERE `cod` = ?";
+	public Agente buscar(int codigo) throws Exception {
+		String sql = "SELECT * FROM `agente` WHERE `cod` = ?";
 		preparar(sql);
 		getStatement().setInt(1, codigo);
 		ResultSet rs = null;
@@ -93,20 +87,29 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 		} catch (SQLException e) {
 			getConnection().rollback();
 			fecharStatetment();
-			JOptionPane.showMessageDialog(null, "Pacote não encontrado!");
+			JOptionPane.showMessageDialog(null, "Agente não encontrado!");
 		}
-		rs.next();
-		Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+		try {
+			rs.next();
+			Agente o = new Agente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
 				rs.getString(5));
 		rs.close();
 		fecharStatetment();
 		return o;
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+		
 	}
 
 	@Override
-	public ArrayList<Pessoa> listarTodos() throws Exception {
-		ArrayList<Pessoa> r = new ArrayList<Pessoa>();
-		String sql = "SELECT * FROM `gerente`";
+	public ArrayList<Agente> listarTodos() throws Exception {
+		ArrayList<Agente> r = new ArrayList<Agente>();
+		String sql = "SELECT * FROM `agente`";
 		preparar(sql);
 		ResultSet rs = null;
 		try {
@@ -118,7 +121,7 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 			e.printStackTrace();
 		}
 		while (rs.next()) {
-			Gerente o = new Gerente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+			Agente o = new Agente(rs.getFloat(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
 					rs.getString(5));
 			r.add(o);
 		}
@@ -128,3 +131,4 @@ public class FuncionarioDAO extends DAO<Pessoa>{
 
 	}
 }
+

@@ -1,29 +1,78 @@
 package br.ufrpe.libelula.negocio.beans;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
-public class Agente extends Funcionario{
-	private int tipo;
-	public Agente() {
-		super();
-		this.setTipo(2);
-	}
-	public Agente(String cPF, String ramal, double salario, int cod, String nome, Date dt_nasc, ArrayList<String> sexo,
-			String fone, byte[] logo, String cep, int num, String cod_Agencia) {
-		super(cPF, ramal, salario, cod, nome, dt_nasc, sexo, fone, logo, cep, num, cod_Agencia);
-		// TODO Auto-generated constructor stub
+public class Agente extends Pessoa{
+	private Float salario;
+	private Integer ramal;
+	private String CPF;
+	private String cod_Agencia;
+
+	
+	public Agente(String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep, Integer num,
+			Float salario, Integer ramal, String cPF, String cod_Agencia) {
+		super(nome, dt_nasc, sexo, fone, foto, cep, num);
+		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.cod_Agencia = cod_Agencia;
 	}
 
-	public Agente(String cPF, String ramal, double salario, String cod_Agencia) {
-		super(cPF, ramal, salario, cod_Agencia);
-		// TODO Auto-generated constructor stub
+
+	public Agente(Integer cod, String nome, LocalDate dt_nasc, String sexo, String fone, byte[] foto, String cep,
+			Integer num, Float salario, Integer ramal, String cPF, String cod_Agencia) {
+		super(cod, nome, dt_nasc, sexo, fone, foto, cep, num);
+		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.cod_Agencia = cod_Agencia;
 	}
-	public int getTipo() {
-		return tipo;
-	}
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+
+
+	public Agente(Float salario, Integer ramal, String cPF,Integer cod, String cod_Agencia) {
+		super(cod);
+		this.salario = salario;
+		this.ramal = ramal;
+		CPF = cPF;
+		this.cod_Agencia = cod_Agencia;
 	}
 	
+
+	public Agente() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+
+	public Integer getRamal() {
+		return ramal;
+	}
+
+	public void setRamal(Integer ramal) {
+		this.ramal = ramal;
+	}
+
+	public float getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Float salario) {
+		this.salario = salario;
+	}
+
+	public String getCod_Agencia() {
+		return cod_Agencia;
+	}
+
+	public void setCod_Agencia(String cod_Agencia) {
+		this.cod_Agencia = cod_Agencia;
+	}
+	
+
 }

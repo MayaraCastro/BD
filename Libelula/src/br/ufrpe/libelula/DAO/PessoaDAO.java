@@ -73,7 +73,7 @@ public class PessoaDAO extends DAO<Pessoa> {
 
 	@Override
 	public void remover(Pessoa o) throws Exception {
-		String sql = "DELETE FROM pessoa WHERE `cod` = ?";
+		String sql = "DELETE FROM pessoa WHERE `cod` = ? ";
 		preparar(sql);
 		getStatement().setInt(1, o.getCod());
 		try {
@@ -91,7 +91,7 @@ public class PessoaDAO extends DAO<Pessoa> {
 	@Override
 	public void alterar(Pessoa o) throws Exception {
 		String sql = "UPDATE `pessoa` SET `nome` = ?,`dt_nasc` = ?,`sexo` = ?,"
-				+ "`fone` = ?,`foto` = ?,`cep` = ?,`num` = ?"
+				+ "`fone` = ?,`foto` = ?,`cep` = ?,`num` = ? "
 				+  "WHERE `cod` = ?";
 		preparar(sql);
 		getStatement().setString(1, o.getNome() );
@@ -105,6 +105,7 @@ public class PessoaDAO extends DAO<Pessoa> {
 		}
 		
 		getStatement().setString(6, o.getCep());
+		
 		if(o.getNum()!=null) {
 			getStatement().setInt(7, o.getNum());
 		}
