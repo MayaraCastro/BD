@@ -10,8 +10,7 @@ import javax.swing.JOptionPane;
 import br.ufrpe.libelula.negocio.beans.Servico_Ref;
 
 public class Servico_RefDAO extends DAO<Servico_Ref> {
-		@Override
-		public void inserir(Servico_Ref o) throws Exception {
+		public void inserir(Servico_Ref o , int tipo) throws Exception {
 			String sql = "INSERT INTO `servico_ref` (`valor`,`local_destino`,`nivel`,`tipoServico`)"
 					+ " VALUES " + "(?,?,?,?)";
 			preparar(sql);
@@ -28,34 +27,32 @@ public class Servico_RefDAO extends DAO<Servico_Ref> {
 			try {
 				getStatement().execute();
 				getConnection().commit();
-				JOptionPane.showMessageDialog(null, "Inserção realizada com sucesso!");
+				JOptionPane.showMessageDialog(null, "Inserï¿½ï¿½o realizada com sucesso!");
 			} catch (SQLException e) {
-				getConnection().rollback(); //caso aja erro na transação faz um rollback
-				JOptionPane.showMessageDialog(null, "Erro na Inserção!");
+				getConnection().rollback(); //caso aja erro na transaï¿½ï¿½o faz um rollback
+				JOptionPane.showMessageDialog(null, "Erro na Inserï¿½ï¿½o!");
 			} finally {
 				fecharStatetment();
 			}
 		}
 
-		@Override
-		public void remover(Servico_Ref o) throws Exception {
+		public void remover(Servico_Ref o, int tipo) throws Exception {
 			String sql = "DELETE FROM servico_ref WHERE `codigo` = ?";
 			preparar(sql);
 			getStatement().setInt(1, o.getCodigo());
 			try {
 				getStatement().execute();
 				getConnection().commit();
-				JOptionPane.showMessageDialog(null, "Remoção realizada com sucesso!");
+				JOptionPane.showMessageDialog(null, "Remoï¿½ï¿½o realizada com sucesso!");
 			} catch (SQLException e) {
 				getConnection().rollback();
-				JOptionPane.showMessageDialog(null, "Erro na Remoção!");
+				JOptionPane.showMessageDialog(null, "Erro na Remoï¿½ï¿½o!");
 			} finally {
 				fecharStatetment();
 			}
 		}
 
-		@Override
-		public void alterar(Servico_Ref o) throws Exception {
+		public void alterar(Servico_Ref o, int tipo) throws Exception {
 			String sql = "UPDATE `servico_ref` SET `valor` = ?,`local_destino` = ?,`nivel` = ?,"
 					+ "`tipoServico` = ?"
 					 + "WHERE `codigo` = ?";
@@ -73,10 +70,10 @@ public class Servico_RefDAO extends DAO<Servico_Ref> {
 			try {
 				getStatement().execute();
 				getConnection().commit();
-				JOptionPane.showMessageDialog(null, "Alteração realizada com sucesso!");
+				JOptionPane.showMessageDialog(null, "Alteraï¿½ï¿½o realizada com sucesso!");
 			} catch (SQLException e) {
 				getConnection().rollback();
-				JOptionPane.showMessageDialog(null, "Erro na Alteração!");
+				JOptionPane.showMessageDialog(null, "Erro na Alteraï¿½ï¿½o!");
 			} finally {
 				fecharStatetment();
 			}
@@ -93,7 +90,7 @@ public class Servico_RefDAO extends DAO<Servico_Ref> {
 			} catch (SQLException e) {
 				getConnection().rollback();
 				fecharStatetment();
-				JOptionPane.showMessageDialog(null, "Servico não encontrado!");
+				JOptionPane.showMessageDialog(null, "Servico nï¿½o encontrado!");
 			}
 			rs.next();
 			Servico_Ref o = new Servico_Ref(rs.getInt(1), rs.getFloat(2), rs.getString(3), rs.getInt(4),
