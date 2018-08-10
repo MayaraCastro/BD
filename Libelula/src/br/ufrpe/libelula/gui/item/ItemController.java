@@ -6,21 +6,33 @@ import java.util.ResourceBundle;
 import br.ufrpe.libelula.gui.ScreenManager;
 import br.ufrpe.libelula.gui.pacote.PacoteController;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
+import br.ufrpe.libelula.negocio.beans.Pacote;
 import br.ufrpe.libelula.negocio.beans.Servico_Ref;
 import br.ufrpe.libelula.negocio.gerenciamento.Fachada;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+
+
+
+
 public class ItemController implements Initializable{
 	
 	private Fachada f;
 	
 	private ItemPacote i;
-
-    @FXML
+	
+	private Pacote p;
+	
+	private Servico_Ref s;
+	
+	@FXML
     private TextField cod_serv;
 
     @FXML
@@ -31,9 +43,57 @@ public class ItemController implements Initializable{
 
     @FXML
     private DatePicker data;
-    
+
     @FXML
     private Button remover_button;
+
+    @FXML
+    private Label cod_pacote;
+
+    @FXML
+    private Label valor_total_pacote;
+
+    @FXML
+    private Label valor_desconto_pacote;
+
+    @FXML
+    private Label total_pagar_pacote;
+
+    @FXML
+    private Label n_criancas;
+
+    @FXML
+    private Label dt_inicio;
+
+    @FXML
+    private Label dt_final;
+
+    @FXML
+    private Label tipo_pacote;
+
+    @FXML
+    private Label n_adultos;
+
+    @FXML
+    private Label cod_servico;
+
+    @FXML
+    private Label valor_servico;
+
+    @FXML
+    private Label destino_servico;
+
+    @FXML
+    private Label tipo_servico;
+
+    @FXML
+    private Label nivel_servico;
+    
+    @FXML
+    private Tab tab_pacote;
+    
+    @FXML
+    private Tab tab_servico;
 
     @FXML
     void buscar_servico(ActionEvent event) {
@@ -41,6 +101,8 @@ public class ItemController implements Initializable{
     	if(s != null) {
     		valor_unitario.setText(Float.toString(s.getValor()));
         	System.out.println(Integer.parseInt(cod_serv.getText()));
+        	this.preenchercampos();
+			tab_servico.setDisable(false);
 
     	}
     }
@@ -81,19 +143,62 @@ public class ItemController implements Initializable{
     	}
 
     }
+    
+    public void preenchercampos() {
+    	//item
+    	cod_serv.setText(Integer.toString(i.getCodservico()));
+		valor_unitario.setText(Float.toString(i.getVl_unitario()));
+		qtd.setText(Integer.toString(i.getQtd()));
+		data.setValue(i.getDt());
+		
+		//pacote
+		cod_pacote.setText(Integer.toString(p.getCodigo()));
+		valor_total_pacote.setText(Float.toString(p.getVl_total()));
+		valor_desconto_pacote.setText(Float.toString(p.getVl_desconto()));
+		total_pagar_pacote.setText(Float.toString(p.getTotal_a_pagar()));
+		dt_inicio.setText(p.getDatainicio().toString());
+		dt_final.setText(p.getDatafim().toString());
+		if(p.getTipo() == 3) {
+			tipo_pacote.setText("Grupo");
+			n_criancas.setText(Integer.toString(p.getN_criancas()));
+			n_adultos.setText(Integer.toString(p.getN_adultos()));
+		}
+		else if(p.getTipo() == 2) {
+			tipo_pacote.setText("Casal");
+		}
+		else {
+			tipo_pacote.setText("Individual");
+		}
+			
+		
+		//servico
+		cod_servico.setText(Integer.toString(s.getCodigo()));
+		valor_servico.setText(Float.toString(s.getValor()));
+		destino_servico.setText(s.getLocal_destino());
+		if(s.getTipoServico() == 1) {
+			tipo_servico.setText("Serviço Próprio");
+		}
+		else {
+			tipo_servico.setText("Serviço Parceiro");
+		}
+
+		nivel_servico.setText(Integer.toString(s.getNivel()));
+		
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		this.f = Fachada.getInstance();
 		i = PacoteController.getItem();
+		p = PacoteController.getPacote();
 		if(i.getId_sk()!=null) {
-			cod_serv.setText(Integer.toString(i.getCodservico()));
-			valor_unitario.setText(Float.toString(i.getVl_unitario()));
-			qtd.setText(Integer.toString(i.getQtd()));
-			data.setValue(i.getDt());
-			
+			p = f.BuscarPacote(i.getCodpacote());
+			s = f.BuscarServico(i.getCodservico());
+			tab_pacote.setDisable(false);
+			tab_servico.setDisable(false);
+			this.preenchercampos();
 			remover_button.setDisable(false);
 		}
-		this.f = Fachada.getInstance();
 		
 	}
     

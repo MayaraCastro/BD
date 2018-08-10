@@ -6,12 +6,11 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.item.ItemController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.item.ItemController">
    <children>
-      <TabPane layoutX="-1.0" layoutY="-3.0" prefHeight="403.0" prefWidth="569.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-1.0" layoutY="-3.0" prefHeight="286.0" prefWidth="399.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Item">
                <content>
@@ -32,15 +31,49 @@
                   </Pane>
                </content>
           </Tab>
-          <Tab text="Pacote">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
+          <Tab fx:id="tab_pacote" disable="true" text="Pacote">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="24.0" layoutY="147.0" text="Total a pagar:" />
+                        <Label layoutX="24.0" layoutY="69.0" text="Valor total:" />
+                        <Label layoutX="24.0" layoutY="109.0" text="Valor de desconto:" />
+                        <Label layoutX="199.0" layoutY="109.0" text="Data final:" />
+                        <Label layoutX="25.0" layoutY="26.0" text="Código do Pacote:" />
+                        <Label layoutX="198.0" layoutY="69.0" text="Data de início:" />
+                        <Label layoutX="25.0" layoutY="186.0" text="Nº de Crianças:" />
+                        <Label layoutX="200.0" layoutY="147.0" text="Tipo:" />
+                        <Label layoutX="200.0" layoutY="186.0" text="Nº de Adultos:" />
+                        <Label fx:id="cod_pacote" layoutX="150.0" layoutY="26.0" text="#" />
+                        <Label fx:id="valor_total_pacote" layoutX="109.0" layoutY="69.0" text="#" />
+                        <Label fx:id="valor_desconto_pacote" layoutX="150.0" layoutY="109.0" text="#" />
+                        <Label fx:id="total_pagar_pacote" layoutX="135.0" layoutY="147.0" text="#" />
+                        <Label fx:id="n_criancas" layoutX="133.0" layoutY="186.0" text=" " />
+                        <Label fx:id="dt_inicio" layoutX="312.0" layoutY="69.0" text="#" />
+                        <Label fx:id="dt_final" layoutX="308.0" layoutY="109.0" text="#" />
+                        <Label fx:id="tipo_pacote" layoutX="269.0" layoutY="147.0" text="#" />
+                        <Label fx:id="n_adultos" layoutX="296.0" layoutY="186.0" text=" " />
+                     </children>
+                  </Pane>
+               </content>
           </Tab>
-            <Tab text="Serviço">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab fx:id="tab_servico" disable="true" text="Serviço">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="27.0" layoutY="28.0" text="Código do Serviço:" />
+                        <Label layoutX="28.0" layoutY="106.0" text="Destino:" />
+                        <Label layoutX="27.0" layoutY="69.0" text="Valor:" />
+                        <Label layoutX="27.0" layoutY="186.0" text="Nível:" />
+                        <Label layoutX="27.0" layoutY="147.0" text="Tipo de Serviço:" />
+                        <Label fx:id="cod_servico" layoutX="160.0" layoutY="28.0" text="#" />
+                        <Label fx:id="valor_servico" layoutX="80.0" layoutY="69.0" text="#" />
+                        <Label fx:id="destino_servico" layoutX="96.0" layoutY="106.0" text="#" />
+                        <Label fx:id="tipo_servico" layoutX="139.0" layoutY="147.0" text="#" />
+                        <Label fx:id="nivel_servico" layoutX="77.0" layoutY="186.0" text="#" />
+                     </children>
+                  </Pane>
+               </content>
             </Tab>
         </tabs>
       </TabPane>

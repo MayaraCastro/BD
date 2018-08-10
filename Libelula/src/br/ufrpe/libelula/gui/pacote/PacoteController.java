@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.gluonhq.impl.charm.a.b.b.i;
-import com.jfoenix.controls.JFXListView;
 
 import br.ufrpe.libelula.gui.ScreenManager;
 import br.ufrpe.libelula.negocio.beans.ItemPacote;
@@ -20,14 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
@@ -121,6 +117,7 @@ public class PacoteController implements Initializable{
     		lista_itens.setItems(oListItens);
 		}
     }
+    
     @FXML
     void novo(ActionEvent event) {
     	p = new Pacote();
