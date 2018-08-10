@@ -31,7 +31,8 @@ public class Fachada {
 		this.gip = new GerenciamentoItemPacote();
 		this.gs = new GerenciamentoServico();
 		this.login = new GerenciamentoLogin();
-	}
+		this.gpessoa = new GerenciamentoPessoa();
+		}
 
 	public static Fachada getInstance() {
 		if (instance == null)

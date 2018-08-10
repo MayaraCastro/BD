@@ -123,6 +123,7 @@ public class TelaFuncionarioController implements Initializable{
     	else{
     		f.CadastrarFuncionario(pessoa);
     		codigo.setText(Integer.toString(f.pegarcoddoultimo()));
+    		remover_button.setDisable(false);
     	}
     }
     void preenchercomosdados() {
