@@ -6,16 +6,16 @@ public class Intercambio extends Servico_Ref{
 	private int codigo;
 	private String obs;
 	private String detalhe;
-	private String tipo_intercambio;
+	private int tipo_intercambio;
 	private String cargo;
 	private Date dt_inicio;
 	private Date dt_fim;
-	private String cargaHoraria;
+	private int cargaHoraria;
 	private String nome_curso;
 	private String lingua;
 	
-	public Intercambio(int codigo,	String obs,	String detalhe,	String tipo_intercambio, String cargo,	Date dt_inicio,
-					   Date dt_fim,	String cargaHoraria, String nome_curso,	String lingua) {
+	public Intercambio(int codigo,	String obs,	String detalhe,	int tipo_intercambio, String cargo,	Date dt_inicio,
+					   Date dt_fim,	int cargaHoraria, String nome_curso,	String lingua) {
 		super();
 		this.codigo = codigo;
 		this.obs = obs;
@@ -31,8 +31,8 @@ public class Intercambio extends Servico_Ref{
 	}
 	
 	public Intercambio(int codigo, float valor, String local_destino, Integer nivel, int tipoServico, 
-					   int codigo2,	String obs,	String detalhe,	String tipo_intercambio, String cargo,	
-					   Date dt_inicio, Date dt_fim,	String cargaHoraria, String nome_curso,	String lingua) {
+					   int codigo2,	String obs,	String detalhe,	int tipo_intercambio, String cargo,	
+					   Date dt_inicio, Date dt_fim,	int cargaHoraria, String nome_curso,	String lingua) {
 		super(codigo, valor, local_destino, nivel, tipoServico);
 		this.codigo = codigo2;
 		this.obs = obs;
@@ -70,11 +70,11 @@ public class Intercambio extends Servico_Ref{
 		this.detalhe = detalhe;
 	}
 
-	public String getTipo_intercambio() {
+	public int getTipo_intercambio() {
 		return tipo_intercambio;
 	}
 
-	public void setTipo_intercambio(String tipo_intercambio) {
+	public void setTipo_intercambio(int tipo_intercambio) {
 		this.tipo_intercambio = tipo_intercambio;
 	}
 
@@ -102,11 +102,11 @@ public class Intercambio extends Servico_Ref{
 		this.dt_fim = dt_fim;
 	}
 
-	public String getCargaHoraria() {
+	public int getCargaHoraria() {
 		return cargaHoraria;
 	}
 
-	public void setCargaHoraria(String cargaHoraria) {
+	public void setCargaHoraria(int cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
 

@@ -26,18 +26,15 @@ $$
 
 #2.   para retornar se o CLIENTE esta em dias com seus pagamentos de FATURAS
 delimiter $$
-create function cliente_em_dias (cod int) returns bool
+create function cliente_em_dias (cod int, tipo int) returns bool
 	begin
-		-- 0 pago
-		-- !=0 nao pago
-		
-		select f.status
-		from fatura f join pacote p join  clienteJuridico_compra cj join clienteFisico_compra cf
-		on cj.codcliente=cod or cf.codcliente = cod
+		select @val:=SUM(f.stats)
+		from fatura f join pacote p join clienteJuridico_compra cj join clienteFisico_compra cf 
+		on cj.codpacote = p.cod or cf.codpacote = p.cod
 		where
-			f.codpacote = p.codigo;
-		
-		if f.stats = 0 then
+				f.codpacote = p.codigo;
+
+		if @val = 0 then
 			return true;
 		else
 			return false;
@@ -171,49 +168,26 @@ $$
 
 #2.  Para atualizar o  atributo "numero_clientes" de AGENCIA 
 delimiter $$
-create trigger atualiza_num_clientes_fisicos_delete 
+create trigger atualiza_num_clientesdelete 
+before delete on cliente_juridico
 before delete on cliente_fisico
 for each row
 begin
 
-	if(old.cod_cliente is not null)then
-		update agencia set num_clientes_fisicos = num_clientes_fisicos - 1 where CNPJ = old.cod_agencia;
+	if(old.cod_agencia is not null)then
+		update agencia set num_cliente = num_cliente - 1 where CNPJ = old.cod_agencia;
     end if;
 end;
 $$
 
 delimiter $$
-create trigger atualiza_num_clientes_fisicos_insert 
+create trigger atualiza_num_clientesinsert 
+after insert on cliente_juridico
 after insert on cliente_fisico
 for each row
 begin
 	if(new.cod_agencia is not null)then
-		update agencia set num_clientes_fisicos = num_clientes_fisicos + 1 where CNPJ = new.cod_agencia;
-    end if;
-end;
-$$
-
-
-
-delimiter $$
-create trigger atualiza_num_clientes_juridicos_delete 
-before delete on cliente_juridico
-for each row
-begin
-
-	if(old.cod_agencia is not null)then
-		update agencia set num_cliente_juridico = num_cliente_juridico - 1 where CNPJ = old.cod_agencia;
-    end if;
-end;
-$$
-
-delimiter $$
-create trigger atualiza_num_clientes_juridicos_insert 
-after insert on cliente_juridico
-for each row
-begin
-	if(new.cod_agencia is not null)then
-		update agencia set num_cliente_juridico = num_cliente_juridico + 1 where CNPJ = new.cod_agencia;
+		update agencia set num_cliente = num_cliente + 1 where CNPJ = new.cod_agencia;
     end if;
 end;
 $$
