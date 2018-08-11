@@ -10,11 +10,11 @@ public class Acomodacao extends Servico_Ref{
 	private int capacidade_pessoas;
 	private int fumante;
 	private int no_estrelas;
-	private String tipo;
+	private int tipo;
 	
 	
 	public Acomodacao(int codigo, String descricao,	Date data_entrada, Date dt_saida, int capacidade_pessoas, 
-					  int fumante, int no_estrelas,	String tipo) {
+					  int fumante, int no_estrelas,	int tipo) {
 		super();
 		this.codigo = codigo;
 		this.descricao = descricao;
@@ -30,7 +30,7 @@ public class Acomodacao extends Servico_Ref{
 	
 	public Acomodacao(int codigo, float valor, String local_destino, Integer nivel, int tipoServico, int codigo2,
 			String descricao, Date data_entrada, Date dt_saida, int capacidade_pessoas, int fumante, int no_estrelas,
-			String tipo) {
+			int tipo) {
 		super(codigo, valor, local_destino, nivel, tipoServico);
 		codigo = codigo2;
 		this.descricao = descricao;
@@ -112,12 +112,12 @@ public class Acomodacao extends Servico_Ref{
 	}
 
 
-	public String getTipo() {
+	public int getTipo() {
 		return tipo;
 	}
 
 
-	public void setTipo(String tipo) {
+	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
 }
