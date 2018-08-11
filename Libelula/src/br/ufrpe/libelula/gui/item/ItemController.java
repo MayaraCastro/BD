@@ -1,7 +1,6 @@
 package br.ufrpe.libelula.gui.item;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -12,7 +11,6 @@ import br.ufrpe.libelula.negocio.beans.ItemPacote;
 import br.ufrpe.libelula.negocio.beans.Pacote;
 import br.ufrpe.libelula.negocio.beans.Servico_Ref;
 import br.ufrpe.libelula.negocio.gerenciamento.Fachada;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,6 +95,10 @@ public class ItemController implements Initializable{
     
     @FXML
     private Tab tab_servico;
+    
+    @FXML
+    private TextField seq;
+
 
     @FXML
     void buscar_servico(ActionEvent event) {
@@ -115,14 +117,13 @@ public class ItemController implements Initializable{
     }
     
     public boolean verificarDados() {
-    	LocalDate date = LocalDate.now();
     	if(s ==null || data.getValue() == null || qtd.getText() == null || valor_unitario.getText() == null) {
     		return false;
     	}
-    	if(data.getValue().compareTo(date) < 0  ) {
+    	if(data.getValue().getYear() < 2000  ) {
     		return false;
     	}
-    	if(Integer.parseInt(qtd.getText()) <0) {
+    	if(Integer.parseInt(qtd.getText()) <0 || Integer.parseInt(seq.getText()) <0) {
     		return false;
     	}
     	if(Float.parseFloat(valor_unitario.getText()) < 0) {
@@ -139,6 +140,7 @@ public class ItemController implements Initializable{
 	    	this.i.setDt(data.getValue());
 	    	this.i.setQtd(Integer.parseInt(qtd.getText()));
 	    	this.i.setVl_unitario(Float.parseFloat(valor_unitario.getText()));
+	    	this.i.setSeq(Integer.parseInt(seq.getText()));
 	    	
 	    	if(this.verificarDados()) {
 	    		if(i.getId_sk()!= null) {
@@ -153,7 +155,7 @@ public class ItemController implements Initializable{
 	    	PacoteController.setItem(new ItemPacote());
     	}
     	catch(Exception e) {
-    		JOptionPane.showMessageDialog(null, "Informação Inválida!");
+    		JOptionPane.showMessageDialog(null, "Informação Inválida!" +e.getMessage());
     	}
 
     }
@@ -179,6 +181,7 @@ public class ItemController implements Initializable{
 		valor_unitario.setText(Float.toString(i.getVl_unitario()));
 		qtd.setText(Integer.toString(i.getQtd()));
 		data.setValue(i.getDt());
+		seq.setText(Integer.toString(i.getSeq()));
 		}
 	public void preenchercampospacote() {
 		//pacote

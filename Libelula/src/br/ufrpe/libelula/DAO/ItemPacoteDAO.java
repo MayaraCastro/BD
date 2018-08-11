@@ -12,15 +12,16 @@ import br.ufrpe.libelula.negocio.beans.ItemPacote;
 public class ItemPacoteDAO extends DAO<ItemPacote> {
 	@Override
 	public void inserir(ItemPacote o) throws Exception {
-		String sql = "INSERT INTO `item_pacote` (`codservico`,`codpacote`,`dt`,`vl_unitario`,`qtd`,`vl_com_desconto`)"
-				+ " VALUES " + "(?,?,?,?,?,?)";
+		String sql = "INSERT INTO `item_pacote` (`codservico`,`codpacote`,`dt`,`vl_unitario`,`qtd`,`seq`,`vl_com_desconto`)"
+				+ " VALUES " + "(?,?,?,?,?,?,?)";
 		preparar(sql);
 		getStatement().setInt(1, o.getCodservico());
 		getStatement().setFloat(2, o.getCodpacote());
 		getStatement().setDate(3, Date.valueOf(o.getDt()));
 		getStatement().setFloat(4, o.getVl_unitario());
 		getStatement().setInt(5, o.getQtd());
-		getStatement().setFloat(6, o.getVl_com_desconto());
+		getStatement().setInt(6, o.getSeq());
+		getStatement().setFloat(7, o.getVl_com_desconto());
 		
 		try {
 			getStatement().execute();
