@@ -24,7 +24,7 @@ CREATE TABLE pessoa (
 	fone   varchar(15),
     foto blob,
     cep varchar(10) not null, #da relacao
-    num int, #da relacao
+    num int check(num > 0), #da relacao
     
 	primary key (cod),
     foreign key (cep) references endereco(cep)
@@ -35,11 +35,11 @@ create table agencia(
 CNPJ char (18) not null unique,
 nome_fantasia varchar(50),
 cep varchar(10) unique, #da relacao
-num int, #da relacao
+num int check(num > 0), #da relacao
 codgerente int not null unique,  
 datainicio date,
-num_cliente int,
-num_funcionarios int,
+num_cliente int check(num >= 0),
+num_funcionarios int check(num >= 0),
 
 primary key (CNPJ),
 foreign key (cep) references endereco(cep) 
@@ -49,7 +49,7 @@ foreign key (cep) references endereco(cep)
 
 create table agente(
 salario decimal(10,2) check(salario>0), 
-ramal int,
+ramal int check(num > 0),
 cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
@@ -61,7 +61,7 @@ constraint fk_agente_agencia foreign key (cod_agencia) references agencia(CNPJ) 
 
 create table guia(
 salario decimal(10,2) check(salario>0), 
-ramal int,
+ramal int check(num > 0),
 cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
@@ -74,7 +74,7 @@ constraint fk_guia_agencia foreign key (cod_agencia) references agencia(CNPJ)on 
 
 create table motorista(
 salario decimal(10,2) check(salario>0), 
-ramal int,
+ramal int check(num > 0),
 cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
@@ -87,7 +87,7 @@ constraint fk_motorista_agencia foreign key (cod_agencia) references agencia(CNP
 
 create table gerente(
 salario decimal(10,2) check(salario>0), 
-ramal int,
+ramal int check(num > 0),
 cpf char(14) not null unique,
 cod int not null, #da hierarquia
 cod_agencia char (18) not null,
@@ -104,8 +104,8 @@ ALTER TABLE agencia ADD constraint fk_agencia_gerente FOREIGN KEY ( codgerente )
 create table malaDireta(
 codigo int not null auto_increment,
 texto varchar(300),
-dt_criacao date,
-dt_envio date,
+dt_criacao date ,
+dt_envio date check(dt_envio >= dt_criacao),
 
 primary key (codigo)
 );
@@ -166,7 +166,7 @@ create table passaporte(
 numero varchar(10) not null unique, 
 pais_emissao varchar(50),
 validade date,
-dt_emissao date, 
+dt_emissao date check(validade > dt_emissao), 
 codcliente int not null,
 
 primary key(numero),
@@ -178,8 +178,8 @@ controlnumber varchar(14) not null unique,
 numeroPass varchar(10) not null,
 tipo varchar(5), 
 pais varchar(50),
-dt_inicio date, 
-dt_fim date, 
+dt_inicio date , 
+dt_fim date check(dt_fim > dt_inicio), 
 
 primary key(controlnumber),
 constraint fk_visto_passaporte foreign key(numeroPass) references passaporte(numero) on delete cascade on update cascade
@@ -188,9 +188,9 @@ constraint fk_visto_passaporte foreign key(numeroPass) references passaporte(num
 create table pacote(
 
 codigo int not null unique auto_increment,
-total_a_pagar decimal(10,2),
-vl_total decimal(10,2), 
-vl_desconto decimal(10,2), 
+total_a_pagar decimal(10,2) check(total_a_pagar > 0),
+vl_total decimal(10,2) check(vl_total > 0), 
+vl_desconto decimal(10,2) check(vl_desconto > 0), 
 datafim date check(datafim >= datainicio),
 datainicio date check(datafim >= datainicio),
 indicadorReserva int check(1>=indicadorReserva>=0),
@@ -203,7 +203,7 @@ primary key(codigo)
 
 create table clienteFisico_compra(
 dt_compra date not null,
-stats int,
+stats int check(1>=stats>=0),
 codagente int not null,
 codpacote int not null, 
 codcliente int not null,
@@ -217,7 +217,7 @@ constraint fk_fisicoCompra_fisico foreign key(codcliente) references cliente_fis
 
 create table clienteJuridico_compra(
 dt_compra date not null,
-stats int,
+stats int check(1>=stats>=0),
 codagente int not null,
 codpacote int not null, 
 codcliente int not null,
@@ -231,7 +231,7 @@ constraint fk_juridicoCompra_juridico foreign key(codcliente) references cliente
 
 create table nivel_servico(
 codigo int not null unique,
-nivel int, 
+nivel int check(nivel>=0), 
 descr varchar(100),
 
 primary key(codigo)
@@ -239,7 +239,7 @@ primary key(codigo)
 
 create table servico_ref(
 codigo int not null unique auto_increment, 
-valor decimal(10,2),
+valor decimal(10,2) check(valor>0),
 local_destino varchar(50),
 nivel int ,
 tipoServico int not null, #serviço parceiro, serviço proprio
@@ -253,9 +253,9 @@ id_sk int unique auto_increment ,
 codservico int not null, 
 codpacote int not null, 
 dt date,
-vl_unitario decimal(10,2),
-qtd int, 
-seq int auto_increment,
+vl_unitario decimal(10,2) check(vl_unitario>0),
+qtd int check(qtd >= 0), 
+seq int check(seq>0),
 vl_com_desconto decimal(10,2),
 
 primary key(id_sk),
@@ -268,7 +268,7 @@ create table fatura(
 id int not null unique auto_increment,
 codpacote int ,
 dt_fatura date, 
-stats int, 
+stats int check(1>=stats>=0), 
 
 primary key(id),
 foreign key(codpacote) references pacote(codigo)
@@ -288,16 +288,16 @@ constraint fk_itemFatura_pacote foreign key(sk_itemPacote)references item_pacote
 
 create table pagamento(
 codigo int not null unique auto_increment,
-vl_pago decimal(10,2),
-juros decimal(10,2),
-dt_vence date,
-dt_pag date,
+vl_pago decimal(10,2) check(vl_pago>0),
+juros decimal(10,2) check(juros>=0),
+dt_vence date ,
+dt_pag date check(dt_vence >= dt_pag),
 codFatura int,
-tipo int not null, #da hierarquia
+tipo int not null check(3>=tipo >= 1), #da hierarquia
 cod_seg int,
 numero_cartao varchar(20),
-dt_validade date, 
-tipoCartao int, 
+dt_validade date check(dt_validade > dt_pag), 
+tipoCartao int check(1 >= tipoCartao >= 0), 
 nome_titular varchar(100),
 
 primary key(codigo),
@@ -317,7 +317,7 @@ id int not null unique,
 dt_fim date,
 porcentagem_desconto double,
 tipo int, 
-dt_inicio date,
+dt_inicio date check(dt_fim >= dt_inicio),
 codservico int,
 
 primary key(id),
@@ -332,9 +332,9 @@ tipo_intercambio int not null, #hierarquia
 
 cargo varchar(20),#trabalho
 dt_inicio date,
-dt_fim date,
+dt_fim date check(dt_fim >= dt_inicio),
 
-cargaHoraria int, #estudo
+cargaHoraria int check(cargaHoraria > 0), #estudo
 nome_curso varchar(50),
 lingua varchar(20),
 
@@ -346,10 +346,10 @@ create table acomodacao(
 codigo int not null,
 descricao varchar(100),
 data_entrada date,
-dt_saida date,
-capacidade_pessoas int,
+dt_saida date check(dt_saida >= data_entrada),
+capacidade_pessoas int check(capacidade_pessoas > 0),
 fumante int check (1 >= fumante >=0),
-no_estrelas int,
+no_estrelas int check(5 >= no_estrelas > 0),
 tipo varchar(100), 
 
 primary key(codigo),
@@ -360,10 +360,10 @@ create table evento(
 codigo int not null,
 stats varchar(100),
 data_entrada date,
-dt_fim date,
+dt_fim date check(dt_fim >= data_entrada),
 nome varchar(100),
 detalhe varchar(100),
-tipo int,
+tipo int ,
 vl_desc varchar(100),
 obs varchar(100), 
 guiacod int not null,
@@ -378,12 +378,12 @@ create table transporte(
 codigo int not null,
 local_de_origem varchar(100),
 data_ida date,
-dt_volta date,
+dt_volta date check(dt_volta >= data_ida),
 modalidade varchar(100),
 marca varchar(100),
 tipo varchar(50),
-num_identificacao int,
-capacidade_n_pessoas int,
+num_identificacao int check(num_identificacao >= 0),
+capacidade_n_pessoas int check(capacidade_n_pessoas >= 0),
 motoristacod int not null,
 
 primary key(codigo),
@@ -410,8 +410,8 @@ create table parceiro(
 
 CNPJ varchar(18) not null unique,
 nome_fantasia varchar(50),
-stats int, 
-tipo int, 
+stats int check( 1 >=stats >= 0), 
+tipo int check(4 >=tipo > 0), 
 ramo varchar(10),
 
 primary key(CNPJ)
@@ -421,8 +421,8 @@ create table oferece(
 codigo int not null,
 CNPJ varchar(18) not null,
 dt_inicio date, 
-dt_fim date, 
-percentual float, 
+dt_fim date check(dt_fim >= dt_inicio), 
+percentual float check(percentual >= 0), 
 no_contrato int not null,
 
 primary key(codigo, CNPJ, no_contrato),

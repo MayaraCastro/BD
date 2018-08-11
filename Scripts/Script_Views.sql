@@ -8,7 +8,7 @@ create or replace view viewPacote
 
 use AGENCIA;
 create or replace view viewClienteJuridico
- as select C.codcliente as 'Cliente', PAC.cod as  'Pacote', F.id as 'Fatura', PAG.cod as 'Pagamento'
+ as select C.codcliente as 'Cliente', PAC.codigo as  'Pacote', F.id as 'Fatura', PAG.codigo as 'Pagamento'
 	from clienteJuridico_compra C join Pacote PAC join Fatura F join Pagamento PAG
 		on  PAC.codigo = F.codpacote
 		and F.id = PAG.codFatura
@@ -17,7 +17,7 @@ create or replace view viewClienteJuridico
 
 use AGENCIA;
 create or replace view viewClienteFisico
- as select C.codcliente as 'Cliente', PAC.cod as  'Pacote', F.id as 'Fatura', PAG.cod as 'Pagamento'
+ as select C.codcliente as 'Cliente', PAC.codigo as  'Pacote', F.id as 'Fatura', PAG.codigo as 'Pagamento'
 	from clienteJuridico_compra C join Pacote PAC join Fatura F join Pagamento PAG
 		on  PAC.codigo = F.codpacote
 		and F.id = PAG.codFatura
