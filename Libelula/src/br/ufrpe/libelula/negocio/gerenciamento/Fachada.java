@@ -94,7 +94,9 @@ public class Fachada {
 	public void AtualizarPacote(Pacote a) {
 		this.gp.AtualizarPacote(a);
 	}
-	
+	public int pegarcoddoultimoPacote() {
+		return this.gp.pegarCoddoUltimoInserido();
+	}
 	/** ITEM PACOTE */
 	public void CadastrarItemPacote(ItemPacote a) {
 		this.gip.CadastrarItemPacote(a);

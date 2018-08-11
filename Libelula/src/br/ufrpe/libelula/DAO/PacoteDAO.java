@@ -44,7 +44,26 @@ public class PacoteDAO extends DAO<Pacote> {
 			fecharStatetment();
 		}
 	}
-
+	public int pegarCodigodoUltimoAutoIncrmente() throws Exception {
+		String sql ="SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'agencia' AND TABLE_NAME = 'pacote'";
+		preparar(sql);
+		
+		ResultSet rs = null;
+		try {
+			rs = getStatement().executeQuery();
+			getConnection().commit();
+		} catch (SQLException e) {
+			getConnection().rollback();
+			fecharStatetment();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		rs.next();
+		
+			int o = rs.getInt(1) - 1 ;
+		rs.close();
+		fecharStatetment();
+		return o;
+	}
 	@Override
 	public void remover(Pacote o) throws Exception {
 		String sql = "DELETE FROM pacote WHERE `codigo` = ?";

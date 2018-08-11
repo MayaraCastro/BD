@@ -59,5 +59,15 @@ public class GerenciamentoPacote {
 		}
 		return null;
 	}
+	
+	public int pegarCoddoUltimoInserido() {
+		try {
+			return pacote.pegarCodigodoUltimoAutoIncrmente();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 }

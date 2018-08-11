@@ -1,5 +1,15 @@
 package br.ufrpe.libelula.gui.funcionario;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+
 import br.ufrpe.libelula.gui.ScreenManager;
 import br.ufrpe.libelula.negocio.beans.Agente;
 import br.ufrpe.libelula.negocio.beans.Gerente;
@@ -7,15 +17,6 @@ import br.ufrpe.libelula.negocio.beans.Guia;
 import br.ufrpe.libelula.negocio.beans.Motorista;
 import br.ufrpe.libelula.negocio.beans.Pessoa;
 import br.ufrpe.libelula.negocio.gerenciamento.Fachada;
-
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
-
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -113,96 +114,138 @@ public class TelaFuncionarioController implements Initializable{
     	ScreenManager.getInstance().showFuncionario();
     }
     
+    public boolean verificarDados() {
+    	LocalDate date = LocalDate.now();
+    	if(nome.getText() ==null || data_nascimento.getValue() == null  || telefone.getText() == null
+    			||cep.getText() == null ||num_end.getText() == null ||salario.getText() == null
+    			||ramal.getText() == null ||cpf.getText() == null || agencia.getText() ==null) {
+    		return false;
+    	}
+    	if(data_nascimento.getValue().compareTo(date) > 0 || data_nascimento.getValue().getYear() < 1900
+    			|| data_nascimento.getValue().getYear() > (date.getYear()-18)) {
+    		return false;
+    	}
+    	if(Integer.parseInt(ramal.getText()) <0 || Integer.parseInt(num_end.getText()) <0) {
+    		return false;
+    	}
+    	if(Float.parseFloat(salario.getText()) < 0) {
+    		return false;
+    	}
+    	/*if(Integer.parseInt(telefone.getText().substring(1, 2)) < 0 ||Integer.parseInt(telefone.getText().substring(4, 12)) <0 ) {
+    		return false;
+    	}*/
+    	if(Integer.parseInt(cpf.getText().substring(0, 3)) < 0 || Integer.parseInt(cpf.getText().substring(4, 7)) <0 
+            || Integer.parseInt(cpf.getText().substring(8, 11)) < 0 
+            || Integer.parseInt(cpf.getText().substring(12, 14)) < 0) {
+    		return false;
+    	}
+    	 
+    	return true;
+    }
+    
     @FXML
     void salvar(ActionEvent event) {
+    	try {
+    		this.preenchercomosdados();
+
+		
+	    	if(this.verificarDados()) {
+	    		if(pessoa.getCod() != null) {
+	    		f.AtualizarFuncionario(pessoa);
+	    		}
+	    		else{
+	    			f.CadastrarFuncionario(pessoa);
+	    			codigo.setText(Integer.toString(f.pegarcoddoultimo()));
+	    			remover_button.setDisable(false);
+	    		}
+	    	}else {
+	    		JOptionPane.showMessageDialog(null, "Informação Inválida!");
+	    	}
+    	}
+    	catch(Exception e) {
+    		JOptionPane.showMessageDialog(null, "Informação Inválida!");
+    	}
     	
-    	this.preenchercomosdados();
-    	if(pessoa.getCod() != null) {
-    		f.AtualizarFuncionario(pessoa);
-    	}
-    	else{
-    		f.CadastrarFuncionario(pessoa);
-    		codigo.setText(Integer.toString(f.pegarcoddoultimo()));
-    		remover_button.setDisable(false);
-    	}
     }
     void preenchercomosdados() {
-    	if(cargo.getSelectionModel().getSelectedItem().equals("Gerente")) {
-    		
-			String s;
-			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
-				s = "M";
-			}else{
-				s ="F";
-			}
-			
-			if(pessoa.getCod() != null) {
-				pessoa = new Gerente(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
-	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-			}
-			else {
-				pessoa = new Gerente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
-    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
     	
-			}
-    	}
-    	else if(cargo.getSelectionModel().getSelectedItem().equals("Agente")) {
-    		
-			String s;
-			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
-				s = "M";
-			}else{
-				s ="F";
-			}
-			
-			if(pessoa.getCod() != null) {
-				pessoa = new Agente(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    	if(cargo.getSelectionModel().getSelectedItem().equals("Gerente")) {
+	    		
+				String s;
+				if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+					s = "M";
+				}else{
+					s ="F";
+				}
+				
+				if(pessoa.getCod() != null) {
+					pessoa = new Gerente(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+		    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+				}
+				else {
+					pessoa = new Gerente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
 	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-			}
-			else {
-				pessoa = new Agente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
-    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-    	
-			}
-    	}
-    	else if(cargo.getSelectionModel().getSelectedItem().equals("Guia")) {
-    		
-			String s;
-			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
-				s = "M";
-			}else{
-				s ="F";
-			}
-			
-			if(pessoa.getCod() != null) {
-				pessoa = new Guia(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    	
+				}
+	    	}
+	    	else if(cargo.getSelectionModel().getSelectedItem().equals("Agente")) {
+	    		
+				String s;
+				if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+					s = "M";
+				}else{
+					s ="F";
+				}
+				
+				if(pessoa.getCod() != null) {
+					pessoa = new Agente(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+		    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+				}
+				else {
+					pessoa = new Agente(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
 	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-			}
-			else {
-				pessoa = new Guia(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
-    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-    	
-			}
-    	}
-    	else if(cargo.getSelectionModel().getSelectedItem().equals("Motorista")) {
-    		
-			String s;
-			if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
-				s = "M";
-			}else{
-				s ="F";
-			}
-			
-			if(pessoa.getCod() != null) {
-				pessoa = new Motorista(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    	
+				}
+	    	}
+	    	else if(cargo.getSelectionModel().getSelectedItem().equals("Guia")) {
+	    		
+				String s;
+				if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+					s = "M";
+				}else{
+					s ="F";
+				}
+				
+				if(pessoa.getCod() != null) {
+					pessoa = new Guia(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+		    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+				}
+				else {
+					pessoa = new Guia(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
 	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
-			}
-			else {
-				pessoa = new Motorista(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
-    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+	    	
+				}
+	    	}
+	    	else if(cargo.getSelectionModel().getSelectedItem().equals("Motorista")) {
+	    		
+				String s;
+				if(sexo.getSelectionModel().getSelectedItem().equals("Masculino")) {
+					s = "M";
+				}else{
+					s ="F";
+				}
+				
+				if(pessoa.getCod() != null) {
+					pessoa = new Motorista(pessoa.getCod(), nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+		    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+				}
+				else {
+					pessoa = new Motorista(nome.getText(),data_nascimento.getValue(),s ,telefone.getText(), null, cep.getText(),Integer.parseInt(num_end.getText()),
+	    				Float.parseFloat(salario.getText()), Integer.parseInt(ramal.getText()), cpf.getText(), agencia.getText());
+	    	
+				}
+	    	}
     	
-			}
-    	}
     		
     }
     

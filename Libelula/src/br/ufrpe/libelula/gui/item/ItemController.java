@@ -1,7 +1,10 @@
 package br.ufrpe.libelula.gui.item;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import br.ufrpe.libelula.gui.ScreenManager;
 import br.ufrpe.libelula.gui.pacote.PacoteController;
@@ -97,11 +100,10 @@ public class ItemController implements Initializable{
 
     @FXML
     void buscar_servico(ActionEvent event) {
-    	Servico_Ref s = this.f.BuscarServico(Integer.parseInt(cod_serv.getText()));
+    	s = this.f.BuscarServico(Integer.parseInt(cod_serv.getText()));
     	if(s != null) {
     		valor_unitario.setText(Float.toString(s.getValor()));
-        	System.out.println(Integer.parseInt(cod_serv.getText()));
-        	this.preenchercampos();
+        	this.preenchercamposservico();
 			tab_servico.setDisable(false);
 
     	}
@@ -111,21 +113,48 @@ public class ItemController implements Initializable{
     void cancelar(ActionEvent event) {
     	ScreenManager.getInstance().fecharInfoStage();
     }
+    
+    public boolean verificarDados() {
+    	LocalDate date = LocalDate.now();
+    	if(s ==null || data.getValue() == null || qtd.getText() == null || valor_unitario.getText() == null) {
+    		return false;
+    	}
+    	if(data.getValue().compareTo(date) < 0  ) {
+    		return false;
+    	}
+    	if(Integer.parseInt(qtd.getText()) <0) {
+    		return false;
+    	}
+    	if(Float.parseFloat(valor_unitario.getText()) < 0) {
+    		return false;
+    	}
+    	return true;
+    }
 
     @FXML
     void salvar(ActionEvent event) {
-    	this.i.setCodpacote(PacoteController.getPacote().getCodigo());
-    	this.i.setCodservico(Integer.parseInt(cod_serv.getText()));
-    	this.i.setDt(data.getValue());
-    	this.i.setQtd(Integer.parseInt(qtd.getText()));
-    	this.i.setVl_unitario(Float.parseFloat(valor_unitario.getText()));
-    	
-    	if(i.getId_sk()!= null) {
-    		f.AtualizarItemPacote(i);
-    	}else {
-    		f.CadastrarItemPacote(i);
+    	try {
+	    	this.i.setCodpacote(PacoteController.getPacote().getCodigo());
+	    	this.i.setCodservico(s.getCodigo());
+	    	this.i.setDt(data.getValue());
+	    	this.i.setQtd(Integer.parseInt(qtd.getText()));
+	    	this.i.setVl_unitario(Float.parseFloat(valor_unitario.getText()));
+	    	
+	    	if(this.verificarDados()) {
+	    		if(i.getId_sk()!= null) {
+	    			f.AtualizarItemPacote(i);
+	    		}else {
+	    			f.CadastrarItemPacote(i);
+	    		}
+	    		ScreenManager.getInstance().fecharInfoStage();
+			}else {
+				JOptionPane.showMessageDialog(null, "Informação Inválida!");
+			}
+	    	PacoteController.setItem(new ItemPacote());
     	}
-		ScreenManager.getInstance().fecharInfoStage();
+    	catch(Exception e) {
+    		JOptionPane.showMessageDialog(null, "Informação Inválida!");
+    	}
 
     }
     
@@ -144,13 +173,14 @@ public class ItemController implements Initializable{
 
     }
     
-    public void preenchercampos() {
+    public void preenchercampositem() {
     	//item
     	cod_serv.setText(Integer.toString(i.getCodservico()));
 		valor_unitario.setText(Float.toString(i.getVl_unitario()));
 		qtd.setText(Integer.toString(i.getQtd()));
 		data.setValue(i.getDt());
-		
+		}
+	public void preenchercampospacote() {
 		//pacote
 		cod_pacote.setText(Integer.toString(p.getCodigo()));
 		valor_total_pacote.setText(Float.toString(p.getVl_total()));
@@ -170,7 +200,8 @@ public class ItemController implements Initializable{
 			tipo_pacote.setText("Individual");
 		}
 			
-		
+	}
+	public void preenchercamposservico() {
 		//servico
 		cod_servico.setText(Integer.toString(s.getCodigo()));
 		valor_servico.setText(Float.toString(s.getValor()));
@@ -191,12 +222,15 @@ public class ItemController implements Initializable{
 		this.f = Fachada.getInstance();
 		i = PacoteController.getItem();
 		p = PacoteController.getPacote();
+		tab_pacote.setDisable(false);
+		this.preenchercampospacote();
 		if(i.getId_sk()!=null) {
 			p = f.BuscarPacote(i.getCodpacote());
 			s = f.BuscarServico(i.getCodservico());
-			tab_pacote.setDisable(false);
+			
 			tab_servico.setDisable(false);
-			this.preenchercampos();
+			this.preenchercampositem();
+			this.preenchercamposservico();
 			remover_button.setDisable(false);
 		}
 		

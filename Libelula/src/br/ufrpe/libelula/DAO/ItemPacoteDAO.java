@@ -54,7 +54,7 @@ public class ItemPacoteDAO extends DAO<ItemPacote> {
 	@Override
 	public void alterar(ItemPacote o) throws Exception {
 		String sql = "UPDATE `item_pacote` SET `dt` = ?,`vl_unitario` = ?,`qtd` = ?,"
-				+ "`vl_com_desconto` = ?,"
+				+ "`vl_com_desconto` = ? "
 				 + "WHERE `id_sk` = ?";
 		preparar(sql);
 		getStatement().setDate(1, Date.valueOf(o.getDt()));

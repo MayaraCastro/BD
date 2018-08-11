@@ -28,12 +28,12 @@
                </effect>
             </Text>
             <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#Tela_Principal" style="-fx-background-color: ffffff;" text="Home" />
-            <TextField fx:id="Busca_pacote" layoutX="529.0" layoutY="18.0" prefHeight="25.0" prefWidth="153.0" promptText="Buscar Pacote">
+            <TextField fx:id="Busca_pacote" layoutX="529.0" layoutY="18.0" prefHeight="25.0" prefWidth="108.0" promptText="Buscar Pacote">
                <effect>
                   <DropShadow />
                </effect>
             </TextField>
-            <Button layoutX="692.0" layoutY="18.0" mnemonicParsing="false" onAction="#buscar" style="-fx-background-color: ffffff;" text="Buscar" />
+            <Button layoutX="648.0" layoutY="18.0" mnemonicParsing="false" onAction="#buscar" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: ffffff;" text="Buscar" />
             <Button layoutX="750.0" layoutY="18.0" mnemonicParsing="false" onAction="#novo" style="-fx-background-color: ffffff;" text="Novo" />
          </children>
          <effect>
@@ -46,11 +46,11 @@
       </Pane>
       <Pane layoutX="8.0" layoutY="45.0" prefHeight="170.0" prefWidth="799.0" style="-fx-background-color: ffffff;">
          <children>
-            <TextField fx:id="desconto" layoutX="189.0" layoutY="21.0" onKeyTyped="#mudar_total" />
-            <TextField fx:id="valor" layoutX="14.0" layoutY="21.0" onKeyTyped="#mudar_total" />
+            <TextField fx:id="desconto" layoutX="189.0" layoutY="21.0" onKeyTyped="#mudar_total" prefHeight="25.0" prefWidth="95.0" />
+            <TextField fx:id="valor" layoutX="14.0" layoutY="21.0" onKeyTyped="#mudar_total" prefHeight="25.0" prefWidth="108.0" />
             <Label layoutX="14.0" layoutY="6.0" text="Valor" />
             <Label layoutX="189.0" layoutY="6.0" text="Desconto" />
-            <TextField fx:id="total_pagar" editable="false" layoutX="373.0" layoutY="21.0" />
+            <TextField fx:id="total_pagar" editable="false" layoutX="373.0" layoutY="21.0" prefHeight="25.0" prefWidth="79.0" />
             <Label layoutX="373.0" layoutY="6.0" text="Total a Pagar" />
             <DatePicker fx:id="dtinicio" layoutX="14.0" layoutY="81.0" prefHeight="25.0" prefWidth="149.0" />
             <DatePicker fx:id="dtfim" layoutX="189.0" layoutY="81.0" prefHeight="25.0" prefWidth="149.0" />
@@ -64,8 +64,8 @@
                 </toggles>
             </ToggleButtonGroup>
             <Label layoutX="373.0" layoutY="64.0" text="Tipo de Pacote" />
-            <TextField fx:id="n_adultos" editable="false" layoutX="14.0" layoutY="130.0" />
-            <TextField fx:id="n_criancas" editable="false" layoutX="189.0" layoutY="130.0" />
+            <TextField fx:id="n_adultos" editable="false" layoutX="14.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" />
+            <TextField fx:id="n_criancas" editable="false" layoutX="189.0" layoutY="130.0" prefHeight="25.0" prefWidth="95.0" />
             <Label layoutX="14.0" layoutY="113.0" text="Número de Adultos" />
             <Label layoutX="189.0" layoutY="113.0" text="Número de Crianças" />
             <Button fx:id="adicionar_itens" disable="true" layoutX="655.0" layoutY="60.0" mnemonicParsing="false" onAction="#adicionar_itens" text="Adicionar Itens" />

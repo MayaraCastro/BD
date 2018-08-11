@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -43,7 +42,7 @@
             </DropShadow>
          </effect>
       </Pane>
-      <Pane layoutX="189.0" layoutY="47.0" prefHeight="323.0" prefWidth="404.0" style="-fx-background-color: ffffff;">
+      <Pane layoutX="95.0" layoutY="51.0" prefHeight="323.0" prefWidth="410.0" style="-fx-background-color: ffffff;">
          <children>
             <JFXDatePicker fx:id="data_nascimento" defaultColor="#7c6602" layoutX="213.0" layoutY="168.0" prefHeight="28.0" prefWidth="158.0" promptText="Data de Nascimento" />
             <JFXComboBox fx:id="cargo" layoutX="20.0" layoutY="169.0" prefHeight="25.0" prefWidth="150.0" promptText="Cargo" />
@@ -78,9 +77,5 @@
             <DropShadow />
          </effect>
       </Pane>
-      <JFXTreeTableView layoutX="7.0" layoutY="47.0" prefHeight="323.0" prefWidth="171.0">
-         <effect>
-            <DropShadow />
-         </effect></JFXTreeTableView>
    </children>
 </Pane>
