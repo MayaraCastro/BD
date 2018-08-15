@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ServicoController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tab_servico" text="Servico">
+               <content>
+                  <Pane prefHeight="170.0" prefWidth="218.0" style="-fx-background-color: ffffff;">
+                     <children>
+                        <TextField fx:id="cod_serv" layoutX="7.0" layoutY="36.0" />
+                        <Label layoutX="7.0" layoutY="14.0" text="Código do serviço" />
+                        <Button layoutX="175.0" layoutY="34.0" mnemonicParsing="false" onAction="#buscar_servico" prefHeight="25.0" prefWidth="149.0" text="Buscar Servico" />
+                        <TextField fx:id="valor_servico" disable="true" layoutX="7.0" layoutY="91.0" />
+                        <Label fx:id="valor" layoutX="7.0" layoutY="74.0" text="Valor " />
+                        <TextField fx:id="niveLabel" layoutX="6.0" layoutY="156.0" />
+                        <Label fx:id="nivel" layoutX="12.0" layoutY="130.0" text="Nivel" />
+                        <Button layoutX="175.0" layoutY="126.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                        <Button fx:id="remover_button" disable="true" layoutX="174.0" layoutY="168.0" mnemonicParsing="false" onAction="#remover" text="Remover" />
+                        <Button layoutX="275.0" layoutY="168.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+                        <TextField fx:id="tipo_de_servico" layoutX="7.0" layoutY="217.0" />
+                        <Label layoutX="12.0" layoutY="193.0" text="Tipo de Servico" />
+                        <Label fx:id="localDestino" layoutX="190.0" layoutY="74.0" text="Local de Destino" />
+                        <TextField fx:id="local_dest" disable="true" layoutX="190.0" layoutY="91.0" />
+                     </children>
+                  </Pane>
+               </content>
+          </Tab>
+          <Tab text="Endereco">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="24.0" layoutY="147.0" text="Total a pagar:" />
+                        <Label layoutX="24.0" layoutY="69.0" text="Valor total:" />
+                        <Label layoutX="24.0" layoutY="109.0" text="Valor de desconto:" />
+                        <Label layoutX="199.0" layoutY="109.0" text="Data final:" />
+                        <Label layoutX="25.0" layoutY="26.0" text="Código do Pacote:" />
+                        <Label layoutX="198.0" layoutY="69.0" text="Data de início:" />
+                        <Label layoutX="25.0" layoutY="186.0" text="Nº de Crianças:" />
+                        <Label layoutX="200.0" layoutY="147.0" text="Tipo:" />
+                        <Label layoutX="200.0" layoutY="186.0" text="Nº de Adultos:" />
+                        <Label fx:id="cod_pacote" layoutX="150.0" layoutY="26.0" text="#" />
+                        <Label fx:id="valor_total_pacote" layoutX="109.0" layoutY="69.0" text="#" />
+                        <Label fx:id="valor_desconto_pacote" layoutX="150.0" layoutY="109.0" text="#" />
+                        <Label fx:id="total_pagar_pacote" layoutX="135.0" layoutY="147.0" text="#" />
+                        <Label fx:id="n_criancas" layoutX="133.0" layoutY="186.0" text=" " />
+                        <Label fx:id="dt_inicio" layoutX="312.0" layoutY="69.0" text="#" />
+                        <Label fx:id="dt_final" layoutX="308.0" layoutY="109.0" text="#" />
+                        <Label fx:id="tipo_pacote" layoutX="269.0" layoutY="147.0" text="#" />
+                        <Label fx:id="n_adultos" layoutX="296.0" layoutY="186.0" text=" " />
+                     </children>
+                  </Pane>
+               </content>
+          </Tab>
+            <Tab text="Passaporte">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="27.0" layoutY="28.0" text="Código do Serviço:" />
+                        <Label layoutX="28.0" layoutY="106.0" text="Destino:" />
+                        <Label layoutX="27.0" layoutY="69.0" text="Valor:" />
+                        <Label layoutX="27.0" layoutY="186.0" text="Nível:" />
+                        <Label layoutX="27.0" layoutY="147.0" text="Tipo de Serviço:" />
+                        <Label fx:id="cod_servico" layoutX="160.0" layoutY="28.0" text="#" />
+                        <Label fx:id="valor_servico" layoutX="80.0" layoutY="69.0" text="#" />
+                        <Label fx:id="destino_servico" layoutX="96.0" layoutY="106.0" text="#" />
+                        <Label fx:id="tipo_servico" layoutX="139.0" layoutY="147.0" text="#" />
+                        <Label fx:id="nivel_servico" layoutX="77.0" layoutY="186.0" text="#" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

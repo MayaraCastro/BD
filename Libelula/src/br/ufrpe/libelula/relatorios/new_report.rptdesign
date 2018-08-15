@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.6.0.v201606072122</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">fixed layout</property>
+    <property name="bidiLayoutOrientation">rtl</property>
+    <property name="imageDPI">120</property>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Agencia" id="114">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.eclipse.birt.report.data.oda.sampledb.Driver</property>
+            <property name="odaURL">jdbc:classicmodels:sampledb</property>
+            <property name="odaUser">ClassicModels</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="view1" id="120">
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">Agencia</property>
+            <xml-property name="queryText"><![CDATA[select * from viewClienteFisico]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="view2" id="121">
+            <structure name="cachedMetaData"/>
+            <property name="dataSource">Agencia</property>
+            <xml-property name="queryText"><![CDATA[select * from viewClienteJuridico
+]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="38">
+            <property name="width">7.958333333333333in</property>
+            <column id="39">
+                <property name="width">2.35in</property>
+            </column>
+            <column id="40"/>
+            <column id="41">
+                <property name="width">2.65in</property>
+            </column>
+            <row id="42">
+                <property name="backgroundColor">#400040</property>
+                <cell id="43">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">3</property>
+                    <image id="31">
+                        <property name="height">1.3473684210526315in</property>
+                        <property name="width">1.3473684210526315in</property>
+                        <property name="source">file</property>
+                        <expression name="uri" type="constant">src/br/ufrpe/libelula/gui/login/gps.png</expression>
+                    </image>
+                </cell>
+                <cell id="44">
+                    <property name="backgroundColor">#400040</property>
+                </cell>
+                <cell id="45"/>
+            </row>
+            <row id="46">
+                <property name="backgroundColor">#400040</property>
+                <cell id="48">
+                    <property name="backgroundColor">#400040</property>
+                    <label id="30">
+                        <property name="fontSize">36pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="color">white</property>
+                        <property name="textAlign">center</property>
+                        <property name="whiteSpace">pre</property>
+                        <text-property name="text">Libélula</text-property>
+                    </label>
+                </cell>
+                <cell id="49"/>
+            </row>
+            <row id="50">
+                <property name="backgroundColor">#400040</property>
+                <cell id="52">
+                    <property name="backgroundColor">#400040</property>
+                </cell>
+                <cell id="53"/>
+            </row>
+        </grid>
+        <table id="78">
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Cliente</property>
+                    <text-property name="displayName">Cliente</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["Cliente"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">pacote</property>
+                    <text-property name="displayName">Pacote</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["pacote"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">fatura</property>
+                    <text-property name="displayName">Fatura</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fatura"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">pagamento</property>
+                    <text-property name="displayName">Pagamento</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["pagamento"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">tipo de servico</property>
+                    <text-property name="displayName">tipo de servico</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["tipo de servico"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="102"/>
+            <column id="103"/>
+            <column id="104"/>
+            <column id="105"/>
+            <column id="109"/>
+            <header>
+                <row id="79">
+                    <property name="backgroundColor">#FEAE1B</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">medium</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">medium</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">medium</property>
+                    <cell id="80">
+                        <label id="81">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Cliente</text-property>
+                        </label>
+                    </cell>
+                    <cell id="82">
+                        <label id="83">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Pacote</text-property>
+                        </label>
+                    </cell>
+                    <cell id="84">
+                        <label id="85">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Fatura</text-property>
+                        </label>
+                    </cell>
+                    <cell id="86">
+                        <label id="87">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Pagamento</text-property>
+                        </label>
+                    </cell>
+                    <cell id="106">
+                        <label id="111">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Tipo de Servico</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="88">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">medium</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">medium</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">medium</property>
+                    <cell id="89">
+                        <data id="90">
+                            <property name="resultSetColumn">cliente</property>
+                        </data>
+                    </cell>
+                    <cell id="91">
+                        <data id="92">
+                            <property name="resultSetColumn">pacote</property>
+                        </data>
+                    </cell>
+                    <cell id="93">
+                        <data id="94">
+                            <property name="resultSetColumn">fatura</property>
+                        </data>
+                    </cell>
+                    <cell id="95">
+                        <data id="96">
+                            <property name="resultSetColumn">pagamento</property>
+                        </data>
+                    </cell>
+                    <cell id="107">
+                        <data id="112">
+                            <property name="resultSetColumn">tipo de servico</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="97">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">medium</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">medium</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">medium</property>
+                    <cell id="98"/>
+                    <cell id="99"/>
+                    <cell id="100"/>
+                    <cell id="101"/>
+                    <cell id="108"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

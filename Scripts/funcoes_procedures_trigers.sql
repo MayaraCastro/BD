@@ -1,22 +1,38 @@
 use AGENCIA;
 
+            
+insert into agente(cod, cpf, cod_agencia) values (1, '102.104.547-85','62.252.681/0001-32' );
+delete from cliente_fisico where cod = 26;
+insert into cliente_fisico(cod,cpf, agencia, tipo) values(26,'428.703.331-02','62.252.681/0001-32',1);
+
+call gera_malaDireta(2);
+select @val:=SUM(f.stats)
+		from fatura f join pacote p join clienteJuridico_compra cj join clienteFisico_compra cf 
+		on cj.codcliente = 21 or cf.codcliente = 21
+		where
+				f.codpacote = p.codigo;
+                
+select cliente_apto(27,'USA', '2014-05-07', '2016-05-20');
+select cliente_apto(27,'USA', '2016-05-07', '2016-05-20');
 -- FUNCTIONS
 #1.  para retornar se um CLIENTE está apto a uma certa VIAGEM durante o gerenciamento de seus ITEM_PACOTE com a informação de seu VISTO
-
+drop function cliente_apto;
 delimiter $$
-create function cliente_apto (cod int, pais varchar(50), dt_inicio date, dt_fim date) returns bool
+create function cliente_apto (cod int, pais varchar(50), dt_inicio Date, dt_fim date) returns boolean
  begin
 	declare visto_dt_inicio date;
     declare visto_dt_fim date;
-    
+
     select V.dt_inicio, V.dt_fim  into visto_dt_inicio, visto_dt_fim
 		from visto V join passaporte P
         on	V.numeroPass = P.numero and P.codcliente = cod
         where
 			V.pais = pais;
 	
-    if dt_inicio >= visto_dt_inicio and dt_fim <= visto_dt_fim then
-		return true;
+    if  dt_inicio > visto_dt_inicio and dt_fim <  visto_dt_fim then
+		
+			return true;
+            
 	else
 		return false;
 	end if;
@@ -30,10 +46,10 @@ create function cliente_em_dias (cod int, tipo int) returns bool
 	begin
 		select @val:=SUM(f.stats)
 		from fatura f join pacote p join clienteJuridico_compra cj join clienteFisico_compra cf 
-		on cj.codpacote = p.cod or cf.codpacote = p.cod
+		on cj.codcliente = cod or cf.codcliente = cod
 		where
 				f.codpacote = p.codigo;
-
+                
 		if @val = 0 then
 			return true;
 		else
@@ -168,26 +184,47 @@ $$
 
 #2.  Para atualizar o  atributo "numero_clientes" de AGENCIA 
 delimiter $$
-create trigger atualiza_num_clientesdelete 
-before delete on cliente_juridico
+create trigger atualiza_num_clientes_fisico_delete 
 before delete on cliente_fisico
 for each row
 begin
 
-	if(old.cod_agencia is not null)then
-		update agencia set num_cliente = num_cliente - 1 where CNPJ = old.cod_agencia;
+	if(old.agencia is not null)then
+		update agencia set num_cliente = num_cliente - 1 where CNPJ = old.agencia;
+    end if;
+end;
+
+$$
+delimiter $$
+create trigger atualiza_num_clientes_juridico_delete 
+before delete on cliente_juridico
+for each row
+begin
+
+	if(old.agencia is not null)then
+		update agencia set num_cliente = num_cliente - 1 where CNPJ = old.agencia;
     end if;
 end;
 $$
 
 delimiter $$
-create trigger atualiza_num_clientesinsert 
-after insert on cliente_juridico
+create trigger atualiza_num_clientes_fisico_insert 
 after insert on cliente_fisico
 for each row
 begin
-	if(new.cod_agencia is not null)then
-		update agencia set num_cliente = num_cliente + 1 where CNPJ = new.cod_agencia;
+	if(new.agencia is not null)then
+		update agencia set num_cliente = num_cliente + 1 where CNPJ = new.agencia;
+    end if;
+end;
+$$
+
+delimiter $$
+create trigger atualiza_num_clientes_juridico_insert 
+after insert on cliente_juridico
+for each row
+begin
+	if(new.agencia is not null)then
+		update agencia set num_cliente = num_cliente + 1 where CNPJ = new.agencia;
     end if;
 end;
 $$

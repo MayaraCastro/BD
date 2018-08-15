@@ -1,6 +1,6 @@
 use AGENCIA;
 
-# DROP USER 'admin'@'localhost';
+ #DROP USER 'admin'@'localhost';
 #DROP USER 'gerente'@'localhost';
 #DROP USER 'agente'@'localhost';
 
