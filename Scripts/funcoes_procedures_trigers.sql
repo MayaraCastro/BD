@@ -40,21 +40,32 @@ create function cliente_apto (cod int, pais varchar(50), dt_inicio Date, dt_fim 
 $$
 
 
+
 #2.   para retornar se o CLIENTE esta em dias com seus pagamentos de FATURAS
-delimiter $$
+
+delimiter $$ 
 create function cliente_em_dias (cod int, tipo int) returns bool
-	begin
-		select @val:=SUM(f.stats)
-		from fatura f join pacote p join clienteJuridico_compra cj join clienteFisico_compra cf 
-		on cj.codcliente = cod or cf.codcliente = cod
+    begin
+    DECLARE val int(11);
+	if(tipo=0) then
+		select SUM(cj.stats) INTO val
+		from fatura f join pacote p join clienteJuridico_compra cj
+		on cj.codcliente = cod
 		where
-				f.codpacote = p.codigo;
-                
-		if @val = 0 then
-			return true;
-		else
-			return false;
-		end if;		
+			f.codpacote = p.codigo and p.codigo=cj.codpacote;
+	else
+		select SUM(cf.stats) INTO val
+		from fatura f join pacote p join clienteFisico_compra cf
+		on cf.codcliente = p.cod
+		where
+				f.codpacote = p.codigo and p.codigo=cj.codpacote;
+	end if;
+
+	if val = 0 then
+		return true;
+	else
+		return false;
+	end if;		
 	end;
 $$
 
