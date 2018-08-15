@@ -90,17 +90,34 @@ $$
 
 #2. para verificar se o "status" de uma FATURA em função dos PAGAMENTOS 
 
+
 delimiter $$
-create procedure verificarStatus(in status int)
-	begin
-		if( status = 0 ) then
-			INSERT INTO fatura (status) VALUES (0);
-        
-	        else 
-			INSERT INTO fatura (status) VALUES (1);
-	        end if;
-    end;
-$$ 
+create procedure Fatura_Pagamentos()
+begin
+	DECLARE done INT DEFAULT 0;
+	DECLARE var1, var2 date;
+
+	DECLARE curs CURSOR FOR (
+		select dt_pag, dt_fatura from pagamento join fatura on id = codFatura
+	);
+
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+	OPEN curs;
+
+	REPEAT
+
+		FETCH curs INTO var1, var2;
+			IF NOT done THEN
+				if datediff(var1,var2) > 0 then
+					update fatura set stats = 1;
+				else
+					update fatura set stats = 0;
+				end if;
+			END IF;
+		UNTIL done END REPEAT;
+end
+$$
 
 -- TRIGGERS
 
