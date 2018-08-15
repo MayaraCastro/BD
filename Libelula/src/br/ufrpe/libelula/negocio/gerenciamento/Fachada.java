@@ -18,6 +18,7 @@ public class Fachada {
 	private GerenciamentoItemPacote gip;
 	private GerenciamentoServico gs;
 	private GerenciamentoLogin login;
+	private GerenciamentoPagamento gpag;
 	
 	private GerenciamentoPessoa gpessoa;
 	
@@ -26,7 +27,7 @@ public class Fachada {
 	private Fachada() {
 		this.gfu = new GerenciamentoFuncionario();
 		this.gfa = new GerenciamentoFatura();
-	//	this.gc = new GerenciamentoCliente();
+		this.gc = new GerenciamentoCliente();
 		this.gp = new GerenciamentoPacote();
 		this.gip = new GerenciamentoItemPacote();
 		this.gs = new GerenciamentoServico();
@@ -152,9 +153,58 @@ public class Fachada {
 		return gs.BuscarServico(cod);
 	}
 	
-	/** FATURA */
+		/**PAGAMENTO
+	 * @param i **/
+	public ArrayList<Pagamento> ListarPagamento() {
+		// TODO Auto-generated method stub
+		return this.gpag.ListarPagamento();
+	}
+
+	public Pagamento BuscarPagamento(int cod) {
+		// TODO Auto-generated method stub
+		return this.gpag.BuscarPagamento(cod);
+	}
+
+	public void AtualizarPagamento(Pagamento pag) {
+		this.gpag.AtualizarPagamento(pag);
+
+	}
+
+	public void CadastrarPagamento(Pagamento pag) {
+		// TODO Auto-generated method stub
+		this.gpag.CadastrarPagamento(pag);
+
+	}
+	public int pegarcoddoultimoPagamento() {
+		return this.gpag.pegarCoddoUltimoInserido();
+	}
+
+	public void RemoverPagamento(Pagamento pag) {
+		// TODO Auto-generated method stub
+		this.gpag.RemoverPagamento(pag);
+
+	}
 	
 	/** CLIENTE */
+	public void CadastrarCliente(Pessoa a) {
+		this.gc.CadastrarCliente(a);
+	}
 	
+	public void RemoverCliente(Pessoa a) {
+		this.gc.RemoverCliente(a);
+	}
+	
+	public Pessoa BuscarCliente(int cod) {
+		return this.gc.BuscarCliente(cod);
+	}
+	
+	public ArrayList<Pessoa> ListarCliente(){
+		return this.gc.ListarCliente();
+	}
+	
+	public void AtualizarCliente(Pessoa a) {
+		this.gc.AtualizarCliente(a);
+	}
+
 
 }
