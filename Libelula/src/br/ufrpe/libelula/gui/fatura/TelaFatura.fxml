@@ -1,26 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="451.0" prefWidth="816.0" style="-fx-background-color: aaaaaa;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.libelula.gui.fatura.FaturaController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Fatura">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <TextField layoutX="14.0" layoutY="55.0" />
-                        <Label layoutX="14.0" layoutY="28.0" prefHeight="15.0" prefWidth="171.0" text="Codigo do Servico" />
-                        <Button layoutX="201.0" layoutY="55.0" mnemonicParsing="false" text="Buscar Fatura" />
-                     </children>
-                  </Pane>
-               </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <Pane layoutX="-7.0" layoutY="-8.0" prefHeight="50.0" prefWidth="824.0" style="-fx-background-color: #2c90d7;">
+         <children>
+            <Text fill="#2c686c" layoutX="351.0" layoutY="36.0" opacity="0.99" strokeType="OUTSIDE" strokeWidth="0.0" text="Libélula" wrappingWidth="123.0000029602088">
+               <font>
+                  <Font name="Leelawadee UI" size="33.0" />
+               </font>
+               <effect>
+                  <InnerShadow height="1.32" radius="0.0" width="0.0" />
+               </effect>
+            </Text>
+            <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#Tela_Principal" style="-fx-background-color: ffffff;" text="Home" />
+            <TextField fx:id="Busca_fatura" layoutX="529.0" layoutY="18.0" prefHeight="25.0" prefWidth="108.0" promptText="Buscar Fatura">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </TextField>
+            <Button layoutX="648.0" layoutY="18.0" mnemonicParsing="false" onAction="#buscar" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: ffffff;" text="Buscar" />
+            <Button layoutX="750.0" layoutY="18.0" mnemonicParsing="false" onAction="#novo" style="-fx-background-color: ffffff;" text="Novo" />
+         </children>
+         <effect>
+            <DropShadow>
+               <input>
+                  <Glow level="0.14" />
+               </input>
+            </DropShadow>
+         </effect>
+      </Pane>
+      <Pane layoutX="9.0" layoutY="56.0" prefHeight="170.0" prefWidth="799.0" style="-fx-background-color: ffffff;">
+         <children>
+            <TextField fx:id="codpacote" layoutX="189.0" layoutY="21.0"  prefHeight="25.0" prefWidth="95.0" />
+            <TextField fx:id="id" layoutX="14.0" layoutY="21.0"  prefHeight="25.0" prefWidth="108.0" />
+            <Label layoutX="14.0" layoutY="6.0" text="Identificador" />
+            <Label layoutX="189.0" layoutY="6.0" text="Codigo do Pacote" />
+            <TextField fx:id="status" editable="false" layoutX="366.0" layoutY="21.0" prefHeight="25.0" prefWidth="79.0" />
+            <Label layoutX="373.0" layoutY="6.0" text="Status" />
+            <ToggleButtonGroup layoutX="373.0" layoutY="89.0" selectionType="SINGLE" />
+            <Button fx:id="adicionar_itens" disable="true" layoutX="94.0" layoutY="131.0" mnemonicParsing="false" onAction="#adicionar_itens" text="Adicionar Itens" />
+            <Button layoutX="23.0" layoutY="131.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+            <Button fx:id="remover_button" disable="true" layoutX="205.0" layoutY="131.0" mnemonicParsing="false" onAction="#remover_pagamento" text="Remover" />
+            <DatePicker fx:id="dt_fatura" layoutX="11.0" layoutY="73.0" prefHeight="25.0" prefWidth="149.0" />
+            <Label layoutX="11.0" layoutY="56.0" text="Data fatura" />
+         </children>
+      </Pane>
+      <TableView fx:id="lista_pagamento" editable="true" layoutX="8.0" layoutY="237.0" onMouseClicked="#selecionaPagamento" prefHeight="200.0" prefWidth="799.0">
+         <columns>
+            <TableColumn fx:id="id_col" prefWidth="75.0" text="Id" />
+            <TableColumn fx:id="cod_pacote_col" prefWidth="117.60003662109375" text="Código do pacote" />
+            <TableColumn fx:id="data_col" prefWidth="86.39996337890625" text="Data" />
+            <TableColumn fx:id="status_col" prefWidth="104.800048828125" text="Status" />
+         </columns>
+      </TableView>
    </children>
 </Pane>
