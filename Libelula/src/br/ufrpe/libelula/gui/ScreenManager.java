@@ -53,6 +53,41 @@ public class ScreenManager {
 		}
 
 	}
+	
+	public void loadServio() {
+		try {
+			Pane telaServico = FXMLLoader.load(this.getClass().getResource("servico/TelaServico.fxml"));
+			this.mainServico = new Scene(telaServico);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void loadFatura() {
+		try {
+			Pane telaFatura = FXMLLoader.load(this.getClass().getResource("fatura/TelaFatura.fxml"));
+			this.mainFatura = new Scene(telaFatura);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void loadPagamento() {
+		try {
+			Pane telaPagamento = FXMLLoader.load(this.getClass().getResource("pagamento/TelaPagamento.fxml"));
+			this.mainPagamento = new Scene(telaPagamento);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+	
 	public void loadLogin() {
 		try {
 			Pane telaLogin = FXMLLoader.load(this.getClass().getResource("login/TelaLogin.fxml"));
@@ -68,6 +103,17 @@ public class ScreenManager {
 		try {
 			Pane telaFuncionario = FXMLLoader.load(this.getClass().getResource("funcionario/Tela_Funcionarios.fxml"));
 			this.mainFuncionario = new Scene(telaFuncionario);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void loadCliente() {
+		try {
+			Pane ClienteController = FXMLLoader.load(this.getClass().getResource("cliente/TelaCliente.fxml"));
+			this.mainCliente = new Scene(ClienteController);
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -94,7 +140,7 @@ public class ScreenManager {
 
 	public void setMainStage(Stage mainStage) {
 		this.mainStage = mainStage;
-		this.mainStage.setTitle("Libélula");
+		this.mainStage.setTitle("LibÃ©lula");
 		this.mainStage.setResizable(false);
 		// this.mainStage.initStyle(StageStyle.UNDECORATED);
 	}
@@ -139,6 +185,32 @@ public class ScreenManager {
 		this.infoStage.show();
 
 	}
+	
+	
+	public void showCliente(){
+		this.loadCliente();
+		this.infoStage.setScene(mainCliente);
+		this.infoStage.show();
+	}
+
+	public void showFatura(){
+		this.loadFatura();
+		this.infoStage.setScene(mainFatura);
+		this.infoStage.show();
+	}
+
+	public void showPagamento(){
+		this.loadPagamento();
+		this.infoStage.setScene(mainPagamento);
+		this.infoStage.show();
+	}
+
+	public void showServico(){
+		this.loadServio();
+		this.infoStage.setScene(mainServico);
+		this.infoStage.show();
+	}
+	
 	public void showInfoStage(){
 		this.infoStage.show();
 	}
